@@ -1,7 +1,25 @@
 
-# inheritance-tax-on-pensions-stubs
+# Inheritance Tax on Pensions Stubs
 
-This is a placeholder README.md for a new repository
+Microservice to provide endpoints to replicate request and response from the IHTP API
+
+Description of the API TBC
+
+Test data description TBC
+
+### Unit tests
+
+> `sbt test`
+
+### Integration tests
+
+> `sbt it/test`
+
+You can also execute the [runtests.sh](runtests.sh) file to run both unit and integration tests and generate coverage report easily.
+
+```bash
+/bin/bash ./runtests.sh
+```
 
 ### License
 
