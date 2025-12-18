@@ -1,7 +1,9 @@
 
-# inheritance-tax-on-pensions-stubs
+# Inheritance Tax on Pensions Stub
 
-This is a placeholder README.md for a new repository
+Microservice to provide endpoints to replicate request and response from the IHTP API
+
+Description of the API TBC
 
 ### License
 
