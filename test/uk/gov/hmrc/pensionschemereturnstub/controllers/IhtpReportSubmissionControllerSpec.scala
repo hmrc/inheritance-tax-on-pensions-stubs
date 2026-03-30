@@ -36,9 +36,9 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
   )
 
   "POST ihtp report" must {
-    
+
     val srn = "S2400000001"
-    
+
     "return 200-Ok for a valid request" in {
       val validData = jsonUtils.readJsonFile(filePath = "conf/resources/data/validReturnSubmission.json")
       val postRequest = fakePostRequest.withJsonBody(validData)

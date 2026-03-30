@@ -23,7 +23,7 @@ import play.api.libs.json.{JsValue, Json}
 import java.io.{FileInputStream, InputStream}
 import scala.io.Source
 
-class JsonUtils @Inject()(environment: Environment) {
+class JsonUtils @Inject() (environment: Environment) {
 
   def readJsonFile(filePath: String): JsValue = {
     val jsonSchemaFile = environment.getFile(filePath)

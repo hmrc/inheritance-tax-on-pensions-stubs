@@ -26,8 +26,8 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 
 @Singleton()
-class IhtpReportSubmissionController @Inject()(
-  cc: ControllerComponents,
+class IhtpReportSubmissionController @Inject() (
+  cc: ControllerComponents
 ) extends IhtpControllerBase(cc) {
   private val logger = Logger(classOf[IhtpReportSubmissionController])
 

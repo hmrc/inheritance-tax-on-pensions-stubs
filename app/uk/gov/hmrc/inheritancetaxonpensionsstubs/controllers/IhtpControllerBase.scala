@@ -24,7 +24,7 @@ import uk.gov.hmrc.play.bootstrap.backend.controller.BackendController
 import javax.inject.Inject
 import scala.concurrent.Future
 
-class IhtpControllerBase @Inject()(cc: ControllerComponents) extends BackendController(cc) with APIResponses {
+class IhtpControllerBase @Inject() (cc: ControllerComponents) extends BackendController(cc) with APIResponses {
 
   def unprocessable(code: String, reason: String): Future[Result] =
     Future.successful(
