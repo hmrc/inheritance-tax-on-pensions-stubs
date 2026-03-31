@@ -19,7 +19,7 @@ package uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers
 import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
-
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.config.Constants._
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDateTime, ZoneOffset}
 import javax.inject.{Inject, Singleton}
@@ -29,18 +29,25 @@ import scala.concurrent.Future
 class IhtpReportSubmissionController @Inject() (
   cc: ControllerComponents
 ) extends IhtpControllerBase(cc) {
+
   private val logger = Logger(classOf[IhtpReportSubmissionController])
 
-  private val invalidPostSrn: String = "S2400000011"
-  private val serverErrorSrn: String = "S2400000012"
-
   def postIhtpReport(srn: String): Action[AnyContent] = Action.async { implicit request =>
-    if (srn == invalidPostSrn) {
+
+    val significantBit: Int = srn.takeRight(1).toInt
+
+    if (significantBit == BAD_REQUEST_BIT) {
       logger.debug("Invalid srn -> Bad request")
       invalidSrn400Response
-    } else if (srn == serverErrorSrn) {
+    } else if (significantBit == SERVER_ERROR_BIT) {
       logger.debug("Server error srn -> Server error")
       internalServerError500Response
+    } else if (significantBit == SERVICE_UNAVAILABLE_BIT) {
+      logger.debug("Server error srn -> Service unavailable")
+      serviceUnavailable503Response
+    } else if (significantBit == UNPROCESSABLE_ENTITY_BIT) {
+      logger.debug("Server error srn -> Unprocessable entity")
+      unprocessable422Response
     } else {
       request.body.asJson match {
         case Some(body) =>

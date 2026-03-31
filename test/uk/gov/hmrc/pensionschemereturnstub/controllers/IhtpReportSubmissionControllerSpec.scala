@@ -57,7 +57,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 400-BadRequest for an invalid srn" in {
-      val result = controller.postIhtpReport("S2400000011")(fakePostRequest)
+      val result = controller.postIhtpReport("S2400000002")(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
       val content = contentAsJson(result)
       (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
@@ -67,13 +67,33 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 500-InternalServerError for an srn" in {
-      val result = controller.postIhtpReport("S2400000012")(fakePostRequest)
+      val result = controller.postIhtpReport("S2400000003")(fakePostRequest)
       status(result) mustBe Status.INTERNAL_SERVER_ERROR
       val content = contentAsJson(result)
       (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
         JsString("Something went wrong.")
       )
       (JsPath \ "failures" \ 0 \ "code")(content) mustBe List(JsString("INTERNAL_SERVER_ERROR"))
+    }
+
+    "return 503-ServiceUnavailable for an srn" in {
+      val result = controller.postIhtpReport("S2400000004")(fakePostRequest)
+      status(result) mustBe Status.SERVICE_UNAVAILABLE
+      val content = contentAsJson(result)
+      (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
+        JsString("The remote endpoint has indicated that the service is unavailable")
+      )
+      (JsPath \ "failures" \ 0 \ "code")(content) mustBe List(JsString("SERVICE_UNAVAILABLE"))
+    }
+
+    "return 422-UnprocessableEntity for an srn" in {
+      val result = controller.postIhtpReport("S2400000005")(fakePostRequest)
+      status(result) mustBe Status.UNPROCESSABLE_ENTITY
+      val content = contentAsJson(result)
+      (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
+        JsString("The remote endpoint returned unprocessable")
+      )
+      (JsPath \ "failures" \ 0 \ "code")(content) mustBe List(JsString("UNPROCESSABLE_ENTITY"))
     }
   }
 }

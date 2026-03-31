@@ -54,20 +54,6 @@ class IhtpControllerBase @Inject() (cc: ControllerComponents) extends BackendCon
       )
     )
 
-  private def notFound(code: String, reason: String): Future[Result] =
-    Future.successful(
-      NotFound(
-        Json.obj(
-          "failures" -> Json.arr(
-            Json.obj(
-              "code" -> code,
-              "reason" -> reason
-            )
-          )
-        )
-      )
-    )
-
   private def serviceUnavailable(code: String, reason: String): Future[Result] =
     Future.successful(
       ServiceUnavailable(
@@ -100,9 +86,9 @@ class IhtpControllerBase @Inject() (cc: ControllerComponents) extends BackendCon
   val invalidSrn400Response: Future[Result] =
     badRequest("INVALID_SRN", "Submission has not passed validation. Invalid parameter srn.")
 
-  // 404 - Not found
-  val notFound404Response: Future[Result] =
-    notFound("NO_REPORT_FOUND", "The remote endpoint has indicated No Scheme report was found.")
+  // 422 - Unprocessable Entity:
+  val unprocessable422Response: Future[Result] =
+    unprocessable("UNPROCESSABLE_ENTITY", "The remote endpoint returned unprocessable")
 
   // 503 - service unavailable
   val serviceUnavailable503Response: Future[Result] =
