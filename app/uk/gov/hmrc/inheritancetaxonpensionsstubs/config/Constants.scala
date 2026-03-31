@@ -22,5 +22,5 @@ object Constants {
   val SERVER_ERROR_BIT: Int = 3
   val SERVICE_UNAVAILABLE_BIT: Int = 4
   val UNPROCESSABLE_ENTITY_BIT: Int = 5
-  
+
 }
