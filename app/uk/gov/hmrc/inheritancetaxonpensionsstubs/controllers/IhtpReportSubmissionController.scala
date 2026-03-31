@@ -37,22 +37,17 @@ class IhtpReportSubmissionController @Inject() (
     val significantBit: Int = srn.takeRight(1).toInt
 
     if (significantBit == BAD_REQUEST_BIT) {
-      logger.debug("Invalid srn -> Bad request")
       invalidSrn400Response
     } else if (significantBit == SERVER_ERROR_BIT) {
-      logger.debug("Server error srn -> Server error")
       internalServerError500Response
     } else if (significantBit == SERVICE_UNAVAILABLE_BIT) {
-      logger.debug("Server error srn -> Service unavailable")
       serviceUnavailable503Response
     } else if (significantBit == UNPROCESSABLE_ENTITY_BIT) {
-      logger.debug("Server error srn -> Unprocessable entity")
       unprocessable422Response
     } else {
       request.body.asJson match {
         case Some(body) =>
           logger.info(message = s"postIhtpReport - Incoming payload: \n${Json.prettyPrint(body)}\n")
-          logger.debug("postIhtpReport stubbed success -> Created")
           Future.successful(
             Ok(
               Json.obj(
