@@ -1,0 +1,69 @@
+/*
+ * Copyright 2024 HM Revenue & Customs
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers
+
+import play.api.Logger
+import play.api.libs.json.Json
+import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.config.Constants._
+import java.time.format.DateTimeFormatter
+import java.time.{LocalDateTime, ZoneOffset}
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.Future
+
+@Singleton()
+class IhtpReportSubmissionController @Inject() (
+  cc: ControllerComponents
+) extends IhtpControllerBase(cc) {
+
+  private val logger = Logger(classOf[IhtpReportSubmissionController])
+
+  def postIhtpReport(srn: String): Action[AnyContent] = Action.async { implicit request =>
+
+    val significantBit: Int = srn.takeRight(1).toInt
+
+    if (significantBit == BAD_REQUEST_BIT) {
+      invalidSrn400Response
+    } else if (significantBit == SERVER_ERROR_BIT) {
+      internalServerError500Response
+    } else if (significantBit == SERVICE_UNAVAILABLE_BIT) {
+      serviceUnavailable503Response
+    } else if (significantBit == UNPROCESSABLE_ENTITY_BIT) {
+      unprocessable422Response
+    } else {
+      request.body.asJson match {
+        case Some(body) =>
+          logger.info(message = s"postIhtpReport - Incoming payload: \n${Json.prettyPrint(body)}\n")
+          Future.successful(
+            Ok(
+              Json.obj(
+                "processingDateTime" -> LocalDateTime
+                  .now()
+                  .atOffset(ZoneOffset.UTC)
+                  .format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")),
+                "formBundleNumber" -> "000012345678",
+                "paymentReference" -> "000012345321"
+              )
+            )
+          )
+        case _ =>
+          logger.debug("No body -> Bad request")
+          Future.successful(BadRequest(invalidPayload))
+      }
+    }
+  }
+}
