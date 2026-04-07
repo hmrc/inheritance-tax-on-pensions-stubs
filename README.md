@@ -7,25 +7,32 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
 
 ## Description of the API(s)
 
-**URL**: `/pension-online/scheme-inheritance-tax-report/:srn`
+**URL**: `/etmp/RESTAdapter/pods/reports/ihtp`
 
 **Method**: `POST`
 
-**URL Params**:
+## The body of the payload is the Report Details built from user answers to be submitted down to ETMP
 
-| Parameter Name | Type   | Description                 | Notes                                                    |
-|----------------|--------|-----------------------------|----------------------------------------------------------|
-| srn            | String | The scheme reference number | Body / payload is the IHTP return data from user answers |
+## Example
+
+```json
+{
+  "reportDetails": {
+    "pstr": "S2400000001",
+    "inheritanceTaxReference": "A123456/25A"
+  }
+}
+```
 
 ## Returning specific stubbed information
 
-The last charactor of the SRN is used to return specific error scenarios. 
+The last charactor of the inheritanceTaxReference is used to return specific error scenarios. 
 
-SUCCESS (200)               :S240000000`1`
-BAD_REQUEST (400)           :S240000000`2`
-SERVER_ERROR (500)          :S240000000`3`
-SERVICE_UNAVAILABLE (503)   :S240000000`4`
-UNPROCESSABLE_ENTITY (422)  :S240000000`5`
+SUCCESS (200)               :A123456/25`A`
+BAD_REQUEST (400)           :A123456/25`B`
+SERVER_ERROR (500)          :A123456/25`C`
+SERVICE_UNAVAILABLE (503)   :A123456/25`D`
+UNPROCESSABLE_ENTITY (422)  :A123456/25`E`
 
 ## Running the service
 

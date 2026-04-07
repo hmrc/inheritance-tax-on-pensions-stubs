@@ -20,10 +20,13 @@ import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.config.Constants._
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.IhtpReportSubmissionPayload
+
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDateTime, ZoneOffset}
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
+import scala.util.{Success, Try}
 
 @Singleton()
 class IhtpReportSubmissionController @Inject() (
@@ -32,38 +35,44 @@ class IhtpReportSubmissionController @Inject() (
 
   private val logger = Logger(classOf[IhtpReportSubmissionController])
 
-  def postIhtpReport(srn: String): Action[AnyContent] = Action.async { implicit request =>
+  def postIhtpReport(): Action[AnyContent] = Action.async { implicit request =>
+    request.body.asJson match {
+      case Some(body) =>
+        logger.info(message = s"postIhtpReport - Incoming payload: \n${Json.prettyPrint(body)}\n")
 
-    val significantBit: Int = srn.takeRight(1).toInt
+        Try(body.as[IhtpReportSubmissionPayload]) match {
+          case Success(submissionResponse) =>
+            val significantChar: String = submissionResponse.reportDetails.inheritanceTaxReference.takeRight(1)
 
-    if (significantBit == BAD_REQUEST_BIT) {
-      invalidSrn400Response
-    } else if (significantBit == SERVER_ERROR_BIT) {
-      internalServerError500Response
-    } else if (significantBit == SERVICE_UNAVAILABLE_BIT) {
-      serviceUnavailable503Response
-    } else if (significantBit == UNPROCESSABLE_ENTITY_BIT) {
-      unprocessable422Response
-    } else {
-      request.body.asJson match {
-        case Some(body) =>
-          logger.info(message = s"postIhtpReport - Incoming payload: \n${Json.prettyPrint(body)}\n")
-          Future.successful(
-            Ok(
-              Json.obj(
-                "processingDateTime" -> LocalDateTime
-                  .now()
-                  .atOffset(ZoneOffset.UTC)
-                  .format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")),
-                "formBundleNumber" -> "000012345678",
-                "paymentReference" -> "000012345321"
+            if (significantChar == BAD_REQUEST_CHAR) {
+              invalidSrn400Response
+            } else if (significantChar == SERVER_ERROR_CHAR) {
+              internalServerError500Response
+            } else if (significantChar == SERVICE_UNAVAILABLE_CHAR) {
+              serviceUnavailable503Response
+            } else if (significantChar == UNPROCESSABLE_ENTITY_CHAR) {
+              unprocessable422Response
+            } else {
+              Future.successful(
+                Ok(
+                  Json.obj(
+                    "processingDateTime" -> LocalDateTime
+                      .now()
+                      .atOffset(ZoneOffset.UTC)
+                      .format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")),
+                    "formBundleNumber" -> "000012345678",
+                    "paymentReference" -> "000012345321"
+                  )
+                )
               )
-            )
-          )
-        case _ =>
-          logger.debug("No body -> Bad request")
-          Future.successful(BadRequest(invalidPayload))
-      }
+            }
+          case _ =>
+            logger.debug("Could not parse body -> Bad request")
+            Future.successful(BadRequest(invalidPayload))
+        }
+      case _ =>
+        logger.debug("No body -> Bad request")
+        Future.successful(BadRequest(invalidPayload))
     }
   }
 }
