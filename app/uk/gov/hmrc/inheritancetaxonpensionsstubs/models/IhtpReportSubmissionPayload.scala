@@ -14,13 +14,20 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.inheritancetaxonpensionsstubs.config
+package uk.gov.hmrc.inheritancetaxonpensionsstubs.models
 
-object Constants {
+import play.api.libs.json.{Json, OFormat}
 
-  val BAD_REQUEST_CHAR: String = "B"
-  val SERVER_ERROR_CHAR: String = "C"
-  val SERVICE_UNAVAILABLE_CHAR: String = "D"
-  val UNPROCESSABLE_ENTITY_CHAR: String = "E"
+case class IhtpReportSubmissionPayload(reportDetails: ReportDetails)
 
+object IhtpReportSubmissionPayload {
+  implicit val ihtpReportSubmissionPayloadFormat: OFormat[IhtpReportSubmissionPayload] =
+    Json.format[IhtpReportSubmissionPayload]
+}
+
+case class ReportDetails(pstr: String, inheritanceTaxReference: String)
+
+object ReportDetails {
+  implicit val ihtpReportDetailsFormat: OFormat[ReportDetails] =
+    Json.format[ReportDetails]
 }

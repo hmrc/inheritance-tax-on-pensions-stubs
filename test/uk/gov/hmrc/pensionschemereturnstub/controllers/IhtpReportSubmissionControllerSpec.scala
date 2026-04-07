@@ -37,13 +37,11 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
 
   "POST ihtp report" must {
 
-    val srn = "S2400000001"
-
     "return 200-Ok for a valid request" in {
       val validData = jsonUtils.readJsonFile(filePath = "conf/resources/data/validReturnSubmission.json")
       val postRequest = fakePostRequest.withJsonBody(validData)
 
-      val result = controller.postIhtpReport(srn)(postRequest)
+      val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "formBundleNumber")(content) must not be empty
@@ -51,13 +49,16 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 400-BadRequest for a missing json body" in {
-      val result = controller.postIhtpReport(srn)(fakePostRequest)
+      val result = controller.postIhtpReport()(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
       contentAsJson(result) mustBe invalidPayload
     }
 
     "return 400-BadRequest for an invalid srn" in {
-      val result = controller.postIhtpReport("S2400000002")(fakePostRequest)
+      val badRequestData = jsonUtils.readJsonFile(filePath = "conf/resources/data/BadRequestSubmission.json")
+      val postRequest = fakePostRequest.withJsonBody(badRequestData)
+
+      val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.BAD_REQUEST
       val content = contentAsJson(result)
       (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
@@ -67,7 +68,10 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 500-InternalServerError for an srn" in {
-      val result = controller.postIhtpReport("S2400000003")(fakePostRequest)
+      val serverErrorData = jsonUtils.readJsonFile(filePath = "conf/resources/data/ServerErrorSubmission.json")
+      val postRequest = fakePostRequest.withJsonBody(serverErrorData)
+
+      val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.INTERNAL_SERVER_ERROR
       val content = contentAsJson(result)
       (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
@@ -77,7 +81,10 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 503-ServiceUnavailable for an srn" in {
-      val result = controller.postIhtpReport("S2400000004")(fakePostRequest)
+      val unavailableData = jsonUtils.readJsonFile(filePath = "conf/resources/data/UnavailableSubmission.json")
+      val postRequest = fakePostRequest.withJsonBody(unavailableData)
+
+      val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.SERVICE_UNAVAILABLE
       val content = contentAsJson(result)
       (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
@@ -87,7 +94,10 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 422-UnprocessableEntity for an srn" in {
-      val result = controller.postIhtpReport("S2400000005")(fakePostRequest)
+      val unprocessableData = jsonUtils.readJsonFile(filePath = "conf/resources/data/UnprocessableSubmission.json")
+      val postRequest = fakePostRequest.withJsonBody(unprocessableData)
+
+      val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.UNPROCESSABLE_ENTITY
       val content = contentAsJson(result)
       (JsPath \ "failures" \ 0 \ "reason")(content) mustBe List(
