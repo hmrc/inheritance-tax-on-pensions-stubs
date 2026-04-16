@@ -18,16 +18,29 @@ package uk.gov.hmrc.inheritancetaxonpensionsstubs.models
 
 import play.api.libs.json.{Json, OFormat}
 
-case class IhtpReportSubmissionPayload(reportDetails: ReportDetails)
+case class IhtpReportSubmissionPayload(reportDetails: ReportDetails, deceasedDetails: DeceasedDetails)
 
 object IhtpReportSubmissionPayload {
   implicit val ihtpReportSubmissionPayloadFormat: OFormat[IhtpReportSubmissionPayload] =
     Json.format[IhtpReportSubmissionPayload]
 }
 
-case class ReportDetails(pstr: String, inheritanceTaxReference: String)
+case class ReportDetails(
+  pstr: String
+)
 
 object ReportDetails {
   implicit val ihtpReportDetailsFormat: OFormat[ReportDetails] =
     Json.format[ReportDetails]
+}
+
+case class DeceasedDetails(
+  inheritanceTaxReference: String,
+  nino: Option[String],
+  reasonForNoNino: Option[String]
+)
+
+object DeceasedDetails {
+  implicit val deceasedDetailsFormat: OFormat[DeceasedDetails] =
+    Json.format[DeceasedDetails]
 }

@@ -42,7 +42,7 @@ class IhtpReportSubmissionController @Inject() (
 
         Try(body.as[IhtpReportSubmissionPayload]) match {
           case Success(submissionResponse) =>
-            val significantChar: String = submissionResponse.reportDetails.inheritanceTaxReference.takeRight(1)
+            val significantChar: String = submissionResponse.deceasedDetails.inheritanceTaxReference.takeRight(1)
 
             if (significantChar == BAD_REQUEST_CHAR) {
               invalidSrn400Response
