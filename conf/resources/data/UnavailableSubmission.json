@@ -1,6 +1,10 @@
 {
   "reportDetails": {
-    "pstr": "S2400000001",
-    "inheritanceTaxReference": "A123456/25D"
+    "pstr": "S2400000001"
+  },
+  "deceasedDetails": {
+    "inheritanceTaxReference": "A123456/25D",
+    "nino": "NW123456C",
+    "reasonForNoNino": null
   }
 }

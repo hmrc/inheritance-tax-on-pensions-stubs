@@ -18,15 +18,19 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
 ```json
 {
   "reportDetails": {
-    "pstr": "S2400000001",
-    "inheritanceTaxReference": "A123456/25A"
+    "pstr": "S2400000001"
+  },
+  "deceasedDetails": {
+    "inheritanceTaxReference": "A123456/25A",
+    "nino": "NW123456C",
+    "reasonForNoNino": null
   }
 }
 ```
 
 ## Returning specific stubbed information
 
-The last charactor of the inheritanceTaxReference is used to return specific error scenarios. 
+The last character of the inheritanceTaxReference is used to return specific error scenarios. 
 
 SUCCESS (200)               :A123456/25`A`
 BAD_REQUEST (400)           :A123456/25`B`
