@@ -1,4 +1,3 @@
 # microservice specific routes
-@uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.app
 
 POST    /etmp/RESTAdapter/pods/reports/ihtp             uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportSubmissionController.postIhtpReport()
