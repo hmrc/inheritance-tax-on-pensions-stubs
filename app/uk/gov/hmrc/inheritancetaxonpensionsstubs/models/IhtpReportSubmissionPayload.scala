@@ -40,6 +40,8 @@ case class DeceasedDetails(
   firstForename: String,
   secondForename: Option[String],
   surname: String,
+  dateOfBirth: String,
+  dateOfDeath: String,
   nino: Option[String],
   reasonForNoNino: Option[String]
 )
