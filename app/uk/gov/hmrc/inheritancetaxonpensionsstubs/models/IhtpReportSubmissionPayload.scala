@@ -36,6 +36,10 @@ object ReportDetails {
 
 case class DeceasedDetails(
   inheritanceTaxReference: String,
+  title: Option[String],
+  firstForename: String,
+  secondForename: Option[String],
+  surname: String,
   nino: Option[String],
   reasonForNoNino: Option[String]
 )

@@ -22,6 +22,10 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
   },
   "deceasedDetails": {
     "inheritanceTaxReference": "A123456/25A",
+    "title": "Mr",
+    "firstForename": "John",
+    "secondForename": "William",
+    "surname": "Doe",
     "nino": "NW123456C",
     "reasonForNoNino": null
   }
