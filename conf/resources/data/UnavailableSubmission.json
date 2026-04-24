@@ -4,6 +4,10 @@
   },
   "deceasedDetails": {
     "inheritanceTaxReference": "A123456/25D",
+    "title": "Mr",
+    "firstForename": "John",
+    "secondForename": "William",
+    "surname": "Doe",
     "nino": "NW123456C",
     "reasonForNoNino": null
   }
