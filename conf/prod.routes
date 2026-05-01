@@ -1,3 +1,4 @@
 # Add all the application routes to the app.routes file
-->         /pension-online              app.Routes
-->         /                            health.Routes
+
+POST    /etmp/RESTAdapter/pods/reports/ihtp             uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportSubmissionController.postIhtpReport()
+->      /                                               health.Routes
