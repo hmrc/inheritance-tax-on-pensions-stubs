@@ -30,6 +30,14 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
     "dateOfDeath": "2026-01-01",
     "nino": null,
     "reasonForNoNino": "Reason for no national insurance number"
+  },
+  "lprDetails": {
+    "individual": {
+      "title": "Mr",
+      "firstForename": "John",
+      "secondForename": "William",
+      "surname": "Doe"
+    }
   }
 }
 ```
