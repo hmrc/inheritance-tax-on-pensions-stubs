@@ -18,7 +18,11 @@
       "title": "Mr",
       "firstForename": "John",
       "secondForename": "William",
-      "surname": "Doe"
+      "surname": "Doe",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
+      "ukPostcode": "ZZ99 1AA",
+      "country": "GB"
     }
   }
 }

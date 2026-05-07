@@ -66,7 +66,13 @@ case class IndividualName(
   title: Option[String],
   firstForename: String,
   secondForename: Option[String],
-  surname: String
+  surname: String,
+  addressLine1: Option[String] = None,
+  addressLine2: Option[String] = None,
+  addressLine3: Option[String] = None,
+  addressLine4: Option[String] = None,
+  ukPostcode: Option[String] = None,
+  country: Option[String] = None
 )
 
 object IndividualName {
