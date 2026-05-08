@@ -42,6 +42,32 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
 }
 ```
 
+## Example (Organisation)
+
+```json
+{
+  "reportDetails": {
+    "pstr": "S2400000001"
+  },
+  "deceasedDetails": {
+    "inheritanceTaxReference": "A123456/25A",
+    "title": "Mr",
+    "firstForename": "John",
+    "secondForename": "William",
+    "surname": "Doe",
+    "dateOfBirth": "1950-01-01",
+    "dateOfDeath": "2026-01-01",
+    "nino": null,
+    "reasonForNoNino": "Reason for no national insurance number"
+  },
+  "lprDetails": {
+    "organisation": {
+      "organisationName": "Doe Incorporated"
+    }
+  }
+}
+```
+
 ## Returning specific stubbed information
 
 The last character of the inheritanceTaxReference is used to return specific error scenarios. 
