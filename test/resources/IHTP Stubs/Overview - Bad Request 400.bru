@@ -1,0 +1,33 @@
+meta {
+  name: Overview - Bad Request 400
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp-overview?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=BAD_REQUEST
+  body: none
+  auth: none
+}
+
+params:query {
+  pstr: 24000001IN
+  dateFrom: 2026-01-01
+  dateTo: 2026-12-31
+  status: BAD_REQUEST
+}
+
+headers {
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: MDTP
+}
+
+tests {
+  test("Status code is 400", function () {
+      expect(res.getStatus()).to.equal(400);
+  });
+}
