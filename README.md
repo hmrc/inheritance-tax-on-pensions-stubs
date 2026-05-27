@@ -5,15 +5,16 @@ Microservice to provide endpoints to replicate request and response from the IHT
 Inheritance Tax on Pensions is a feature on manage your pension (MPS) service. Pension Scheme Administrators (PSA) and/or
 Pension Scheme Practitioners use this service for reporting IHT due on unused pension funds and retrieving payment reference.
 
-## Description of the API(s)
+## Endpoints
 
-**URL**: `/etmp/RESTAdapter/pods/reports/ihtp`
+### Submit IHTP report
 
-**Method**: `POST`
+- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp`
+- **Method**: `POST`
 
-## The body of the payload is the Report Details built from user answers to be submitted down to ETMP
+The body of the payload is the report details built from user answers to be submitted down to ETMP.
 
-## Example
+#### Example individual payload
 
 ```json
 {
@@ -42,7 +43,7 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
 }
 ```
 
-## Example (Organisation)
+#### Example organisation payload
 
 ```json
 {
@@ -68,15 +69,52 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
 }
 ```
 
-## Returning specific stubbed information
+#### Submit report stub scenarios
 
-The last character of the inheritanceTaxReference is used to return specific error scenarios. 
+The last character of the `inheritanceTaxReference` is used to return specific error scenarios.
 
-SUCCESS (200)               :A123456/25`A`
-BAD_REQUEST (400)           :A123456/25`B`
-SERVER_ERROR (500)          :A123456/25`C`
-SERVICE_UNAVAILABLE (503)   :A123456/25`D`
-UNPROCESSABLE_ENTITY (422)  :A123456/25`E`
+| Scenario | `inheritanceTaxReference` suffix | Response |
+| --- | --- | --- |
+| Success | `A123456/25A` | `200 OK` |
+| Bad request | `A123456/25B` | `400 Bad Request` |
+| Internal server error | `A123456/25C` | `500 Internal Server Error` |
+| Service unavailable | `A123456/25D` | `503 Service Unavailable` |
+| Unprocessable entity | `A123456/25E` | `422 Unprocessable Entity` |
+
+### Get IHTP overview
+
+- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp-overview`
+- **Method**: `GET`
+
+**Query parameters**:
+
+- `pstr` - required
+- `dateFrom` - required, for example `2026-01-01`
+- `dateTo` - required, for example `2026-12-31`
+- `status` - optional, for example `Processed`
+
+#### Overview stub scenarios
+
+The overview endpoint can return different responses by changing query parameter values. This is intentionally deterministic so
+that Bruno and frontend/backend tests can exercise success and error paths without needing realistic ETMP data.
+
+Known PSTRs:
+
+- `24000001IN`
+- `24000002IN`
+
+| Scenario | Query values | Response |
+| --- | --- | --- |
+| Successful overview list | Known `pstr`, matching `dateFrom` / `dateTo`, no `status` | `200 OK` with all matching overview records |
+| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Processed` | `200 OK` with matching processed overview records |
+| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Submitted` | `200 OK` with matching submitted overview records |
+| No records found | Unknown `pstr` | `422 Unprocessable Entity` |
+| No records found | Known `pstr`, date range with no matching overview records | `422 Unprocessable Entity` |
+| No records found | Known `pstr`, normal `status` value with no matching overview records | `422 Unprocessable Entity` |
+| Forced no records response | `status=NO_RECORDS` | `422 Unprocessable Entity` |
+| Forced bad request response | `status=BAD_REQUEST` | `400 Bad Request` |
+| Forced internal server error response | `status=SERVER_ERROR` | `500 Internal Server Error` |
+| Forced service unavailable response | `status=SERVICE_UNAVAILABLE` | `503 Service Unavailable` |
 
 ## Running the service
 
@@ -92,6 +130,31 @@ UNPROCESSABLE_ENTITY (422)  :A123456/25`E`
 
 The service runs on port `10712` by default. E.g:  http://localhost:10712/ping/ping
 
+## Testing with Bruno
+
+A Bruno collection is available in `test/resources/IHTP Stubs`.
+
+The stubs collection does not require a login request. Requests are sent directly to the stubbed ETMP-style endpoints and use
+`auth: none`.
+
+To use it:
+
+1. Open Bruno.
+2. Select **Open Collection**.
+3. Open the `test/resources/IHTP Stubs` folder.
+4. Select the `LocalHost - IHTP Stubs` environment.
+5. Run the stubs service locally on port `10712`.
+6. Run one of the requests listed below.
+
+Useful requests:
+
+- `Ping` - checks the stubs service is running
+- `Submit - Success` - exercises the successful submit report response
+- `Overview - Success` - exercises the successful overview response
+- `Overview - No Records 422` - exercises the no records overview response
+- `Overview - Bad Request 400` - exercises the forced bad request overview response
+- `Overview - Server Error 500` - exercises the forced internal server error overview response
+- `Overview - Service Unavailable 503` - exercises the forced service unavailable overview response
 
 ### Unit tests
 

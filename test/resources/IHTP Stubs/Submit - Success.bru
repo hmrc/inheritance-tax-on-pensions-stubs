@@ -1,0 +1,58 @@
+meta {
+  name: Submit - Success
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: MDTP
+}
+
+body:json {
+  {
+    "reportDetails": {
+      "pstr": "S2400000001"
+    },
+    "deceasedDetails": {
+      "inheritanceTaxReference": "A123456/25A",
+      "title": "Mr",
+      "firstForename": "John",
+      "secondForename": "William",
+      "surname": "Doe",
+      "dateOfBirth": "1950-01-01",
+      "dateOfDeath": "2026-01-01",
+      "nino": null,
+      "reasonForNoNino": "Reason for no national insurance number"
+    },
+    "lprDetails": {
+      "individual": {
+        "title": "Mr",
+        "firstForename": "John",
+        "secondForename": "William",
+        "surname": "Doe",
+        "addressLine1": "1 ABCDE Street",
+        "addressLine2": "FGHIJ Town",
+        "ukPostcode": "ZZ99 1AA",
+        "country": "GB"
+      }
+    }
+  }
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

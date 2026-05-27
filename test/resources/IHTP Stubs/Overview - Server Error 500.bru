@@ -1,0 +1,33 @@
+meta {
+  name: Overview - Server Error 500
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp-overview?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=SERVER_ERROR
+  body: none
+  auth: none
+}
+
+params:query {
+  pstr: 24000001IN
+  dateFrom: 2026-01-01
+  dateTo: 2026-12-31
+  status: SERVER_ERROR
+}
+
+headers {
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: MDTP
+}
+
+tests {
+  test("Status code is 500", function () {
+      expect(res.getStatus()).to.equal(500);
+  });
+}

@@ -1,0 +1,32 @@
+meta {
+  name: Overview - No Records 422
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp-overview?pstr=24000001IN&dateFrom=2027-01-01&dateTo=2027-12-31
+  body: none
+  auth: none
+}
+
+params:query {
+  pstr: 24000001IN
+  dateFrom: 2027-01-01
+  dateTo: 2027-12-31
+}
+
+headers {
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: MDTP
+}
+
+tests {
+  test("Status code is 422", function () {
+      expect(res.getStatus()).to.equal(422);
+  });
+}

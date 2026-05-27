@@ -1,0 +1,30 @@
+{
+  "success": {
+    "pstr": "24000001IN",
+    "ihtpOverview": [
+      {
+        "fbNumber": "119000004320",
+        "submissionDate": "2026-04-10T16:12:49Z",
+        "paymentDueDate": "2026-10-10",
+        "ihtpVersion": "001",
+        "inheritanceTaxReference": "A123456/25A",
+        "paymentReference": "PR000000001",
+        "firstForename": "John",
+        "secondForename": "William",
+        "surname": "Doe",
+        "ihtpStatus": "Processed"
+      },
+      {
+        "fbNumber": "119000004321",
+        "submissionDate": "2026-04-12T09:30:00Z",
+        "paymentDueDate": "2026-10-12",
+        "ihtpVersion": "002",
+        "inheritanceTaxReference": "A123456/25F",
+        "paymentReference": "PR000000002",
+        "firstForename": "John",
+        "surname": "Doe",
+        "ihtpStatus": "Submitted"
+      }
+    ]
+  }
+}
