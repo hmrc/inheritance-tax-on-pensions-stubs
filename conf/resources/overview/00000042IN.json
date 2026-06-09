@@ -1,0 +1,69 @@
+{
+  "success": {
+    "pstr": "00000042IN",
+    "ihtpOverview": [
+      {
+        "fbNumber": "119000004352",
+        "submissionDate": "2026-05-13T09:05:00Z",
+        "paymentDueDate": "2026-11-13",
+        "ihtpVersion": "002",
+        "inheritanceTaxReference": "A123456/42A",
+        "paymentReference": "A123456/42A518742",
+        "title": "Dr",
+        "firstForename": "Jane",
+        "secondForename": "Elizabeth",
+        "surname": "Doe",
+        "nino": "AB123456C",
+        "ihtpStatus": "Processed"
+      },
+      {
+        "fbNumber": "119000004353",
+        "submissionDate": "2026-05-14T10:20:00Z",
+        "paymentDueDate": "2026-11-14",
+        "ihtpVersion": "001",
+        "inheritanceTaxReference": "F654321/42B",
+        "paymentReference": "F654321/42B749183",
+        "title": "Mr",
+        "firstForename": "John",
+        "secondForename": "Arthur",
+        "surname": "Doe",
+        "ihtpStatus": "Submitted"
+      },
+      {
+        "fbNumber": "119000004354",
+        "submissionDate": "2026-05-15T11:35:00Z",
+        "paymentDueDate": "2026-11-15",
+        "ihtpVersion": "001",
+        "inheritanceTaxReference": "A642531/42C",
+        "firstForename": "Jane",
+        "secondForename": "Victoria",
+        "surname": "Doe",
+        "ihtpStatus": "In progress"
+      },
+      {
+        "fbNumber": "119000004355",
+        "submissionDate": "2026-05-16T12:50:00Z",
+        "paymentDueDate": "2026-11-16",
+        "ihtpVersion": "003",
+        "inheritanceTaxReference": "F135246/42D",
+        "paymentReference": "F135246/42D836204",
+        "firstForename": "John",
+        "secondForename": "Edward",
+        "surname": "Doe",
+        "ihtpStatus": "Not reconciled"
+      },
+      {
+        "fbNumber": "119000004356",
+        "submissionDate": "2026-05-17T14:05:00Z",
+        "paymentDueDate": "2026-11-17",
+        "ihtpVersion": "001",
+        "inheritanceTaxReference": "A654321/42E",
+        "paymentReference": "A654321/42E204675",
+        "title": "Ms",
+        "firstForename": "Jane",
+        "surname": "Doe",
+        "ihtpStatus": "Not reconciled"
+      }
+    ]
+  }
+}
