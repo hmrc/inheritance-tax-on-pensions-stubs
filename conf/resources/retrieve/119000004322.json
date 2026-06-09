@@ -1,0 +1,34 @@
+{
+  "reportDetails": {
+    "pstr": "24000002IN"
+  },
+  "deceasedDetails": {
+    "inheritanceTaxReference": "A654321/25A",
+    "title": "Mr",
+    "firstForename": "John",
+    "secondForename": "William",
+    "surname": "Doe",
+    "dateOfBirth": "1955-03-15",
+    "dateOfDeath": "2026-02-20",
+    "nino": null,
+    "reasonForNoNino": "Reason for no NINO"
+  },
+  "lprDetails": {
+    "individual": {
+      "title": "Mrs",
+      "firstForename": "Jane",
+      "secondForename": "Marie",
+      "surname": "Doe",
+      "addressLine1": "2 XYZ Street",
+      "addressLine2": "London",
+      "ukPostcode": "AB1 2CD",
+      "country": "GB"
+    }
+  },
+  "fbNumber": "119000004322",
+  "submissionDate": "2026-05-01T14:45:00Z",
+  "paymentDueDate": "2026-11-01",
+  "ihtpVersion": "001",
+  "paymentReference": "PR000000003",
+  "ihtpStatus": "Processed"
+}

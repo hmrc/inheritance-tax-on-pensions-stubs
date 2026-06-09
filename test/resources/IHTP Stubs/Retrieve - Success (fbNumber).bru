@@ -1,0 +1,31 @@
+meta {
+  name: Retrieve - Success (fbNumber)
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp?pstr=24000001IN&fbNumber=119000004320
+  body: none
+  auth: none
+}
+
+params:query {
+  pstr: 24000001IN
+  fbNumber: 119000004320
+}
+
+headers {
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: MDTP
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

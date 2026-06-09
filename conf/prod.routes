@@ -1,5 +1,6 @@
 # Add all the application routes to the app.routes file
 
 POST    /etmp/RESTAdapter/pods/reports/ihtp             uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportSubmissionController.postIhtpReport()
+GET     /etmp/RESTAdapter/pods/reports/ihtp             uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportRetrieveController.getIhtpReport
 GET     /etmp/RESTAdapter/pods/reports/ihtp-overview    uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportOverviewController.getIhtpOverview()
 ->      /                                               health.Routes
