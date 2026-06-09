@@ -68,11 +68,11 @@ class IhtpReportSubmissionController @Inject() (
             }
           case _ =>
             logger.debug("Could not parse body -> Bad request")
-            Future.successful(BadRequest(invalidPayload))
+            Future.successful(BadRequest(hodBadRequestResponse))
         }
       case _ =>
         logger.debug("No body -> Bad request")
-        Future.successful(BadRequest(invalidPayload))
+        Future.successful(BadRequest(hodBadRequestResponse))
     }
   }
 }

@@ -56,7 +56,6 @@ class IhtpReportOverviewController @Inject() (
                     Ok(
                       Json.obj(
                         "success" -> Json.obj(
-                          "pstr" -> pstr,
                           "ihtpOverview" -> JsArray(filteredOverview)
                         )
                       )
@@ -69,7 +68,7 @@ class IhtpReportOverviewController @Inject() (
           }
         }
       case _ =>
-        Future.successful(BadRequest(invalidPayload))
+        Future.successful(BadRequest(hodBadRequestResponse))
     }
   }
 
@@ -77,7 +76,7 @@ class IhtpReportOverviewController @Inject() (
     status: Option[String]
   )(implicit request: play.api.mvc.Request[?]): Option[Future[Result]] =
     status.map(_.trim.toUpperCase).flatMap {
-      case "BAD_REQUEST" => Some(Future.successful(BadRequest(invalidPayload)))
+      case "BAD_REQUEST" => Some(Future.successful(BadRequest(hodBadRequestResponse)))
       case "SERVER_ERROR" => Some(internalServerError500Response)
       case "SERVICE_UNAVAILABLE" => Some(serviceUnavailable503Response)
       case "NO_RECORDS" => Some(Future.successful(noRecordsFound))

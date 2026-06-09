@@ -49,7 +49,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       header("correlationid", result).value mustBe correlationId
 
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "pstr")(content) mustBe List(JsString("24000001IN"))
+      (JsPath \ "success" \ "pstr")(content) mustBe empty
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "firstForename")(content) mustBe List(JsString("John"))
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "surname")(content) mustBe List(JsString("Doe"))
@@ -62,7 +62,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
 
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "pstr")(content) mustBe List(JsString("24000002IN"))
+      (JsPath \ "success" \ "pstr")(content) mustBe empty
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("A654321/25A392617"))
     }
 
@@ -107,7 +107,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       )
 
       status(result) mustBe Status.BAD_REQUEST
-      contentAsJson(result) mustBe invalidPayload
+      contentAsJson(result) mustBe hodBadRequestResponse
     }
 
     "return 500-InternalServerError when status is SERVER_ERROR" in {
@@ -142,7 +142,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val result = controller.getIhtpOverview()(overviewRequest(""))
 
       status(result) mustBe Status.BAD_REQUEST
-      contentAsJson(result) mustBe invalidPayload
+      contentAsJson(result) mustBe hodBadRequestResponse
     }
   }
 }

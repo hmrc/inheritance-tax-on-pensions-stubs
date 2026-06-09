@@ -1,0 +1,32 @@
+meta {
+  name: Retrieve - Success (paymentReference + version)
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp?pstr=24000001IN&paymentReferenceNumber=PR000000001&versionNumber=001
+  body: none
+  auth: none
+}
+
+params:query {
+  pstr: 24000001IN
+  paymentReferenceNumber: PR000000001
+  versionNumber: 001
+}
+
+headers {
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: MDTP
+}
+
+tests {
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+}

@@ -20,11 +20,13 @@ import play.api.libs.json.{JsObject, Json}
 
 trait APIResponses {
 
-  val invalidPayload: JsObject = Json.obj(
-    "failures" -> Json.arr(
-      Json.obj(
-        "code" -> "INVALID_PAYLOAD",
-        "reason" -> "Submission has not passed validation. Invalid payload."
+  val hodBadRequestResponse: JsObject = Json.obj(
+    "origin" -> "HoD",
+    "response" -> Json.obj(
+      "error" -> Json.obj(
+        "code" -> "400",
+        "logID" -> "Example id",
+        "message" -> "Example message"
       )
     )
   )
