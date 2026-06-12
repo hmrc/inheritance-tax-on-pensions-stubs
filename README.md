@@ -151,6 +151,7 @@ Known paymentReference + version combinations:
 | Successful retrieve by fbNumber | Known `pstr`, known `fbNumber` | `200 OK` with full report payload |
 | Successful retrieve by payment reference | Known `pstr`, known `paymentReferenceNumber` + `versionNumber` | `200 OK` with full report payload |
 | No records found | Known `pstr`, unknown `fbNumber` | `422 Unprocessable Entity` |
+| No records found | PSTR does not match the resource file's PSTR | `422 Unprocessable Entity` |
 | Bad request | Invalid parameter combination (e.g., fbNumber with paymentReferenceNumber) | `400 Bad Request` |
 | Bad request | Missing required parameters (no fbNumber or paymentReferenceNumber + versionNumber) | `400 Bad Request` |
 
@@ -196,6 +197,7 @@ Useful requests:
 - `Retrieve - Success (fbNumber)` - exercises the successful retrieve by fbNumber response
 - `Retrieve - Success (paymentReference + version)` - exercises the successful retrieve by payment reference response
 - `Retrieve - No Records 422` - exercises the no records retrieve response
+- `Retrieve - PSTR Mismatch 422` - exercises the PSTR mismatch retrieve response
 - `Retrieve - Bad Request 400` - exercises the bad request retrieve response
 
 ### Unit tests

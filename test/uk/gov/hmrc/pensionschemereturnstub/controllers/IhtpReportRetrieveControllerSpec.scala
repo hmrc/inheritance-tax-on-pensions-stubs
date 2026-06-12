@@ -91,6 +91,17 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "errors" \ "text")(contentAsJson(result)) mustBe List(JsString("Request could not be processed"))
     }
 
+    "return 422-UnprocessableEntity when pstr does not match the resource file's pstr" in {
+      val result = controller.getIhtpReport()(
+        retrieveRequest("?pstr=24000002IN&fbNumber=119000004320")
+      )
+
+      status(result) mustBe Status.UNPROCESSABLE_ENTITY
+      header("correlationid", result).value mustBe correlationId
+      (JsPath \ "errors" \ "code")(contentAsJson(result)) mustBe List(JsString("003"))
+      (JsPath \ "errors" \ "text")(contentAsJson(result)) mustBe List(JsString("Request could not be processed"))
+    }
+
     "return 400-BadRequest for invalid parameter combination (fbNumber with paymentReferenceNumber)" in {
       val result = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004320&paymentReferenceNumber=PR000000001")

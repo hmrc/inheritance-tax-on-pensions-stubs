@@ -38,12 +38,12 @@ class IhtpReportRetrieveController @Inject() (
     pstr match {
       case None =>
         Future.successful(BadRequest(invalidPayload))
-      case Some(_) =>
+      case Some(pstrValue) =>
         (fbNumber, paymentReferenceNumber, versionNumber) match {
           case (Some(_), None, None) =>
-            handleRetrieval(fbNumber.get)
+            handleRetrieval(fbNumber.get, pstrValue)
           case (None, Some(prn), Some(vn)) =>
-            handleRetrieval(s"${prn}_$vn")
+            handleRetrieval(s"${prn}_$vn", pstrValue)
           case (None, None, None) =>
             Future.successful(BadRequest(invalidPayload))
           case _ =>
@@ -52,12 +52,17 @@ class IhtpReportRetrieveController @Inject() (
     }
   }
 
-  private def handleRetrieval(identifier: String)(implicit request: play.api.mvc.Request[?]): Future[Result] =
+  private def handleRetrieval(identifier: String, pstr: String)(implicit request: play.api.mvc.Request[?]): Future[Result] =
     resourceService.getResource("retrieve", identifier) match {
       case Some(json) =>
-        Future.successful(
-          withCorrelationId(Ok(json))
-        )
+        val resourcePstr = (json \ "reportDetails" \ "pstr").asOpt[String]
+        if (resourcePstr.contains(pstr)) {
+          Future.successful(
+            withCorrelationId(Ok(json))
+          )
+        } else {
+          Future.successful(noRecordsFound)
+        }
       case None =>
         Future.successful(noRecordsFound)
     }
