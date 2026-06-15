@@ -13,7 +13,7 @@
         "firstForename": "John",
         "secondForename": "Oliver",
         "surname": "Doe",
-        "ihtpStatus": "Processed"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004321",
@@ -25,7 +25,7 @@
         "title": "Mr",
         "firstForename": "John",
         "surname": "Doe",
-        "ihtpStatus": "Submitted"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004322",
