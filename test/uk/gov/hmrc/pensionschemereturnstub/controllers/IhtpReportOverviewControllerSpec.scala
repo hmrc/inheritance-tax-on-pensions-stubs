@@ -63,7 +63,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "success" \ "pstr")(content) mustBe List(JsString("24000002IN"))
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("PR000000003"))
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("A654321/25A392617"))
     }
 
     "return 200-Ok with only matching items when status is supplied" in {
@@ -74,7 +74,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "ihtpStatus")(content) mustBe List(JsString("Submitted"))
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("PR000000002"))
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("A123456/25F482603"))
     }
 
     "return 422-UnprocessableEntity when no overview items match the supplied date range" in {
