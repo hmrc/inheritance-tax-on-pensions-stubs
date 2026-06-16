@@ -17,7 +17,7 @@
 package uk.gov.hmrc.pensionschemereturnstub.controllers
 
 import play.api.http.Status
-import play.api.libs.json.{JsPath, JsString}
+import play.api.libs.json.{JsPath, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportOverviewController
@@ -68,13 +68,17 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
 
     "return 200-Ok with only matching items when status is supplied" in {
       val result = controller.getIhtpOverview()(
-        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=Submitted")
+        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=In progress")
       )
 
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "ihtpStatus")(content) mustBe List(JsString("Submitted"))
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("A123456/25F482603"))
+      val statuses =
+        (content \ "success" \ "ihtpOverview").as[Seq[JsValue]].flatMap(item => (item \ "ihtpStatus").asOpt[String])
+
+      statuses.size mustBe 10
+      statuses.distinct mustBe Seq("In progress")
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004323"))
     }
 
     "return 422-UnprocessableEntity when no overview items match the supplied date range" in {

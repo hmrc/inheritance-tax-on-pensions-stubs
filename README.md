@@ -91,7 +91,7 @@ The last character of the `inheritanceTaxReference` is used to return specific e
 - `pstr` - required
 - `dateFrom` - required, for example `2026-01-01`
 - `dateTo` - required, for example `2026-12-31`
-- `status` - optional, for example `Processed`
+- `status` - optional, for example `Not reconciled`
 
 #### Overview stub scenarios
 
@@ -106,8 +106,8 @@ Known PSTRs:
 | Scenario | Query values | Response |
 | --- | --- | --- |
 | Successful overview list | Known `pstr`, matching `dateFrom` / `dateTo`, no `status` | `200 OK` with all matching overview records |
-| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Processed` | `200 OK` with matching processed overview records |
-| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Submitted` | `200 OK` with matching submitted overview records |
+| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Not reconciled` | `200 OK` with matching not reconciled overview records |
+| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=In progress` | `200 OK` with matching in progress overview records |
 | No records found | Unknown `pstr` | `422 Unprocessable Entity` |
 | No records found | Known `pstr`, date range with no matching overview records | `422 Unprocessable Entity` |
 | No records found | Known `pstr`, normal `status` value with no matching overview records | `422 Unprocessable Entity` |

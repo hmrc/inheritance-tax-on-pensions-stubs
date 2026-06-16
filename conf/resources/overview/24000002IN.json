@@ -13,7 +13,7 @@
         "firstForename": "John",
         "secondForename": "William",
         "surname": "Doe",
-        "ihtpStatus": "Processed"
+        "ihtpStatus": "Not reconciled"
       }
     ]
   }
