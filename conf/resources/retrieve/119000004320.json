@@ -1,0 +1,94 @@
+{
+  "success": {
+    "pstr": "24000001IN",
+    "processingDate": "2022-01-31T09:26:17Z",
+    "ihtpDeclaration": {
+      "submittedBy": "PSA",
+      "submitterId": "A0869183",
+      "psaId": "A1816536"
+    },
+    "ihtpDetails": {
+      "version": "001",
+      "status": "Processed"
+    },
+    "deceasedDetails": {
+      "changeFlag": true,
+      "inheritanceTaxReference": "A123456/25A",
+      "title": "Mr",
+      "firstForename": "John",
+      "secondForename": "William",
+      "surname": "Doe",
+      "dateOfBirth": "1950-01-01",
+      "dateOfDeath": "2026-01-01",
+      "nino": null,
+      "reasonForNoNino": "Reason for no NINO"
+    },
+    "lprDetails": {
+      "changeFlag": true,
+      "individual": {
+        "title": "Mrs",
+        "firstForename": "Jane",
+        "secondForename": "Marie",
+        "surname": "Doe",
+        "addressLine1": "1 ABCDE Street",
+        "addressLine2": "FGHIJ Town",
+        "ukPostcode": "ZZ99 1AA",
+        "country": "GB"
+      }
+    },
+    "ihtTaxInformation": {
+      "changeFlag": true,
+      "dateThePensionSchemeReceivedNoticeToPay": "2425-43-42",
+      "didTheLegalPersonalRepresentativeSubmitTheNotice": "Yes",
+      "areTheBeneficiariesKnown": "Yes",
+      "totalAmountOfIhtPayableInTheNotice": "100.00",
+      "totalAmountOfInterestPayableInTheNotice": "10.00",
+      "total": "110"
+    },
+    "beneficiaryDetails": {
+      "changeFlag": true,
+      "beneficiaries": [
+        {
+          "changeFlag": true,
+          "title": "Mr",
+          "firstForename": "Johnny",
+          "secondForename": "W",
+          "surname": "Doe",
+          "addressLine1": "1 ABCDE Street",
+          "addressLine2": "FGHIJ Town",
+          "addressLine3": "line3",
+          "addressLine4": "line4",
+          "ukPostcode": "ZZ1 1ZZ",
+          "country": "GB",
+          "amountOfIhtPayableInTheNoticeForThisBeneficiary": "60.0",
+          "interestPayableInTheNoticeForThisBeneficiary": "6.00",
+          "totalForThisBeneficiary": "66.00",
+          "nino": null,
+          "reasonForNoNino": "Test"
+        },
+        {
+          "changeFlag": false,
+          "title": "Miss",
+          "firstForename": "Joanna",
+          "secondForename": "W",
+          "surname": "Doe",
+          "addressLine1": "1 ABCDE Street",
+          "addressLine2": "FGHIJ Town",
+          "addressLine3": "line3",
+          "addressLine4": "line4",
+          "ukPostcode": "ZZ1 1ZZ",
+          "country": "GB",
+          "amountOfIhtPayableInTheNoticeForThisBeneficiary": "40.00",
+          "interestPayableInTheNoticeForThisBeneficiary": "4.00",
+          "totalForThisBeneficiary": "44.00",
+          "nino": null,
+          "reasonForNoNino": "Test"
+        }
+      ]
+    },
+    "psaDeclarations": {
+      "declaration1": true,
+      "declaration2": true
+    }
+  }
+}

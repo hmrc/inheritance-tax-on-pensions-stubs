@@ -51,7 +51,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     "return 400-BadRequest for a missing json body" in {
       val result = controller.postIhtpReport()(fakePostRequest)
       status(result) mustBe Status.BAD_REQUEST
-      contentAsJson(result) mustBe invalidPayload
+      contentAsJson(result) mustBe hodBadRequestResponse
     }
 
     "return 400-BadRequest for an invalid srn" in {

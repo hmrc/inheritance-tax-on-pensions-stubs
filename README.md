@@ -116,6 +116,45 @@ Known PSTRs:
 | Forced internal server error response | `status=SERVER_ERROR` | `500 Internal Server Error` |
 | Forced service unavailable response | `status=SERVICE_UNAVAILABLE` | `503 Service Unavailable` |
 
+### Get IHTP report
+
+- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp`
+- **Method**: `GET`
+
+**Query parameters**:
+
+- `pstr` - required
+- `fbNumber` - optional, used for specific record retrieval (12-digit pattern: `^[0-9]{12}$`)
+- `paymentReferenceNumber` - optional, must be used with `versionNumber`
+- `versionNumber` - optional, must be used with `paymentReferenceNumber` (3-digit pattern: `^[0-9]{3}$`)
+
+**Parameter combinations**:
+- `pstr` + `fbNumber` - retrieve by form bundle number
+- `pstr` + `paymentReferenceNumber` + `versionNumber` - retrieve by payment reference and version
+
+#### Retrieve stub scenarios
+
+The retrieve endpoint can return different responses by changing query parameter values. This is intentionally deterministic so
+that Bruno and frontend/backend tests can exercise success and error paths without needing realistic ETMP data.
+
+Known fbNumbers:
+
+- `119000004320` (PSTR: 24000001IN)
+- `119000004322` (PSTR: 24000002IN)
+
+Known paymentReference + version combinations:
+
+- `PR000000001` + `001` (PSTR: 24000001IN)
+
+| Scenario | Query values | Response |
+| --- | --- | --- |
+| Successful retrieve by fbNumber | Known `pstr`, known `fbNumber` | `200 OK` with full report payload |
+| Successful retrieve by payment reference | Known `pstr`, known `paymentReferenceNumber` + `versionNumber` | `200 OK` with full report payload |
+| No records found | Known `pstr`, unknown `fbNumber` | `422 Unprocessable Entity` |
+| No records found | PSTR does not match the resource file's PSTR | `422 Unprocessable Entity` |
+| Bad request | Invalid parameter combination (e.g., fbNumber with paymentReferenceNumber) | `400 Bad Request` |
+| Bad request | Missing required parameters (no fbNumber or paymentReferenceNumber + versionNumber) | `400 Bad Request` |
+
 ## Running the service
 
 1. Make sure you run all the dependant services through the service manager:
@@ -155,6 +194,11 @@ Useful requests:
 - `Overview - Bad Request 400` - exercises the forced bad request overview response
 - `Overview - Server Error 500` - exercises the forced internal server error overview response
 - `Overview - Service Unavailable 503` - exercises the forced service unavailable overview response
+- `Retrieve - Success (fbNumber)` - exercises the successful retrieve by fbNumber response
+- `Retrieve - Success (paymentReference + version)` - exercises the successful retrieve by payment reference response
+- `Retrieve - No Records 422` - exercises the no records retrieve response
+- `Retrieve - PSTR Mismatch 422` - exercises the PSTR mismatch retrieve response
+- `Retrieve - Bad Request 400` - exercises the bad request retrieve response
 
 ### Unit tests
 
