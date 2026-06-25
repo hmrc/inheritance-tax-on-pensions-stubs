@@ -63,7 +63,11 @@ The body of the payload is the report details built from user answers to be subm
   },
   "lprDetails": {
     "organisation": {
-      "organisationName": "Doe Incorporated"
+      "organisationName": "Doe Incorporated",
+      "title": "Ms",
+      "firstForename": "Jane",
+      "secondForename": "Ann",
+      "surname": "Doe"
     }
   }
 }

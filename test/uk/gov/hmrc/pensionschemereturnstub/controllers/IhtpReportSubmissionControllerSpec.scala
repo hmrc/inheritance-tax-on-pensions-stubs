@@ -21,6 +21,7 @@ import play.api.libs.json.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportSubmissionController
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.{IhtpReportSubmissionPayload, OrganisationDetails}
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.utils.{APIResponses, JsonUtils}
 import uk.gov.hmrc.pensionschemereturnstub.base.SpecBase
 
@@ -46,6 +47,101 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (JsPath \ "formBundleNumber")(content) must not be empty
       (JsPath \ "processingDateTime")(content) must not be empty
+    }
+
+    "return 200-Ok for a valid organisation PR request" in {
+      val validData = Json.obj(
+        "reportDetails" -> Json.obj(
+          "pstr" -> "S2400000001"
+        ),
+        "deceasedDetails" -> Json.obj(
+          "inheritanceTaxReference" -> "A123456/25A",
+          "title" -> "Mr",
+          "firstForename" -> "John",
+          "secondForename" -> "William",
+          "surname" -> "Doe",
+          "dateOfBirth" -> "1950-01-01",
+          "dateOfDeath" -> "2026-01-01",
+          "reasonForNoNino" -> "Reason for no national insurance number"
+        ),
+        "lprDetails" -> Json.obj(
+          "organisation" -> Json.obj(
+            "organisationName" -> "Test Organisation",
+            "title" -> "Ms",
+            "firstForename" -> "Jane",
+            "secondForename" -> "Ann",
+            "surname" -> "Doe"
+          )
+        )
+      )
+      validData.validate[IhtpReportSubmissionPayload].map(_.lprDetails.organisation) mustBe JsSuccess(
+        Some(OrganisationDetails("Test Organisation", Some("Ms"), "Jane", Some("Ann"), "Doe"))
+      )
+
+      val postRequest = fakePostRequest.withJsonBody(validData)
+
+      val result = controller.postIhtpReport()(postRequest)
+      status(result) mustBe Status.OK
+      val content = contentAsJson(result)
+      (JsPath \ "formBundleNumber")(content) must not be empty
+      (JsPath \ "processingDateTime")(content) must not be empty
+    }
+
+    "return 400-BadRequest for an organisation request missing organisation name" in {
+      val invalidData = Json.obj(
+        "reportDetails" -> Json.obj(
+          "pstr" -> "S2400000001"
+        ),
+        "deceasedDetails" -> Json.obj(
+          "inheritanceTaxReference" -> "A123456/25A",
+          "firstForename" -> "John",
+          "surname" -> "Doe",
+          "dateOfBirth" -> "1950-01-01",
+          "dateOfDeath" -> "2026-01-01",
+          "reasonForNoNino" -> "Reason for no national insurance number"
+        ),
+        "lprDetails" -> Json.obj(
+          "organisation" -> Json.obj(
+            "title" -> "Ms",
+            "firstForename" -> "Jane",
+            "secondForename" -> "Ann",
+            "surname" -> "Doe"
+          )
+        )
+      )
+      invalidData.validate[IhtpReportSubmissionPayload] mustBe a[JsError]
+
+      val postRequest = fakePostRequest.withJsonBody(invalidData)
+
+      val result = controller.postIhtpReport()(postRequest)
+      status(result) mustBe Status.BAD_REQUEST
+      contentAsJson(result) mustBe hodBadRequestResponse
+    }
+
+    "return 400-BadRequest for an organisation request missing PR name fields" in {
+      val invalidData = Json.obj(
+        "reportDetails" -> Json.obj(
+          "pstr" -> "S2400000001"
+        ),
+        "deceasedDetails" -> Json.obj(
+          "inheritanceTaxReference" -> "A123456/25A",
+          "firstForename" -> "John",
+          "surname" -> "Doe",
+          "dateOfBirth" -> "1950-01-01",
+          "dateOfDeath" -> "2026-01-01",
+          "reasonForNoNino" -> "Reason for no national insurance number"
+        ),
+        "lprDetails" -> Json.obj(
+          "organisation" -> Json.obj(
+            "organisationName" -> "Test Organisation"
+          )
+        )
+      )
+      val postRequest = fakePostRequest.withJsonBody(invalidData)
+
+      val result = controller.postIhtpReport()(postRequest)
+      status(result) mustBe Status.BAD_REQUEST
+      contentAsJson(result) mustBe hodBadRequestResponse
     }
 
     "return 400-BadRequest for a missing json body" in {
