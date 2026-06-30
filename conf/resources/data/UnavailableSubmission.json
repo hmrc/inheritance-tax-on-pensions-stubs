@@ -20,5 +20,8 @@
       "secondForename": "William",
       "surname": "Doe"
     }
+  },
+  "ihtTaxInformation": {
+    "didTheLegalPersonalRepresentativeSubmitTheNotice": "Yes"
   }
 }

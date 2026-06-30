@@ -72,6 +72,9 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
             "secondForename" -> "Ann",
             "surname" -> "Doe"
           )
+        ),
+        "ihtTaxInformation" -> Json.obj(
+          "didTheLegalPersonalRepresentativeSubmitTheNotice" -> "Yes"
         )
       )
       validData.validate[IhtpReportSubmissionPayload].map(_.lprDetails.organisation) mustBe JsSuccess(

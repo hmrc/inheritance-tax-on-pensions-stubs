@@ -24,5 +24,8 @@
       "ukPostcode": "ZZ99 1AA",
       "country": "GB"
     }
+  },
+  "ihtTaxInformation": {
+    "didTheLegalPersonalRepresentativeSubmitTheNotice": "Yes"
   }
 }

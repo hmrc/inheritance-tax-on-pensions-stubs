@@ -17,11 +17,13 @@
 package uk.gov.hmrc.inheritancetaxonpensionsstubs.models
 
 import play.api.libs.json.{Json, OFormat}
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.etmp.YesNo
 
 case class IhtpReportSubmissionPayload(
   reportDetails: ReportDetails,
   deceasedDetails: DeceasedDetails,
-  lprDetails: LprDetails
+  lprDetails: LprDetails,
+  ihtTaxInformation: IhtTaxInformation
 )
 
 object IhtpReportSubmissionPayload {
@@ -91,4 +93,13 @@ case class OrganisationDetails(
 object OrganisationDetails {
   implicit val organisationDetailsFormat: OFormat[OrganisationDetails] =
     Json.format[OrganisationDetails]
+}
+
+case class IhtTaxInformation(
+  didTheLegalPersonalRepresentativeSubmitTheNotice: YesNo
+)
+
+object IhtTaxInformation {
+  implicit val ihtTaxInformationFormat: OFormat[IhtTaxInformation] =
+    Json.format[IhtTaxInformation]
 }
