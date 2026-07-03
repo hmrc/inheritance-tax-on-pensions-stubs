@@ -74,6 +74,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           )
         ),
         "ihtTaxInformation" -> Json.obj(
+          "dateThePensionSchemeReceivedNoticeToPay" -> "2026-03-27",
           "didTheLegalPersonalRepresentativeSubmitTheNotice" -> "Yes"
         )
       )
