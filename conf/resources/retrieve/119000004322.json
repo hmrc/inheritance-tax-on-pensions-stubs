@@ -23,7 +23,7 @@
       "nino": null,
       "reasonForNoNino": "Reason for no NINO"
     },
-    "lprDetails": {
+    "prDetails": {
       "changeFlag": true,
       "individual": {
         "title": "Mrs",
@@ -39,7 +39,7 @@
     "ihtTaxInformation": {
       "changeFlag": true,
       "dateThePensionSchemeReceivedNoticeToPay": "2425-43-42",
-      "didTheLegalPersonalRepresentativeSubmitTheNotice": "Yes",
+      "didThePersonalRepresentativeSubmitTheNotice": "Yes",
       "areTheBeneficiariesKnown": "Yes",
       "totalAmountOfIhtPayableInTheNotice": "100.00",
       "totalAmountOfInterestPayableInTheNotice": "10.00",
