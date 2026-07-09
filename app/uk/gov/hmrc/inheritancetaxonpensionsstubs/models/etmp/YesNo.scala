@@ -30,7 +30,7 @@ object YesNo {
     val value = "No"
   }
 
-  def apply(string: String): YesNo = if (string.toLowerCase()=="yes") Yes else No
+  def apply(string: String): YesNo = if (string.toLowerCase() == "yes") Yes else No
 
   def unapply(yesNo: YesNo): String = yesNo.value
 

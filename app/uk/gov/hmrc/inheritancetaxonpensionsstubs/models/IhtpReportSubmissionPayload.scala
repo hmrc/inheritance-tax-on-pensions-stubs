@@ -96,6 +96,7 @@ object OrganisationDetails {
 }
 
 case class IhtTaxInformation(
+  dateThePensionSchemeReceivedNoticeToPay: String,
   didTheLegalPersonalRepresentativeSubmitTheNotice: YesNo
 )
 
