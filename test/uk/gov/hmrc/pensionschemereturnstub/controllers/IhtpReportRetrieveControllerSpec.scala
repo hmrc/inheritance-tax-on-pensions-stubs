@@ -59,8 +59,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "success" \ "ihtpDeclaration")(content) must not be empty
       (JsPath \ "success" \ "deceasedDetails")(content) must not be empty
       (JsPath \ "success" \ "deceasedDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
-      (JsPath \ "success" \ "lprDetails")(content) must not be empty
-      (JsPath \ "success" \ "lprDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
+      (JsPath \ "success" \ "prDetails")(content) must not be empty
+      (JsPath \ "success" \ "prDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
 
       (JsPath \ "success" \ "ihtTaxInformation")(content) must not be empty
       (JsPath \ "success" \ "ihtTaxInformation" \ "changeFlag")(content) mustBe List(JsBoolean(true))
@@ -88,8 +88,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "success" \ "ihtpDeclaration")(content) must not be empty
       (JsPath \ "success" \ "deceasedDetails")(content) must not be empty
       (JsPath \ "success" \ "deceasedDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
-      (JsPath \ "success" \ "lprDetails")(content) must not be empty
-      (JsPath \ "success" \ "lprDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
+      (JsPath \ "success" \ "prDetails")(content) must not be empty
+      (JsPath \ "success" \ "prDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
 
       (JsPath \ "success" \ "ihtTaxInformation")(content) must not be empty
       (JsPath \ "success" \ "ihtTaxInformation" \ "changeFlag")(content) mustBe List(JsBoolean(true))
@@ -117,8 +117,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "success" \ "ihtpDeclaration")(content) must not be empty
       (JsPath \ "success" \ "deceasedDetails")(content) must not be empty
       (JsPath \ "success" \ "deceasedDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
-      (JsPath \ "success" \ "lprDetails")(content) must not be empty
-      (JsPath \ "success" \ "lprDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
+      (JsPath \ "success" \ "prDetails")(content) must not be empty
+      (JsPath \ "success" \ "prDetails" \ "changeFlag")(content) mustBe List(JsBoolean(true))
 
       (JsPath \ "success" \ "ihtTaxInformation")(content) must not be empty
       (JsPath \ "success" \ "ihtTaxInformation" \ "changeFlag")(content) mustBe List(JsBoolean(true))

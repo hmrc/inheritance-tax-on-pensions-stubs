@@ -22,7 +22,7 @@ import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.etmp.YesNo
 case class IhtpReportSubmissionPayload(
   reportDetails: ReportDetails,
   deceasedDetails: DeceasedDetails,
-  lprDetails: LprDetails,
+  prDetails: PrDetails,
   ihtTaxInformation: IhtTaxInformation
 )
 
@@ -57,11 +57,11 @@ object DeceasedDetails {
     Json.format[DeceasedDetails]
 }
 
-case class LprDetails(individual: Option[IndividualName], organisation: Option[OrganisationDetails])
+case class PrDetails(individual: Option[IndividualName], organisation: Option[OrganisationDetails])
 
-object LprDetails {
-  implicit val lprDetailsFormat: OFormat[LprDetails] =
-    Json.format[LprDetails]
+object PrDetails {
+  implicit val prDetailsFormat: OFormat[PrDetails] =
+    Json.format[PrDetails]
 }
 
 case class IndividualName(
@@ -97,7 +97,7 @@ object OrganisationDetails {
 
 case class IhtTaxInformation(
   dateThePensionSchemeReceivedNoticeToPay: String,
-  didTheLegalPersonalRepresentativeSubmitTheNotice: YesNo
+  didThePersonalRepresentativeSubmitTheNotice: YesNo
 )
 
 object IhtTaxInformation {

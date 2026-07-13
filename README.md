@@ -32,7 +32,7 @@ The body of the payload is the report details built from user answers to be subm
     "nino": null,
     "reasonForNoNino": "Reason for no national insurance number"
   },
-  "lprDetails": {
+  "prDetails": {
     "individual": {
       "title": "Mr",
       "firstForename": "John",
@@ -61,7 +61,7 @@ The body of the payload is the report details built from user answers to be subm
     "nino": null,
     "reasonForNoNino": "Reason for no national insurance number"
   },
-  "lprDetails": {
+  "prDetails": {
     "organisation": {
       "organisationName": "Doe Incorporated",
       "title": "Ms",
@@ -174,6 +174,10 @@ Known paymentReference + version combinations:
 The service runs on port `10712` by default. E.g:  http://localhost:10712/ping/ping
 
 ## Testing with Bruno
+
+If you do not have Bruno installed you can install it with the following command:
+
+`brew install bruno`
 
 A Bruno collection is available in `test/resources/IHTP Stubs`.
 

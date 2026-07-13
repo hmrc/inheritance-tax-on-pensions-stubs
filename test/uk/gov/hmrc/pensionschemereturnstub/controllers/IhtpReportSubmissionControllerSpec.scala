@@ -64,7 +64,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "dateOfDeath" -> "2026-01-01",
           "reasonForNoNino" -> "Reason for no national insurance number"
         ),
-        "lprDetails" -> Json.obj(
+        "prDetails" -> Json.obj(
           "organisation" -> Json.obj(
             "organisationName" -> "Test Organisation",
             "title" -> "Ms",
@@ -75,10 +75,10 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
         ),
         "ihtTaxInformation" -> Json.obj(
           "dateThePensionSchemeReceivedNoticeToPay" -> "2026-03-27",
-          "didTheLegalPersonalRepresentativeSubmitTheNotice" -> "Yes"
+          "didThePersonalRepresentativeSubmitTheNotice" -> "Yes"
         )
       )
-      validData.validate[IhtpReportSubmissionPayload].map(_.lprDetails.organisation) mustBe JsSuccess(
+      validData.validate[IhtpReportSubmissionPayload].map(_.prDetails.organisation) mustBe JsSuccess(
         Some(OrganisationDetails("Test Organisation", Some("Ms"), "Jane", Some("Ann"), "Doe"))
       )
 
@@ -104,7 +104,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "dateOfDeath" -> "2026-01-01",
           "reasonForNoNino" -> "Reason for no national insurance number"
         ),
-        "lprDetails" -> Json.obj(
+        "prDetails" -> Json.obj(
           "organisation" -> Json.obj(
             "title" -> "Ms",
             "firstForename" -> "Jane",
@@ -135,7 +135,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "dateOfDeath" -> "2026-01-01",
           "reasonForNoNino" -> "Reason for no national insurance number"
         ),
-        "lprDetails" -> Json.obj(
+        "prDetails" -> Json.obj(
           "organisation" -> Json.obj(
             "organisationName" -> "Test Organisation"
           )
