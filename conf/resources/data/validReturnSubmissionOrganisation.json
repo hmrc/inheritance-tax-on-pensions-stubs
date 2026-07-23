@@ -1,0 +1,32 @@
+{
+  "reportDetails": {
+    "pstr": "S2400000001"
+  },
+  "deceasedDetails": {
+    "inheritanceTaxReference": "A123456/25A",
+    "title": "Mr",
+    "firstForename": "John",
+    "secondForename": "William",
+    "surname": "Doe",
+    "dateOfBirth": "1950-01-01",
+    "dateOfDeath": "2026-01-01",
+    "nino": null,
+    "reasonForNoNino": "Reason for no national insurance number"
+  },
+  "prDetails": {
+    "organisation": {
+      "title": "Test Organisation",
+      "firstForename": "Jane",
+      "secondForename": "Ann",
+      "surname": "Doe",
+      "addressLine1": "1 ABCDE Street",
+      "addressLine2": "FGHIJ Town",
+      "ukPostcode": "ZZ99 1AA",
+      "country": "GB"
+    }
+  },
+  "ihtTaxInformation": {
+    "dateThePensionSchemeReceivedNoticeToPay": "2026-03-27",
+    "didThePersonalRepresentativeSubmitTheNotice": "Yes"
+  }
+}
