@@ -47,6 +47,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (JsPath \ "formBundleNumber")(content) must not be empty
       (JsPath \ "processingDateTime")(content) must not be empty
+      (JsPath \ "paymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
     }
 
     "return 200-Ok for a valid organisation PR request" in {
@@ -89,6 +90,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (JsPath \ "formBundleNumber")(content) must not be empty
       (JsPath \ "processingDateTime")(content) must not be empty
+      (JsPath \ "paymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
     }
 
     "return 400-BadRequest for an organisation request missing organisation name" in {

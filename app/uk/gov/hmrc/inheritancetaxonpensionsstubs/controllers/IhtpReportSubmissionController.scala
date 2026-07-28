@@ -61,7 +61,7 @@ class IhtpReportSubmissionController @Inject() (
                       .atOffset(ZoneOffset.UTC)
                       .format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")),
                     "formBundleNumber" -> "000012345678",
-                    "paymentReference" -> "000012345321"
+                    "paymentReference" -> s"${submissionResponse.deceasedDetails.inheritanceTaxReference}-556789"
                   )
                 )
               )

@@ -30,4 +30,28 @@ tests {
   test("Status code is 200", function () {
       expect(res.getStatus()).to.equal(200);
   });
+
+  test("Returns both versions of the amendment report", function () {
+      const reports = res.body.success.ihtpOverview.filter(
+        report => report.inheritanceTaxReference === "A556789/26A"
+      );
+      expect(reports).to.have.lengthOf(2);
+      expect(reports.map(report => report.ihtpVersion)).to.deep.equal(["001", "002"]);
+      expect(reports.map(report => report.paymentReference)).to.deep.equal(
+        ["A556789/26A-758204", "A556789/26A-758204"]
+      );
+  });
+
+  test("Returns two additional paid version 001 reports", function () {
+      const reports = res.body.success.ihtpOverview.filter(
+        report => report.ihtpStatus === "Paid" && report.ihtpVersion === "001"
+      );
+      expect(reports).to.have.lengthOf(2);
+      expect(reports.map(report => report.fbNumber)).to.deep.equal(
+        ["119000004362", "119000004363"]
+      );
+      expect(reports.map(report => report.paymentReference)).to.deep.equal(
+        ["F246810/26B-314159", "A975310/26C-271828"]
+      );
+  });
 }

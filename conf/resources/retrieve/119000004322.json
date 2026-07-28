@@ -12,7 +12,7 @@
       "status": "Processed"
     },
     "deceasedDetails": {
-      "changeFlag": true,
+      "changeFlag": false,
       "inheritanceTaxReference": "A654321/25A",
       "title": "Mr",
       "firstForename": "John",
@@ -24,7 +24,7 @@
       "reasonForNoNino": "Reason for no NINO"
     },
     "prDetails": {
-      "changeFlag": true,
+      "changeFlag": false,
       "individual": {
         "title": "Mrs",
         "firstForename": "Jane",
@@ -37,7 +37,7 @@
       }
     },
     "ihtTaxInformation": {
-      "changeFlag": true,
+      "changeFlag": false,
       "dateThePensionSchemeReceivedNoticeToPay": "2425-43-42",
       "didThePersonalRepresentativeSubmitTheNotice": "Yes",
       "areTheBeneficiariesKnown": "Yes",
@@ -46,10 +46,10 @@
       "total": "110.00"
     },
     "beneficiaryDetails": {
-      "changeFlag": true,
+      "changeFlag": false,
       "beneficiaries": [
         {
-          "changeFlag": true,
+          "changeFlag": false,
           "title": "Mr",
           "firstForename": "Johnny",
           "secondForename": "W",

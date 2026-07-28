@@ -95,7 +95,7 @@ The last character of the `inheritanceTaxReference` is used to return specific e
 - `pstr` - required
 - `dateFrom` - required, for example `2026-01-01`
 - `dateTo` - required, for example `2026-12-31`
-- `status` - optional, for example `Not reconciled`
+- `status` - optional, for example `Not reconciled`, `In progress` or `Paid`
 
 #### Overview stub scenarios
 
@@ -112,6 +112,7 @@ Known PSTRs:
 | Successful overview list | Known `pstr`, matching `dateFrom` / `dateTo`, no `status` | `200 OK` with all matching overview records |
 | Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Not reconciled` | `200 OK` with matching not reconciled overview records |
 | Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=In progress` | `200 OK` with matching in progress overview records |
+| Successful filtered overview list | Known `pstr`, matching `dateFrom` / `dateTo`, `status=Paid` | `200 OK` with the two additional paid version 001 records |
 | No records found | Unknown `pstr` | `422 Unprocessable Entity` |
 | No records found | Known `pstr`, date range with no matching overview records | `422 Unprocessable Entity` |
 | No records found | Known `pstr`, normal `status` value with no matching overview records | `422 Unprocessable Entity` |
@@ -129,7 +130,8 @@ Known PSTRs:
 
 - `pstr` - required
 - `fbNumber` - optional, used for specific record retrieval (12-digit pattern: `^[0-9]{12}$`)
-- `paymentReferenceNumber` - optional, must be used with `versionNumber`
+- `paymentReferenceNumber` - optional, must be used with `versionNumber`; format is the 11-character inheritance tax
+  reference followed by a hyphen and 6 digits (for example, `A123456/25A-556789`)
 - `versionNumber` - optional, must be used with `paymentReferenceNumber` (3-digit pattern: `^[0-9]{3}$`)
 
 **Parameter combinations**:
@@ -145,10 +147,43 @@ Known fbNumbers:
 
 - `119000004320` (PSTR: 24000001IN)
 - `119000004322` (PSTR: 24000002IN)
+- `119000004360` (PSTR: 24000001IN, amendment version 001)
+- `119000004361` (PSTR: 24000001IN, amendment version 002)
+- `119000004362` (PSTR: 24000001IN, paid version 001)
+- `119000004363` (PSTR: 24000001IN, paid version 001)
 
 Known paymentReference + version combinations:
 
-- `PR000000001` + `001` (PSTR: 24000001IN)
+- `A123456/25A-629671` + `001` (PSTR: 24000001IN)
+- `A556789/26A-758204` + `001` (PSTR: 24000001IN, pinned amendment baseline)
+- `A556789/26A-758204` + `002` (PSTR: 24000001IN, current amended report)
+- `F246810/26B-314159` + `001` (PSTR: 24000001IN, paid John Edward Doe report)
+- `A975310/26C-271828` + `001` (PSTR: 24000001IN, paid Jane Margaret Doe report)
+
+#### Amendment stub scenario
+
+The overview for PSTR `24000001IN` contains two versions of the report identified by inheritance tax reference
+`A556789/26A` and payment reference `A556789/26A-758204`.
+
+| Version | fbNumber | Retrieve status | Change flags |
+| --- | --- | --- | --- |
+| `001` | `119000004360` | `Paid` | All section and beneficiary flags are `false` |
+| `002` | `119000004361` | `Submitted` | IHT tax information and beneficiary details are `true`; the first beneficiary is `true` |
+
+Both versions can be retrieved either by their fbNumber or by `A556789/26A-758204` with the corresponding version number. The
+deceased and PR details are unchanged. Version 002 increases the tax totals and the amount assigned to the first beneficiary.
+All `changeFlag` values are `false` for initial version `001` reports. Later versions set flags to `true` only for sections or
+beneficiaries changed by the amendment.
+
+#### Additional paid version 001 scenarios
+
+| fbNumber | Payment reference | Deceased | Overview status | Retrieve status | Version |
+| --- | --- | --- | --- | --- | --- |
+| `119000004362` | `F246810/26B-314159` | John Edward Doe | `Paid` | `Paid` | `001` |
+| `119000004363` | `A975310/26C-271828` | Jane Margaret Doe | `Paid` | `Paid` | `001` |
+
+Both reports are included in the unfiltered overview for PSTR `24000001IN`, can be selected with `status=Paid`, and can be
+retrieved either by their fbNumber or by their payment reference with `versionNumber=001`.
 
 | Scenario | Query values | Response |
 | --- | --- | --- |
@@ -197,13 +232,17 @@ Useful requests:
 
 - `Ping` - checks the stubs service is running
 - `Submit - Success` - exercises the successful submit report response
-- `Overview - Success` - exercises the successful overview response
+- `Overview - Success` - exercises the successful overview response, including amendment versions and the two paid version 001 reports
 - `Overview - No Records 422` - exercises the no records overview response
 - `Overview - Bad Request 400` - exercises the forced bad request overview response
 - `Overview - Server Error 500` - exercises the forced internal server error overview response
 - `Overview - Service Unavailable 503` - exercises the forced service unavailable overview response
 - `Retrieve - Success (fbNumber)` - exercises the successful retrieve by fbNumber response
 - `Retrieve - Success (paymentReference + version)` - exercises the successful retrieve by payment reference response
+- `Retrieve - Amendment Version 001` - retrieves the pinned paid version
+- `Retrieve - Amendment Version 002` - retrieves the current version and its change flags
+- `Retrieve - Paid Version 001 (John Doe)` - retrieves the additional paid John Edward Doe report
+- `Retrieve - Paid Version 001 (Jane Doe)` - retrieves the additional paid Jane Margaret Doe report
 - `Retrieve - No Records 422` - exercises the no records retrieve response
 - `Retrieve - PSTR Mismatch 422` - exercises the PSTR mismatch retrieve response
 - `Retrieve - Bad Request 400` - exercises the bad request retrieve response
