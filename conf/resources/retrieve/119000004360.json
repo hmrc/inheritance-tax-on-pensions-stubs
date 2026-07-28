@@ -1,7 +1,7 @@
 {
   "success": {
     "pstr": "24000001IN",
-    "processingDate": "2022-01-31T09:26:17Z",
+    "processingDate": "2026-07-20T10:00:00Z",
     "ihtpDeclaration": {
       "submittedBy": "PSA",
       "submitterId": "A0869183",
@@ -9,80 +9,73 @@
     },
     "ihtpDetails": {
       "version": "001",
-      "status": "Submitted"
+      "status": "Paid"
     },
     "deceasedDetails": {
       "changeFlag": false,
-      "inheritanceTaxReference": "A123456/25A",
-      "title": "Mr",
-      "firstForename": "John",
-      "secondForename": "William",
+      "inheritanceTaxReference": "A556789/26A",
+      "title": "Mrs",
+      "firstForename": "Jane",
+      "secondForename": "Catherine",
       "surname": "Doe",
-      "dateOfBirth": "1950-01-01",
-      "dateOfDeath": "2026-01-01",
-      "nino": null,
-      "reasonForNoNino": "Reason for no NINO"
+      "dateOfBirth": "1948-03-12",
+      "dateOfDeath": "2026-01-15",
+      "nino": "AB123456C"
     },
     "prDetails": {
       "changeFlag": false,
       "individual": {
-        "title": "Mrs",
-        "firstForename": "Jane",
-        "secondForename": "Marie",
+        "title": "Mr",
+        "firstForename": "John",
+        "secondForename": "Patrick",
         "surname": "Doe",
-        "addressLine1": "1 ABCDE Street",
-        "addressLine2": "FGHIJ Town",
-        "ukPostcode": "ZZ99 1AA",
+        "addressLine1": "10 Market Street",
+        "addressLine2": "York",
+        "ukPostcode": "YO1 7AA",
         "country": "GB"
       }
     },
     "ihtTaxInformation": {
       "changeFlag": false,
-      "dateThePensionSchemeReceivedNoticeToPay": "2425-43-42",
+      "dateThePensionSchemeReceivedNoticeToPay": "2026-02-10",
       "didThePersonalRepresentativeSubmitTheNotice": "Yes",
       "areTheBeneficiariesKnown": "Yes",
       "totalAmountOfIhtPayableInTheNotice": "100.00",
       "totalAmountOfInterestPayableInTheNotice": "10.00",
-      "total": "110"
+      "total": "110.00"
     },
     "beneficiaryDetails": {
       "changeFlag": false,
       "beneficiaries": [
         {
           "changeFlag": false,
-          "title": "Mr",
-          "firstForename": "Johnny",
-          "secondForename": "W",
+          "title": "Ms",
+          "firstForename": "Jane",
+          "secondForename": "Rebecca",
           "surname": "Doe",
-          "addressLine1": "1 ABCDE Street",
-          "addressLine2": "FGHIJ Town",
-          "addressLine3": "line3",
-          "addressLine4": "line4",
-          "ukPostcode": "ZZ1 1ZZ",
+          "addressLine1": "21 River Road",
+          "addressLine2": "Leeds",
+          "ukPostcode": "LS1 4AB",
           "country": "GB",
-          "amountOfIhtPayableInTheNoticeForThisBeneficiary": "60.0",
+          "amountOfIhtPayableInTheNoticeForThisBeneficiary": "60.00",
           "interestPayableInTheNoticeForThisBeneficiary": "6.00",
           "totalForThisBeneficiary": "66.00",
-          "nino": null,
-          "reasonForNoNino": "Test"
+          "nino": "CE123456A"
         },
         {
           "changeFlag": false,
-          "title": "Miss",
-          "firstForename": "Joanna",
-          "secondForename": "W",
+          "title": "Mr",
+          "firstForename": "John",
+          "secondForename": "Nicholas",
           "surname": "Doe",
-          "addressLine1": "1 ABCDE Street",
-          "addressLine2": "FGHIJ Town",
-          "addressLine3": "line3",
-          "addressLine4": "line4",
-          "ukPostcode": "ZZ1 1ZZ",
+          "addressLine1": "8 Station Lane",
+          "addressLine2": "Sheffield",
+          "ukPostcode": "S1 2HH",
           "country": "GB",
           "amountOfIhtPayableInTheNoticeForThisBeneficiary": "40.00",
           "interestPayableInTheNoticeForThisBeneficiary": "4.00",
           "totalForThisBeneficiary": "44.00",
-          "nino": null,
-          "reasonForNoNino": "Test"
+          "nino": "GH123456B"
         }
       ]
     },

@@ -43,7 +43,7 @@ class IhtpReportRetrieveController @Inject() (
           case (Some(_), None, None) =>
             handleRetrieval(fbNumber.get, pstrValue)
           case (None, Some(prn), Some(vn)) =>
-            handleRetrieval(s"${prn}_$vn", pstrValue)
+            handleRetrieval(s"${prn.replace("/", "_")}_$vn", pstrValue)
           case (None, None, None) =>
             Future.successful(BadRequest(hodBadRequestResponse))
           case _ =>

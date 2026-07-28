@@ -63,7 +63,63 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "success" \ "pstr")(content) mustBe empty
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(JsString("A654321/25A392617"))
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(
+        JsString("A654321/25A-392617")
+      )
+    }
+
+    "return related report versions for an amendment scenario" in {
+      val result = controller.getIhtpOverview()(
+        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31")
+      )
+
+      status(result) mustBe Status.OK
+      val amendmentReports = (contentAsJson(result) \ "success" \ "ihtpOverview")
+        .as[Seq[JsValue]]
+        .filter(report => (report \ "inheritanceTaxReference").asOpt[String].contains("A556789/26A"))
+
+      amendmentReports.size mustBe 2
+      amendmentReports.map(report => (report \ "ihtpVersion").as[String]) mustBe Seq("001", "002")
+      amendmentReports.map(report => (report \ "fbNumber").as[String]).distinct.size mustBe 2
+      amendmentReports.map(report => (report \ "paymentReference").as[String]).distinct mustBe Seq("A556789/26A-758204")
+    }
+
+    "return payment references in IHT reference plus six digit UPR format" in {
+      Seq("00000042IN", "24000001IN", "24000002IN").foreach { pstr =>
+        val result = controller.getIhtpOverview()(
+          overviewRequest(s"?pstr=$pstr&dateFrom=2026-01-01&dateTo=2026-12-31")
+        )
+
+        status(result) mustBe Status.OK
+        val reports = (contentAsJson(result) \ "success" \ "ihtpOverview").as[Seq[JsValue]]
+
+        reports.foreach { report =>
+          (report \ "paymentReference").asOpt[String].foreach { paymentReference =>
+            val inheritanceTaxReference = (report \ "inheritanceTaxReference").as[String]
+
+            paymentReference must startWith(s"$inheritanceTaxReference-")
+            (paymentReference must fullyMatch).regex("""[AF]\d{6}/\d{2}[A-Z]-\d{6}""")
+          }
+        }
+      }
+    }
+
+    "return two additional paid version 001 reports" in {
+      val result = controller.getIhtpOverview()(
+        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31")
+      )
+
+      status(result) mustBe Status.OK
+      val paidReports = (contentAsJson(result) \ "success" \ "ihtpOverview")
+        .as[Seq[JsValue]]
+        .filter(report =>
+          (report \ "ihtpStatus").as[String] == "Paid" &&
+            (report \ "ihtpVersion").as[String] == "001"
+        )
+
+      paidReports.map(report => (report \ "fbNumber").as[String]) mustBe Seq("119000004362", "119000004363")
+      paidReports.map(report => (report \ "paymentReference").as[String]) mustBe
+        Seq("F246810/26B-314159", "A975310/26C-271828")
     }
 
     "return 200-Ok with only matching items when status is supplied" in {
