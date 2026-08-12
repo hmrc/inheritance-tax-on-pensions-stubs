@@ -17,7 +17,7 @@
 package uk.gov.hmrc.pensionschemereturnstub.controllers
 
 import play.api.http.Status
-import play.api.libs.json.{JsBoolean, JsPath, JsString, JsValue}
+import play.api.libs.json.{JsObject, JsPath, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportRetrieveController
@@ -35,7 +35,7 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
     "X-Originating-System" -> "MDTP",
     "X-Receipt-Date" -> "2026-04-10T16:12:49Z",
     "X-Regime-Type" -> "IHTP",
-    "X-Transmitting-System" -> "MDTP"
+    "X-Transmitting-System" -> "HIP"
   )
 
   "GET ihtp report" must {
@@ -49,25 +49,30 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       header("correlationid", result).value mustBe correlationId
 
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "pstr")(content) mustBe List(JsString("24000001IN"))
-      (JsPath \ "success" \ "processingDate")(content) must not be empty
-      (JsPath \ "success" \ "ihtpDetails" \ "status")(content) mustBe List(JsString("Submitted"))
-      (JsPath \ "success" \ "ihtpDetails" \ "version")(content) mustBe List(JsString("001"))
+      (JsPath \ "success" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000001IN"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
+      (JsPath \ "success" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A629671"))
 
       (JsPath \ "fbNumber")(content) mustBe empty
-      (JsPath \ "paymentReference")(content) mustBe empty
-      (JsPath \ "success" \ "ihtpDeclaration")(content) must not be empty
-      (JsPath \ "success" \ "deceasedDetails")(content) must not be empty
-      (JsPath \ "success" \ "deceasedDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "prDetails")(content) must not be empty
-      (JsPath \ "success" \ "prDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
+      (JsPath \ "success" \ "deceased")(content) must not be empty
+      (JsPath \ "success" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
+      (JsPath \ "success" \ "deceased" \ "deceasedDetails")(content) must not be empty
+      (JsPath \ "success" \ "personalRep")(content) must not be empty
+      (JsPath \ "success" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "personalRep" \ "typeOfPR")(content) mustBe List(JsString("01"))
+      (JsPath \ "success" \ "personalRep" \ "prContactDetails")(content) must not be empty
+      (JsPath \ "success" \ "personalRep" \ "prAddress")(content) must not be empty
 
-      (JsPath \ "success" \ "ihtTaxInformation")(content) must not be empty
-      (JsPath \ "success" \ "ihtTaxInformation" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "beneficiaryDetails")(content) must not be empty
-      (JsPath \ "success" \ "beneficiaryDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "beneficiaryDetails" \ "beneficiaries")(content) must not be empty
-      (JsPath \ "success" \ "psaDeclarations")(content) must not be empty
+      (JsPath \ "success" \ "ihTaxInformation")(content) must not be empty
+      (JsPath \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "beneficiaries")(content) must not be empty
+      (content \ "success" \ "beneficiaries")
+        .as[Seq[JsObject]]
+        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (JsPath \ "success" \ "declarations")(content) must not be empty
     }
 
     "return 200-Ok for a second known fbNumber" in {
@@ -77,26 +82,34 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
 
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "pstr")(content) mustBe List(JsString("24000002IN"))
-      (JsPath \ "success" \ "processingDate")(content) must not be empty
-      (JsPath \ "success" \ "ihtpDetails" \ "status")(content) mustBe List(JsString("Processed"))
-      (JsPath \ "success" \ "ihtpDetails" \ "version")(content) mustBe List(JsString("001"))
+      (JsPath \ "success" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000002IN"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
+      (JsPath \ "success" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(JsString("A654321/25A999999"))
 
       (JsPath \ "fbNumber")(content) mustBe empty
-      (JsPath \ "paymentReference")(content) mustBe empty
+      (JsPath \ "success" \ "deceased")(content) must not be empty
+      (JsPath \ "success" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
+      (JsPath \ "success" \ "deceased" \ "deceasedDetails")(content) must not be empty
+      (JsPath \ "success" \ "personalRep")(content) must not be empty
+      (JsPath \ "success" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "personalRep" \ "typeOfPR")(content) mustBe List(JsString("01"))
+      (JsPath \ "success" \ "personalRep" \ "prContactDetails")(content) must not be empty
+      (JsPath \ "success" \ "personalRep" \ "prAddress")(content) must not be empty
 
-      (JsPath \ "success" \ "ihtpDeclaration")(content) must not be empty
-      (JsPath \ "success" \ "deceasedDetails")(content) must not be empty
-      (JsPath \ "success" \ "deceasedDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "prDetails")(content) must not be empty
-      (JsPath \ "success" \ "prDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
+      (JsPath \ "success" \ "ihTaxInformation")(content) must not be empty
+      (JsPath \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "beneficiaries")(content) must not be empty
+      (content \ "success" \ "beneficiaries")
+        .as[Seq[JsObject]]
+        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (JsPath \ "success" \ "declarations")(content) must not be empty
+      (JsPath \ "success" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSP"))
+      (JsPath \ "success" \ "declarations" \ "submitterID")(content) mustBe List(JsString("A1816536"))
+      (JsPath \ "success" \ "declarations" \ "pspDeclaration" \ "psaid")(content) mustBe List(JsString("A2100005"))
 
-      (JsPath \ "success" \ "ihtTaxInformation")(content) must not be empty
-      (JsPath \ "success" \ "ihtTaxInformation" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "beneficiaryDetails")(content) must not be empty
-      (JsPath \ "success" \ "beneficiaryDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "beneficiaryDetails" \ "beneficiaries")(content) must not be empty
-      (JsPath \ "success" \ "pspDeclarations")(content) must not be empty // PSP
     }
 
     "return 200-Ok for known paymentReference and versionNumber" in {
@@ -106,26 +119,33 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
 
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "pstr")(content) mustBe List(JsString("24000001IN"))
-      (JsPath \ "success" \ "processingDate")(content) must not be empty
-      (JsPath \ "success" \ "ihtpDetails" \ "status")(content) mustBe List(JsString("Submitted"))
-      (JsPath \ "success" \ "ihtpDetails" \ "version")(content) mustBe List(JsString("001"))
+      (JsPath \ "success" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000001IN"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
+      (JsPath \ "success" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
+      (JsPath \ "success" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A629671"))
 
       (JsPath \ "fbNumber")(content) mustBe empty
-      (JsPath \ "paymentReference")(content) mustBe empty
+      (JsPath \ "success" \ "deceased")(content) must not be empty
+      (JsPath \ "success" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
+      (JsPath \ "success" \ "deceased" \ "deceasedDetails")(content) must not be empty
+      (JsPath \ "success" \ "personalRep")(content) must not be empty
+      (JsPath \ "success" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "personalRep" \ "typeOfPR")(content) mustBe List(JsString("01"))
+      (JsPath \ "success" \ "personalRep" \ "prContactDetails")(content) must not be empty
+      (JsPath \ "success" \ "personalRep" \ "prAddress")(content) must not be empty
 
-      (JsPath \ "success" \ "ihtpDeclaration")(content) must not be empty
-      (JsPath \ "success" \ "deceasedDetails")(content) must not be empty
-      (JsPath \ "success" \ "deceasedDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "prDetails")(content) must not be empty
-      (JsPath \ "success" \ "prDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-
-      (JsPath \ "success" \ "ihtTaxInformation")(content) must not be empty
-      (JsPath \ "success" \ "ihtTaxInformation" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "beneficiaryDetails")(content) must not be empty
-      (JsPath \ "success" \ "beneficiaryDetails" \ "changeFlag")(content) mustBe List(JsBoolean(false))
-      (JsPath \ "success" \ "beneficiaryDetails" \ "beneficiaries")(content) must not be empty
-      (JsPath \ "success" \ "psaDeclarations")(content) must not be empty
+      (JsPath \ "success" \ "ihTaxInformation")(content) must not be empty
+      (JsPath \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
+      (JsPath \ "success" \ "beneficiaries")(content) must not be empty
+      (content \ "success" \ "beneficiaries")
+        .as[Seq[JsObject]]
+        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (JsPath \ "success" \ "declarations")(content) must not be empty
+      (JsPath \ "success" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSA"))
+      (JsPath \ "success" \ "declarations" \ "submitterID")(content) mustBe List(JsString("A2100005"))
+      (JsPath \ "success" \ "declarations" \ "pspDeclaration" \ "psaid")(content) mustBe empty
     }
 
     "return the pinned and amended versions of a report by fbNumber" in {
@@ -142,29 +162,24 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       val versionOne = contentAsJson(versionOneResult)
       val versionTwo = contentAsJson(versionTwoResult)
 
-      (versionOne \ "success" \ "ihtpDetails" \ "version").as[String] mustBe "001"
-      (versionOne \ "success" \ "ihtpDetails" \ "status").as[String] mustBe "Paid"
-      (versionTwo \ "success" \ "ihtpDetails" \ "version").as[String] mustBe "002"
-      (versionTwo \ "success" \ "ihtpDetails" \ "status").as[String] mustBe "Submitted"
+      (versionOne \ "success" \ "deceased" \ "deceasedPersonalDetails") mustBe
+        (versionTwo \ "success" \ "deceased" \ "deceasedPersonalDetails")
 
-      (versionOne \ "success" \ "deceasedDetails" \ "inheritanceTaxReference").as[String] mustBe
-        (versionTwo \ "success" \ "deceasedDetails" \ "inheritanceTaxReference").as[String]
+      (versionOne \ "success" \ "deceased" \ "deceasedChangeFlag").toOption mustBe None
+      (versionTwo \ "success" \ "deceased" \ "deceasedChangeFlag").toOption mustBe None
 
-      (versionOne \ "success" \ "deceasedDetails" \ "changeFlag").as[Boolean] mustBe false
-      (versionOne \ "success" \ "prDetails" \ "changeFlag").as[Boolean] mustBe false
-      (versionOne \ "success" \ "ihtTaxInformation" \ "changeFlag").as[Boolean] mustBe false
-      (versionOne \ "success" \ "beneficiaryDetails" \ "changeFlag").as[Boolean] mustBe false
+      (versionOne \ "success" \ "beneficiaries")
+        .as[Seq[JsObject]]
+        .map(b => b.keys must not contain "beneficiaryChangeFlag")
 
-      (versionTwo \ "success" \ "deceasedDetails" \ "changeFlag").as[Boolean] mustBe false
-      (versionTwo \ "success" \ "prDetails" \ "changeFlag").as[Boolean] mustBe false
-      (versionTwo \ "success" \ "ihtTaxInformation" \ "changeFlag").as[Boolean] mustBe true
-      (versionTwo \ "success" \ "beneficiaryDetails" \ "changeFlag").as[Boolean] mustBe true
-      (versionTwo \ "success" \ "beneficiaryDetails" \ "beneficiaries")
-        .as[Seq[JsValue]]
-        .map(beneficiary => (beneficiary \ "changeFlag").as[Boolean]) mustBe Seq(true, false)
+      (versionTwo \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag").as[String] mustBe "Yes"
+      (versionTwo \ "success" \ "beneficiaries").as[Seq[JsObject]].length mustBe 2
+      (versionTwo \ "success" \ "beneficiaries")
+        .as[Seq[JsObject]]
+        .map(b => (b \ "beneficiaryChangeFlag").toOption.map(_.as[JsString])) mustBe Seq(Some(JsString("Yes")), None)
 
-      (versionOne \ "success" \ "ihtTaxInformation" \ "total").as[String] mustBe "110.00"
-      (versionTwo \ "success" \ "ihtTaxInformation" \ "total").as[String] mustBe "132.00"
+      (versionOne \ "success" \ "ihTaxInformation" \ "totalIHTPayable").as[String] mustBe "100.00"
+      (versionTwo \ "success" \ "ihTaxInformation" \ "totalIHTPayable").as[String] mustBe "120.00"
     }
 
     "return each amendment version by paymentReference and versionNumber" in {
@@ -172,13 +187,13 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004360")
       )
       val versionOneByPaymentReference = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A-758204&versionNumber=001")
+        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A-999999&versionNumber=001")
       )
       val versionTwoByFbNumber = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004361")
       )
       val versionTwoByPaymentReference = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A-758204&versionNumber=002")
+        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A-999999&versionNumber=002")
       )
 
       status(versionOneByPaymentReference) mustBe Status.OK
@@ -189,8 +204,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
 
     "return the additional paid version 001 reports by fbNumber and paymentReference" in {
       Seq(
-        ("119000004362", "F246810/26B-314159"),
-        ("119000004363", "A975310/26C-271828")
+        ("119000004362", "F246810/26B-999999"),
+        ("119000004363", "A975310/26C-999999")
       ).foreach { case (fbNumber, paymentReference) =>
         val byFbNumber = controller.getIhtpReport()(
           retrieveRequest(s"?pstr=24000001IN&fbNumber=$fbNumber")
@@ -206,8 +221,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         contentAsJson(byPaymentReference) mustBe contentAsJson(byFbNumber)
 
         val content = contentAsJson(byFbNumber)
-        (content \ "success" \ "ihtpDetails" \ "version").as[String] mustBe "001"
-        (content \ "success" \ "ihtpDetails" \ "status").as[String] mustBe "Paid"
+        (content \ "success" \ "reportDetails" \ "ihtPaymentReference")
+          .as[String] mustBe paymentReference.replace("-", "")
       }
     }
 
@@ -219,17 +234,25 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         "?pstr=24000001IN&fbNumber=119000004362",
         "?pstr=24000001IN&fbNumber=119000004363",
         "?pstr=24000001IN&paymentReferenceNumber=A123456/25A-629671&versionNumber=001",
-        "?pstr=24000001IN&paymentReferenceNumber=A556789/26A-758204&versionNumber=001"
+        "?pstr=24000001IN&paymentReferenceNumber=A556789/26A-999999&versionNumber=001"
       ).foreach { queryString =>
         val result = controller.getIhtpReport()(retrieveRequest(queryString))
 
         status(result) mustBe Status.OK
         val content = contentAsJson(result)
-        (content \ "success" \ "ihtpDetails" \ "version").as[String] mustBe "001"
 
-        val changeFlags = content \\ "changeFlag"
-        changeFlags must not be empty
-        changeFlags.foreach(_ mustBe JsBoolean(false))
+        val beneficiaryChangeFlags = (content \ "success" \ "beneficiaries")
+          .as[Seq[JsObject]]
+          .map(b => (b \ "beneficiaryChangeFlag").toOption)
+
+        val deceasedChangeFlag = (content \ "success" \ "deceased" \ "deceasedChangeFlag").toOption
+        val prChangeFlag = (content \ "success" \ "personalRep" \ "prChangeFlag").toOption
+        val ihTaxInformationChangeFlag = (content \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag").toOption
+
+        val allChangeFlags =
+          beneficiaryChangeFlags ++ Seq(deceasedChangeFlag, prChangeFlag, ihTaxInformationChangeFlag)
+        allChangeFlags.foreach(_ mustBe None)
+
       }
     }
 

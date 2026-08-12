@@ -34,10 +34,11 @@
         "paymentDueDate": "2026-11-15",
         "ihtpVersion": "001",
         "inheritanceTaxReference": "A642531/42C",
+        "paymentReference": "A642531/42C-749183",
         "firstForename": "Jane",
         "secondForename": "Victoria",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004355",

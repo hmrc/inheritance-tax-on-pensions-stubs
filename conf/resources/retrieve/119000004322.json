@@ -1,94 +1,118 @@
-{
+{ 
   "success": {
-    "pstr": "24000002IN",
-    "processingDate": "2022-01-31T09:26:17Z",
-    "ihtpDeclaration": {
-      "submittedBy": "PSP",
-      "submitterId": "A0869183",
-      "psaId": "A1816536"
+    "schemeDetails": {
+      "pstr": "24000002IN",
+      "schemeName": "Test Scheme",
+      "schemeStartDate": "1980-01-01",
+      "schemeEndDate": "2030-01-01"
     },
-    "ihtpDetails": {
-      "version": "001",
-      "status": "Processed"
+    "reportDetails": {
+      "submissionDate": "2026-07-14T16:42:20Z",
+      "ihtPaymentReference": "A654321/25A999999",
+      "ihtVersion": "001",
+      "ihtPaid": "true",
+      "ihtPaymentDate": "2026-06-02"
     },
-    "deceasedDetails": {
-      "changeFlag": false,
-      "inheritanceTaxReference": "A654321/25A",
-      "title": "Mr",
-      "firstForename": "John",
-      "secondForename": "William",
-      "surname": "Doe",
-      "dateOfBirth": "1955-03-15",
-      "dateOfDeath": "2026-02-20",
-      "nino": null,
-      "reasonForNoNino": "Reason for no NINO"
+    "deceased": {
+      "deceasedPersonalDetails": {
+        "title": "Mr",
+        "firstForename": "John",
+        "secondForename": "William",
+        "surname": "Doe",
+        "ninoExist": "No",
+        "reasonNoNINO": "Reason for no NINO"
+      },
+      "deceasedDetails": {
+        "deceasedsDOB": "1955-03-15",
+        "deceasedsDOD": "2026-02-20",
+        "ihtRefNumber": "A654321/25A"
+      }
     },
-    "prDetails": {
-      "changeFlag": false,
-      "individual": {
+    "personalRep": {
+      "typeOfPR": "01",
+      "prContactDetails": {
         "title": "Mrs",
         "firstForename": "Jane",
         "secondForename": "Marie",
-        "surname": "Doe",
+        "surname": "Doe"
+      },
+      "prAddress": {
         "addressLine1": "2 XYZ Street",
         "addressLine2": "London",
-        "ukPostcode": "AB1 2CD",
+        "postcode": "AB1 2CD",
         "country": "GB"
       }
     },
-    "ihtTaxInformation": {
-      "changeFlag": false,
-      "dateThePensionSchemeReceivedNoticeToPay": "2425-43-42",
-      "didThePersonalRepresentativeSubmitTheNotice": "Yes",
-      "areTheBeneficiariesKnown": "Yes",
-      "totalAmountOfIhtPayableInTheNotice": "100.00",
-      "totalAmountOfInterestPayableInTheNotice": "10.00",
+    "ihTaxInformation": {
+      "dateNoticeReceived": "2425-43-42",
+      "noticeSubmittedByPR": "Yes",
+      "knownBeneficiaries": "Yes",
+      "totalIHTPayable": "100.00",
+      "totalInterestPayable": "10.00",
       "total": "110.00"
     },
-    "beneficiaryDetails": {
-      "changeFlag": false,
-      "beneficiaries": [
-        {
-          "changeFlag": false,
-          "title": "Mr",
-          "firstForename": "Johnny",
-          "secondForename": "W",
-          "surname": "Doe",
-          "addressLine1": "1 ABCDE Street",
-          "addressLine2": "FGHIJ Town",
-          "addressLine3": "line3",
-          "addressLine4": "line4",
-          "ukPostcode": "ZZ1 1ZZ",
-          "country": "GB",
-          "amountOfIhtPayableInTheNoticeForThisBeneficiary": "60.00",
-          "interestPayableInTheNoticeForThisBeneficiary": "6.00",
-          "totalForThisBeneficiary": "66.00",
-          "nino": null,
-          "reasonForNoNino": "Test"
+    "beneficiaries": [
+      {
+        "beneficiaryType": "01",
+        "beneficiaryContactDetails": {
+          "beneficiaryPersonalDetails": {
+            "title": "Mr",
+            "firstForename": "Johnny",
+            "secondForename": "W",
+            "surname": "Doe",
+            "ninoExist": "No",
+            "reasonForNoNINO": "Test"
+            },
+          "beneficiaryAddress": {
+            "addressLine1": "1 ABCDE Street",
+            "addressLine2": "FGHIJ Town",
+            "addressLine3": "line3",
+            "addressLine4": "line4",
+            "postcode": "ZZ1 1ZZ",
+            "country": "GB"
+            }
         },
-        {
-          "changeFlag": false,
-          "title": "Miss",
-          "firstForename": "Joanna",
-          "secondForename": "W",
-          "surname": "Doe",
-          "addressLine1": "1 ABCDE Street",
-          "addressLine2": "FGHIJ Town",
-          "addressLine3": "line3",
-          "addressLine4": "line4",
-          "ukPostcode": "ZZ1 1ZZ",
-          "country": "GB",
-          "amountOfIhtPayableInTheNoticeForThisBeneficiary": "40.00",
-          "interestPayableInTheNoticeForThisBeneficiary": "4.0",
-          "totalForThisBeneficiary": "44.00",
-          "nino": null,
-          "reasonForNoNino": "Test"
-        }
-      ]
-    },
-    "pspDeclarations": {
-      "declaration1": true,
-      "declaration2": true
+      "beneficiaryPaymentDetails": {
+        "beneficiaryIHTPayable": "60.0",
+        "beneficiaryInterestPayable": "6.00",
+        "beneficiaryTotal": "66.00"
+      }
+      },
+      {
+        "beneficiaryType": "01",
+        "beneficiaryContactDetails": {
+          "beneficiaryPersonalDetails": {
+            "title": "Miss",
+            "firstForename": "Joanna",
+            "secondForename": "W",
+            "surname": "Doe",
+            "ninoExist": "No",
+            "reasonForNoNINO": "Test"
+            },
+          "beneficiaryAddress": {
+            "addressLine1": "1 ABCDE Street",
+            "addressLine2": "FGHIJ Town",
+            "addressLine3": "line3",
+            "addressLine4": "line4",
+            "postcode": "ZZ1 1ZZ",
+            "country": "GB"
+            }
+        },
+      "beneficiaryPaymentDetails": {
+        "beneficiaryIHTPayable": "40.00",
+        "beneficiaryInterestPayable": "4.00",
+        "beneficiaryTotal": "44.00"
+      }
+      } 
+    ],
+    "declarations": {
+      "submittedBy": "PSP",
+      "submitterID": "A1816536",
+      "pspDeclaration": {
+        "pspDeclaration1": "true",
+        "pspDeclaration2": "true",
+        "psaid": "A2100005"
+      }
     }
   }
 }

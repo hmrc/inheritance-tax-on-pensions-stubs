@@ -2,31 +2,51 @@
   "reportDetails": {
     "pstr": "S2400000001"
   },
-  "deceasedDetails": {
-    "inheritanceTaxReference": "A123456/25A",
-    "title": "Mr",
-    "firstForename": "John",
-    "secondForename": "William",
-    "surname": "Doe",
-    "dateOfBirth": "1950-01-01",
-    "dateOfDeath": "2026-01-01",
-    "nino": null,
-    "reasonForNoNino": "Reason for no national insurance number"
+  "deceased": {
+    "deceasedPersonalDetails": {
+            "title": "Mr",
+            "firstForename": "John",
+            "secondForename": "William",
+            "surname": "Doe",
+            "ninoExist": "No",
+            "reasonNoNINO": "Reason for no national insurance number"
+    },
+    "deceasedDetails": {
+            "deceasedsDOB": "1950-01-01",
+            "deceasedsDOD": "2026-01-01",
+            "ihtRefNumber": "A123456/25A"
+    }
   },
-  "prDetails": {
-    "individual": {
+  "personalRep": {
+    "typeOfPR": "01",
+    "prContactDetails": {
       "title": "Mr",
       "firstForename": "John",
       "secondForename": "William",
-      "surname": "Doe",
+      "surname": "Doe"
+    },
+    "prAddress": {
       "addressLine1": "1 ABCDE Street",
       "addressLine2": "FGHIJ Town",
-      "ukPostcode": "ZZ99 1AA",
+      "postcode": "ZZ99 1AA",
       "country": "GB"
     }
   },
-  "ihtTaxInformation": {
-    "dateThePensionSchemeReceivedNoticeToPay": "2026-03-27",
-    "didThePersonalRepresentativeSubmitTheNotice": "Yes"
+  "ihTaxInformation": {
+    "dateNoticeReceived": "2026-03-27",
+    "noticeSubmittedByPR": "Yes",
+    "knownBeneficiaries": "No",
+    "totalIHTPayable": "1000.00",
+    "totalInterestPayable": "50.00",
+    "total": "1050.00"
+  },
+  "declarations": {
+    "submittedBy": "PSP",
+    "submitterID": "21000005",
+    "pspDeclaration": {
+      "pspDeclaration1": "false",
+      "pspDeclaration2": "false",
+      "psaid": "A2100005"
+    }
   }
 }

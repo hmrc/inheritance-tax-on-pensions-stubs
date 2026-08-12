@@ -57,7 +57,7 @@ class IhtpReportRetrieveController @Inject() (
   ): Future[Result] =
     resourceService.getResource("retrieve", identifier) match {
       case Some(json) =>
-        val resourcePstr = (json \ "success" \ "pstr").asOpt[String]
+        val resourcePstr = (json \ "success" \ "schemeDetails" \ "pstr").asOpt[String]
         if (resourcePstr.contains(pstr)) {
           Future.successful(
             withCorrelationId(Ok(json))
