@@ -46,7 +46,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "formBundleNumber")(content) must not be empty
-      (JsPath \ "processingDateTime")(content) must not be empty
+      (JsPath \ "processingDate")(content) must not be empty
       (JsPath \ "paymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
     }
 
@@ -89,7 +89,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "formBundleNumber")(content) must not be empty
-      (JsPath \ "processingDateTime")(content) must not be empty
+      (JsPath \ "processingDate")(content) must not be empty
       (JsPath \ "paymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
     }
 

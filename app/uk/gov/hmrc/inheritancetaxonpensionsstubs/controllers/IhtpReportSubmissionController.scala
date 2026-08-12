@@ -56,7 +56,7 @@ class IhtpReportSubmissionController @Inject() (
               Future.successful(
                 Ok(
                   Json.obj(
-                    "processingDateTime" -> LocalDateTime
+                    "processingDate" -> LocalDateTime
                       .now()
                       .atOffset(ZoneOffset.UTC)
                       .format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")),

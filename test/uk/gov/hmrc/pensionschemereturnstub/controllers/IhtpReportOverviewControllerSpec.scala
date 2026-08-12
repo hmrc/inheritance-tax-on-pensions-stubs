@@ -124,7 +124,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
 
     "return 200-Ok with only matching items when status is supplied" in {
       val result = controller.getIhtpOverview()(
-        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=In progress")
+        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=Not reconciled")
       )
 
       status(result) mustBe Status.OK
@@ -132,9 +132,9 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val statuses =
         (content \ "success" \ "ihtpOverview").as[Seq[JsValue]].flatMap(item => (item \ "ihtpStatus").asOpt[String])
 
-      statuses.size mustBe 10
-      statuses.distinct mustBe Seq("In progress")
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004323"))
+      statuses.size mustBe 34
+      statuses.distinct mustBe Seq("Not reconciled")
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
     }
 
     "return 422-UnprocessableEntity when no overview items match the supplied date range" in {
