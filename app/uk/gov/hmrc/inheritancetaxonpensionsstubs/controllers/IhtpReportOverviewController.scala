@@ -88,12 +88,10 @@ class IhtpReportOverviewController @Inject() (
 
   private def noRecordsFound(implicit request: play.api.mvc.Request[?]): Result =
     withCorrelationId(
-      UnprocessableEntity(
+      Ok(
         Json.obj(
-          "errors" -> Json.obj(
-            "processingDate" -> "2026-04-10T16:12:49Z",
-            "code" -> "003",
-            "text" -> "Request could not be processed"
+          "success" -> Json.obj(
+            "ihtpOverview" -> JsArray.empty
           )
         )
       )

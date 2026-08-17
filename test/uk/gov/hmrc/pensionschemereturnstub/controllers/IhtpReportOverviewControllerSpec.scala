@@ -137,24 +137,26 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
     }
 
-    "return 422-UnprocessableEntity when no overview items match the supplied date range" in {
+    "return 200 and empty list when no overview items match the supplied date range" in {
       val result = controller.getIhtpOverview()(
         overviewRequest("?pstr=24000002IN&dateFrom=2027-01-01&dateTo=2027-12-31")
       )
 
-      status(result) mustBe Status.UNPROCESSABLE_ENTITY
-      (JsPath \ "errors" \ "code")(contentAsJson(result)) mustBe List(JsString("003"))
-      (JsPath \ "errors" \ "text")(contentAsJson(result)) mustBe List(JsString("Request could not be processed"))
+      status(result) mustBe Status.OK
+      val content = contentAsJson(result)
+      val reports = (content \ "success" \ "ihtpOverview").as[Seq[JsValue]]
+      reports.size mustBe 0
     }
 
-    "return 422-UnprocessableEntity when status is NO_RECORDS" in {
+    "return 200 and empty list when status is NO_RECORDS" in {
       val result = controller.getIhtpOverview()(
         overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=NO_RECORDS")
       )
 
-      status(result) mustBe Status.UNPROCESSABLE_ENTITY
-      (JsPath \ "errors" \ "code")(contentAsJson(result)) mustBe List(JsString("003"))
-      (JsPath \ "errors" \ "text")(contentAsJson(result)) mustBe List(JsString("Request could not be processed"))
+      status(result) mustBe Status.OK
+      val content = contentAsJson(result)
+      val reports = (content \ "success" \ "ihtpOverview").as[Seq[JsValue]]
+      reports.size mustBe 0
     }
 
     "return 400-BadRequest when status is BAD_REQUEST" in {
@@ -182,16 +184,6 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
 
       status(result) mustBe Status.SERVICE_UNAVAILABLE
       (JsPath \ "failures" \ 0 \ "code")(contentAsJson(result)) mustBe List(JsString("SERVICE_UNAVAILABLE"))
-    }
-
-    "return 422-UnprocessableEntity for an unknown pstr" in {
-      val result = controller.getIhtpOverview()(
-        overviewRequest("?pstr=24000003IN&dateFrom=2026-01-01&dateTo=2026-12-31")
-      )
-
-      status(result) mustBe Status.UNPROCESSABLE_ENTITY
-      header("correlationid", result).value mustBe correlationId
-      (JsPath \ "errors" \ "code")(contentAsJson(result)) mustBe List(JsString("003"))
     }
 
     "return 400-BadRequest when mandatory query params are missing" in {
