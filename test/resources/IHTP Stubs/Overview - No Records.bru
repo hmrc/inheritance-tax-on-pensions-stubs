@@ -1,5 +1,5 @@
 meta {
-  name: Overview - No Records 422
+  name: Overview - No Records
   type: http
   seq: 3
 }
@@ -26,7 +26,7 @@ headers {
 }
 
 tests {
-  test("Status code is 422", function () {
-      expect(res.getStatus()).to.equal(422);
+  test("Status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
   });
 }

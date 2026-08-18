@@ -3,11 +3,11 @@
     "ihtpOverview": [
       {
         "fbNumber": "119000004320",
-        "submissionDate": "2026-04-10T16:12:49Z",
+        "submissionDate": "2026-08-12T14:46:49Z",
         "paymentDueDate": "2026-10-10",
         "ihtpVersion": "001",
         "inheritanceTaxReference": "A123456/25A",
-        "paymentReference": "A123456/25A-629671",
+        "paymentReference": "A123456/25A-556789",
         "title": "Dr",
         "firstForename": "John",
         "secondForename": "Oliver",
@@ -43,11 +43,12 @@
         "submissionDate": "2026-04-14T11:20:00Z",
         "paymentDueDate": "2026-10-14",
         "ihtpVersion": "001",
-        "inheritanceTaxReference": "A654321/27A",
+        "inheritanceTaxReference": "A654321/48D",
+        "paymentReference": "A654321/48D-123123",
         "firstForename": "John",
         "secondForename": "Michael",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004324",
@@ -79,12 +80,13 @@
         "submissionDate": "2026-04-17T14:35:00Z",
         "paymentDueDate": "2026-10-17",
         "ihtpVersion": "001",
-        "inheritanceTaxReference": "A642531/48B",
+        "inheritanceTaxReference": "A642531/48D",
+        "paymentReference": "A642531/48D-222222",
         "title": "Miss",
         "firstForename": "Jane",
         "secondForename": "Anne",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004327",
@@ -116,11 +118,12 @@
         "submissionDate": "2026-04-20T09:15:00Z",
         "paymentDueDate": "2026-10-20",
         "ihtpVersion": "001",
-        "inheritanceTaxReference": "F456321/63B",
+        "inheritanceTaxReference": "F456321/48D",
+        "paymentReference": "F456321/48D-333333",
         "firstForename": "John",
         "secondForename": "Thomas",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004330",
@@ -152,11 +155,12 @@
         "submissionDate": "2026-04-23T12:30:00Z",
         "paymentDueDate": "2026-10-23",
         "ihtpVersion": "002",
-        "inheritanceTaxReference": "A135246/52B",
+        "inheritanceTaxReference": "A135246/48D",
+        "paymentReference": "A135246/48D-444444",
         "firstForename": "Jane",
         "secondForename": "Grace",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004333",
@@ -187,11 +191,12 @@
         "submissionDate": "2026-04-26T15:45:00Z",
         "paymentDueDate": "2026-10-26",
         "ihtpVersion": "003",
-        "inheritanceTaxReference": "F135246/73D",
+        "inheritanceTaxReference": "F135246/48D",
+        "paymentReference": "F135246/48D-555555",
         "title": "Dr",
         "firstForename": "John",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004336",
@@ -223,11 +228,12 @@
         "submissionDate": "2026-04-29T10:05:00Z",
         "paymentDueDate": "2026-10-29",
         "ihtpVersion": "002",
-        "inheritanceTaxReference": "F123456/24C",
+        "inheritanceTaxReference": "F123456/48D",
+        "paymentReference": "F123456/48D-666666",
         "title": "Mrs",
         "firstForename": "Jane",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004339",
@@ -258,11 +264,12 @@
         "submissionDate": "2026-05-02T13:20:00Z",
         "paymentDueDate": "2026-11-02",
         "ihtpVersion": "004",
-        "inheritanceTaxReference": "A654123/19D",
+        "inheritanceTaxReference": "A654123/48D",
+        "paymentReference": "A654123/48D-777777",
         "firstForename": "John",
         "secondForename": "Henry",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004342",
@@ -294,11 +301,12 @@
         "submissionDate": "2026-05-05T08:35:00Z",
         "paymentDueDate": "2026-11-05",
         "ihtpVersion": "001",
-        "inheritanceTaxReference": "F654321/84E",
+        "inheritanceTaxReference": "F654321/48D",
+        "paymentReference": "F654321/48D-888888",
         "firstForename": "Jane",
         "secondForename": "Sophia",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004345",
@@ -329,11 +337,12 @@
         "submissionDate": "2026-05-08T11:50:00Z",
         "paymentDueDate": "2026-11-08",
         "ihtpVersion": "001",
-        "inheritanceTaxReference": "A642531/42F",
+        "inheritanceTaxReference": "A642531/48D",
+        "paymentReference": "A642531/48D-999999",
         "firstForename": "John",
         "secondForename": "Alexander",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004348",
@@ -365,12 +374,13 @@
         "submissionDate": "2026-05-11T14:10:00Z",
         "paymentDueDate": "2026-11-11",
         "ihtpVersion": "001",
-        "inheritanceTaxReference": "A123654/91E",
+        "inheritanceTaxReference": "A123654/48D",
+        "paymentReference": "A123654/48D-000000",
         "title": "Mrs",
         "firstForename": "Jane",
         "secondForename": "Emily",
         "surname": "Doe",
-        "ihtpStatus": "In progress"
+        "ihtpStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004351",
