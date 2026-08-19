@@ -21,7 +21,7 @@ import play.api.libs.json.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportSubmissionController
-import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.{IhtpReportSubmissionPayload, OrganisationDetails}
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.{IhtpPaymentNoticeSubmissionPayload, PrContactDetails}
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.utils.{APIResponses, JsonUtils}
 import uk.gov.hmrc.pensionschemereturnstub.base.SpecBase
 
@@ -45,42 +45,66 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "formBundleNumber")(content) must not be empty
-      (JsPath \ "processingDateTime")(content) must not be empty
-      (JsPath \ "paymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
+      (JsPath \ "formBundleNo")(content) must not be empty
+      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
     }
 
     "return 200-Ok for a valid organisation PR request" in {
       val validData = Json.obj(
         "reportDetails" -> Json.obj(
-          "pstr" -> "S2400000001"
+          "pstr" -> "S2400000001",
+          "ihtPaymentReference" -> "A123456/25A"
         ),
-        "deceasedDetails" -> Json.obj(
-          "inheritanceTaxReference" -> "A123456/25A",
-          "title" -> "Mr",
-          "firstForename" -> "John",
-          "secondForename" -> "William",
-          "surname" -> "Doe",
-          "dateOfBirth" -> "1950-01-01",
-          "dateOfDeath" -> "2026-01-01",
-          "reasonForNoNino" -> "Reason for no national insurance number"
+        "deceased" -> Json.obj(
+          "deceasedPersonalDetails" -> Json.obj(
+            "title" -> "Mr",
+            "firstForename" -> "John",
+            "secondForename" -> "William",
+            "surname" -> "Doe",
+            "ninoExist" -> "No",
+            "reasonNoNINO" -> "Reason for no national insurance number"
+          ),
+          "deceasedDetails" -> Json.obj(
+            "deceasedsDOB" -> "1950-01-01",
+            "deceasedsDOD" -> "2026-01-01",
+            "ihtRefNumber" -> "A123456/25A"
+          )
         ),
-        "prDetails" -> Json.obj(
-          "organisation" -> Json.obj(
-            "organisationName" -> "Test Organisation",
+        "personalRep" -> Json.obj(
+          "typeOfPR" -> "02",
+          "prContactDetails" -> Json.obj(
+            "orgName" -> "Test Organisation",
             "title" -> "Ms",
             "firstForename" -> "Jane",
             "secondForename" -> "Ann",
             "surname" -> "Doe"
+          ),
+          "prAddress" -> Json.obj(
+            "addressLine1" -> "1 ABCDE Street",
+            "addressLine2" -> "FGHIJ Town",
+            "postcode" -> "ZZ99 1AA",
+            "country" -> "GB"
           )
         ),
-        "ihtTaxInformation" -> Json.obj(
-          "dateThePensionSchemeReceivedNoticeToPay" -> "2026-03-27",
-          "didThePersonalRepresentativeSubmitTheNotice" -> "Yes"
+        "ihTaxInformation" -> Json.obj(
+          "dateNoticeReceived" -> "2026-03-27",
+          "noticeSubmittedByPR" -> "Yes",
+          "knownBeneficiaries" -> "No",
+          "totalIHTPayable" -> "1000.00",
+          "totalInterestPayable" -> "50.00",
+          "total" -> "1050.00"
+        ),
+        "declarations" -> Json.obj(
+          "submittedBy" -> "PSA",
+          "submitterID" -> "TODO",
+          "psaDeclaration" -> Json.obj(
+            "psaDeclaration1" -> "false",
+            "psaDeclaration2" -> "false"
+          )
         )
       )
-      validData.validate[IhtpReportSubmissionPayload].map(_.prDetails.organisation) mustBe JsSuccess(
-        Some(OrganisationDetails("Test Organisation", Some("Ms"), "Jane", Some("Ann"), "Doe"))
+      validData.validate[IhtpPaymentNoticeSubmissionPayload].map(_.personalRep.prContactDetails) mustBe JsSuccess(
+        PrContactDetails(Some("Test Organisation"), Some("Ms"), "Jane", Some("Ann"), "Doe")
       )
 
       val postRequest = fakePostRequest.withJsonBody(validData)
@@ -88,9 +112,8 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "formBundleNumber")(content) must not be empty
-      (JsPath \ "processingDateTime")(content) must not be empty
-      (JsPath \ "paymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
+      (JsPath \ "formBundleNo")(content) must not be empty
+      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
     }
 
     "return 400-BadRequest for an organisation request missing organisation name" in {
@@ -115,7 +138,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           )
         )
       )
-      invalidData.validate[IhtpReportSubmissionPayload] mustBe a[JsError]
+      invalidData.validate[IhtpPaymentNoticeSubmissionPayload] mustBe a[JsError]
 
       val postRequest = fakePostRequest.withJsonBody(invalidData)
 

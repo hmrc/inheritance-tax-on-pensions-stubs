@@ -20,10 +20,8 @@ import play.api.Logger
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.config.Constants._
-import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.IhtpReportSubmissionPayload
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.IhtpPaymentNoticeSubmissionPayload
 
-import java.time.format.DateTimeFormatter
-import java.time.{LocalDateTime, ZoneOffset}
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.Future
 import scala.util.{Success, Try}
@@ -40,9 +38,9 @@ class IhtpReportSubmissionController @Inject() (
       case Some(body) =>
         logger.info(message = s"postIhtpReport - Incoming payload: \n${Json.prettyPrint(body)}\n")
 
-        Try(body.as[IhtpReportSubmissionPayload]) match {
+        Try(body.as[IhtpPaymentNoticeSubmissionPayload]) match {
           case Success(submissionResponse) =>
-            val significantChar: String = submissionResponse.deceasedDetails.inheritanceTaxReference.takeRight(1)
+            val significantChar: String = submissionResponse.deceased.deceasedDetails.ihtRefNumber.takeRight(1)
 
             if (significantChar == BAD_REQUEST_CHAR) {
               invalidSrn400Response
@@ -56,18 +54,14 @@ class IhtpReportSubmissionController @Inject() (
               Future.successful(
                 Ok(
                   Json.obj(
-                    "processingDateTime" -> LocalDateTime
-                      .now()
-                      .atOffset(ZoneOffset.UTC)
-                      .format(DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ssX")),
-                    "formBundleNumber" -> "000012345678",
-                    "paymentReference" -> s"${submissionResponse.deceasedDetails.inheritanceTaxReference}-556789"
+                    "formBundleNo" -> "000012345678",
+                    "ihtPaymentReference" -> s"${submissionResponse.deceased.deceasedDetails.ihtRefNumber}-556789"
                   )
                 )
               )
             }
-          case _ =>
-            logger.debug("Could not parse body -> Bad request")
+          case e =>
+            logger.debug(s"Could not parse body -> Bad request, error: $e")
             Future.successful(BadRequest(hodBadRequestResponse))
         }
       case _ =>

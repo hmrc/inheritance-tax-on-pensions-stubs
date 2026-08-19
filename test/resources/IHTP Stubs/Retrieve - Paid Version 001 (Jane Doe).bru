@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp?pstr=24000001IN&paymentReferenceNumber=A975310/26C-271828&versionNumber=001
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp?pstr=24000001IN&paymentReferenceNumber=A975310/26C-999999&versionNumber=001
   body: none
   auth: none
 }
 
 params:query {
   pstr: 24000001IN
-  paymentReferenceNumber: A975310/26C-271828
+  paymentReferenceNumber: A975310/26C-999999
   versionNumber: 001
 }
 
@@ -22,16 +22,13 @@ headers {
   X-Originating-System: MDTP
   X-Receipt-Date: 2026-07-25T11:45:00Z
   X-Regime-Type: IHTP
-  X-Transmitting-System: MDTP
+  X-Transmitting-System: HIP
 }
 
 tests {
   test("Returns Jane Doe's paid version 001 report", function () {
       expect(res.getStatus()).to.equal(200);
-      expect(res.body.success.ihtpDetails.version).to.equal("001");
-      expect(res.body.success.ihtpDetails.status).to.equal("Paid");
-      expect(res.body.success.deceasedDetails.inheritanceTaxReference).to.equal("A975310/26C");
-      expect(res.body.success.deceasedDetails.firstForename).to.equal("Jane");
-      expect(res.body.success.deceasedDetails.secondForename).to.equal("Margaret");
+      expect(res.body.success.reportDetails.ihtVersion).to.equal("001");
+      expect(res.body.success.reportDetails.ihtPaid).to.equal("true");
   });
 }
