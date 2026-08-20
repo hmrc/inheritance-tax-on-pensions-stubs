@@ -114,7 +114,7 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
 
     "return 200-Ok for known paymentReference and versionNumber" in {
       val result = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A123456/25A-629671&versionNumber=001")
+        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A123456/25A629671&versionNumber=001")
       )
 
       status(result) mustBe Status.OK
@@ -187,13 +187,13 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004360")
       )
       val versionOneByPaymentReference = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A-999999&versionNumber=001")
+        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A999999&versionNumber=001")
       )
       val versionTwoByFbNumber = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004361")
       )
       val versionTwoByPaymentReference = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A-999999&versionNumber=002")
+        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A999999&versionNumber=002")
       )
 
       status(versionOneByPaymentReference) mustBe Status.OK
@@ -204,8 +204,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
 
     "return the additional paid version 001 reports by fbNumber and paymentReference" in {
       Seq(
-        ("119000004362", "F246810/26B-999999"),
-        ("119000004363", "A975310/26C-999999")
+        ("119000004362", "F246810/26B999999"),
+        ("119000004363", "A975310/26C999999")
       ).foreach { case (fbNumber, paymentReference) =>
         val byFbNumber = controller.getIhtpReport()(
           retrieveRequest(s"?pstr=24000001IN&fbNumber=$fbNumber")
@@ -233,8 +233,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         "?pstr=24000001IN&fbNumber=119000004360",
         "?pstr=24000001IN&fbNumber=119000004362",
         "?pstr=24000001IN&fbNumber=119000004363",
-        "?pstr=24000001IN&paymentReferenceNumber=A123456/25A-629671&versionNumber=001",
-        "?pstr=24000001IN&paymentReferenceNumber=A556789/26A-999999&versionNumber=001"
+        "?pstr=24000001IN&paymentReferenceNumber=A123456/25A629671&versionNumber=001",
+        "?pstr=24000001IN&paymentReferenceNumber=A556789/26A999999&versionNumber=001"
       ).foreach { queryString =>
         val result = controller.getIhtpReport()(retrieveRequest(queryString))
 

@@ -1,18 +1,18 @@
 meta {
   name: Retrieve - Success (paymentReference + version)
   type: http
-  seq: 9
+  seq: 10
 }
 
 get {
-  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp?pstr=24000001IN&paymentReferenceNumber=A123456/25A-629671&versionNumber=001
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp?pstr=24000001IN&paymentReferenceNumber=A123456/25A629671&versionNumber=001
   body: none
   auth: none
 }
 
 params:query {
   pstr: 24000001IN
-  paymentReferenceNumber: A123456/25A-629671
+  paymentReferenceNumber: A123456/25A629671
   versionNumber: 001
 }
 

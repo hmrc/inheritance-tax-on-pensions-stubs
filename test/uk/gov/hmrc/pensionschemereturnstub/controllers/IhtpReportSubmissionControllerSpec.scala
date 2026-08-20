@@ -46,14 +46,14 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "formBundleNo")(content) must not be empty
-      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
+      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
     }
 
     "return 200-Ok for a valid organisation PR request" in {
       val validData = Json.obj(
         "reportDetails" -> Json.obj(
           "pstr" -> "S2400000001",
-          "ihtPaymentReference" -> "A123456/25A"
+          "ihtPaymentReference" -> "A123456/25A556789"
         ),
         "deceased" -> Json.obj(
           "deceasedPersonalDetails" -> Json.obj(
@@ -113,7 +113,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "formBundleNo")(content) must not be empty
-      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A-556789"))
+      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
     }
 
     "return 400-BadRequest for an organisation request missing organisation name" in {

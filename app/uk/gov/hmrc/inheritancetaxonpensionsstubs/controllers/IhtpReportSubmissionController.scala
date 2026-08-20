@@ -55,7 +55,7 @@ class IhtpReportSubmissionController @Inject() (
                 Ok(
                   Json.obj(
                     "formBundleNo" -> "000012345678",
-                    "ihtPaymentReference" -> s"${submissionResponse.deceased.deceasedDetails.ihtRefNumber}-556789"
+                    "ihtPaymentReference" -> s"${submissionResponse.deceased.deceasedDetails.ihtRefNumber}556789"
                   )
                 )
               )

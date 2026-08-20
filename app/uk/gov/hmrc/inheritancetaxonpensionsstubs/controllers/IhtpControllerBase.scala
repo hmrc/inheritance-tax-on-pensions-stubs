@@ -26,7 +26,7 @@ import scala.concurrent.Future
 
 class IhtpControllerBase @Inject() (cc: ControllerComponents) extends BackendController(cc) with APIResponses {
 
-  def unprocessable(code: String, reason: String): Future[Result] =
+  private def unprocessable(code: String, reason: String): Future[Result] =
     Future.successful(
       UnprocessableEntity(
         Json.obj(
