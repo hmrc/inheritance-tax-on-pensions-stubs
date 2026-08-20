@@ -64,7 +64,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (JsPath \ "success" \ "pstr")(content) mustBe empty
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(
-        JsString("A654321/25A-392617")
+        JsString("A654321/25A392617")
       )
     }
 
@@ -81,7 +81,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       amendmentReports.size mustBe 2
       amendmentReports.map(report => (report \ "ihtpVersion").as[String]) mustBe Seq("001", "002")
       amendmentReports.map(report => (report \ "fbNumber").as[String]).distinct.size mustBe 2
-      amendmentReports.map(report => (report \ "paymentReference").as[String]).distinct mustBe Seq("A556789/26A-758204")
+      amendmentReports.map(report => (report \ "paymentReference").as[String]).distinct mustBe Seq("A556789/26A758204")
     }
 
     "return payment references in IHT reference plus six digit UPR format" in {
@@ -97,8 +97,8 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
           (report \ "paymentReference").asOpt[String].foreach { paymentReference =>
             val inheritanceTaxReference = (report \ "inheritanceTaxReference").as[String]
 
-            paymentReference must startWith(s"$inheritanceTaxReference-")
-            (paymentReference must fullyMatch).regex("""[AF]\d{6}/\d{2}[A-Z]-\d{6}""")
+            paymentReference must startWith(s"$inheritanceTaxReference")
+            (paymentReference must fullyMatch).regex("""[AF]\d{6}/\d{2}[A-Z]\d{6}""")
           }
         }
       }
@@ -117,9 +117,10 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
             (report \ "ihtpVersion").as[String] == "001"
         )
 
-      paidReports.map(report => (report \ "fbNumber").as[String]) mustBe Seq("119000004362", "119000004363")
+      paidReports
+        .map(report => (report \ "fbNumber").as[String]) mustBe Seq("119000004360", "119000004362", "119000004363")
       paidReports.map(report => (report \ "paymentReference").as[String]) mustBe
-        Seq("F246810/26B-314159", "A975310/26C-271828")
+        Seq("A556789/26A758204", "F246810/26B314159", "A975310/26C271828")
     }
 
     "return 200-Ok with only matching items when status is supplied" in {
@@ -132,7 +133,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val statuses =
         (content \ "success" \ "ihtpOverview").as[Seq[JsValue]].flatMap(item => (item \ "ihtpStatus").asOpt[String])
 
-      statuses.size mustBe 34
+      statuses.size mustBe 33
       statuses.distinct mustBe Seq("Not reconciled")
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
     }

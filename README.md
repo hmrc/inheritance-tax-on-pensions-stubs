@@ -131,7 +131,7 @@ Known PSTRs:
 - `pstr` - required
 - `fbNumber` - optional, used for specific record retrieval (12-digit pattern: `^[0-9]{12}$`)
 - `paymentReferenceNumber` - optional, must be used with `versionNumber`; format is the 11-character inheritance tax
-  reference followed by a hyphen and 6 digits (for example, `A123456/25A-556789`)
+  reference followed by 6 digits (for example, `A123456/25A556789`)
 - `versionNumber` - optional, must be used with `paymentReferenceNumber` (3-digit pattern: `^[0-9]{3}$`)
 
 **Parameter combinations**:
