@@ -8,10 +8,10 @@
     },
     "reportDetails": {
       "submissionDate": "2026-07-14T16:42:20Z",
+      "ihtPaymentDate": "2026-08-02",
       "ihtPaymentReference": "A556789/26A999999",
       "ihtVersion": "001",
-      "ihtPaid": "true",
-      "ihtPaymentDate": "2026-06-02"
+      "ihtPaid": "true"
     },
     "deceased": {
       "deceasedPersonalDetails": {
@@ -104,6 +104,7 @@
     "declarations": {
       "submittedBy": "PSA",
       "submitterID": "A2100005",
+      "submitterName": "PSA Name",
       "psaDeclaration": {
         "psaDeclaration1": "true",
         "psaDeclaration2": "true"

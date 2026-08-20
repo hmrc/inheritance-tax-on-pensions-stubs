@@ -105,6 +105,7 @@
     "declarations": {
       "submittedBy": "PSA",
       "submitterID": "A2100005",
+      "submitterName": "PSA Name",
       "psaDeclaration": {
         "psaDeclaration1": "true",
         "psaDeclaration2": "true"

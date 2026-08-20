@@ -8,10 +8,10 @@
     },
     "reportDetails": {
       "submissionDate": "2026-07-14T16:42:20Z",
+      "ihtPaymentDate": "2026-08-02",
       "ihtPaymentReference": "A654321/25A999999",
       "ihtVersion": "001",
-      "ihtPaid": "true",
-      "ihtPaymentDate": "2026-06-02"
+      "ihtPaid": "true"
     },
     "deceased": {
       "deceasedPersonalDetails": {
@@ -108,10 +108,12 @@
     "declarations": {
       "submittedBy": "PSP",
       "submitterID": "A1816536",
+      "submitterName": "PSP Name",
       "pspDeclaration": {
         "pspDeclaration1": "true",
         "pspDeclaration2": "true",
-        "psaid": "A2100005"
+        "psaid": "A2100005",
+        "schemeAdministrator": "PSA Name"
       }
     }
   }
