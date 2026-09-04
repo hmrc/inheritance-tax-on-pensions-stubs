@@ -36,8 +36,8 @@
         "surname": "Lastname"
       },
       "prAddress": {
-        "addressLine1": "1 ABCDE Street",
-        "addressLine2": "FGHIJ Town",
+        "addressline1": "1 ABCDE Street",
+        "addressline2": "FGHIJ Town",
         "postcode": "AA1 1AA",
         "country": "GB"
       }
@@ -63,8 +63,8 @@
             "reasonNoNINO": "Test data does not include a National Insurance number"
           },
           "beneficiaryAddress": {
-            "addressLine1": "1 Test Street",
-            "addressLine2": "Test Town",
+            "addressline1": "1 Test Street",
+            "addressline2": "Test Town",
             "postcode": "TE57 0AA",
             "country": "GB"
           }
@@ -87,8 +87,8 @@
             "reasonNoNINO": "Test data does not include a National Insurance number"
           },
           "beneficiaryAddress": {
-            "addressLine1": "1 ABCDE Street",
-            "addressLine2": "FGHIJ Town",
+            "addressline1": "1 ABCDE Street",
+            "addressline2": "FGHIJ Town",
             "postcode": "AA1 1AA",
             "country": "GB"
           }

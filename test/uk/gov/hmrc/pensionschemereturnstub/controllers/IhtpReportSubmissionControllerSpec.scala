@@ -80,8 +80,8 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
             "surname" -> "Surname"
           ),
           "prAddress" -> Json.obj(
-            "addressLine1" -> "1 ABCDE Street",
-            "addressLine2" -> "FGHIJ Town",
+            "addressline1" -> "1 ABCDE Street",
+            "addressline2" -> "FGHIJ Town",
             "postcode" -> "ZZ99 1AA",
             "country" -> "GB"
           )

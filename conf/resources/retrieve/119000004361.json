@@ -37,8 +37,8 @@
         "surname": "Surname"
       },
       "prAddress": {
-        "addressLine1": "1 AB Street",
-        "addressLine2": "ABtown",
+        "addressline1": "1 AB Street",
+        "addressline2": "ABtown",
         "postcode": "YY1 1YY",
         "country": "GB"
       }
@@ -67,8 +67,8 @@
             "reasonForNoNino": "Reason for no national insurance number"
           },
           "beneficiaryAddress": {
-            "addressLine1": "21 RB Road",
-            "addressLine2": "RBtown",
+            "addressline1": "21 RB Road",
+            "addressline2": "RBtown",
             "postcode": "LL1 4LL",
             "country": "GB"
           }
@@ -92,8 +92,8 @@
             "reasonForNoNino": "Reason for no national insurance number"
             },
           "beneficiaryAddress": {
-            "addressLine1": "8 SB Lane",
-            "addressLine2": "SBtown",
+            "addressline1": "8 SB Lane",
+            "addressline2": "SBtown",
             "postcode": "SS1 2SS",
             "country": "GB"
             }
