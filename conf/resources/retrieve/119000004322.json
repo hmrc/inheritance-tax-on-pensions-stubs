@@ -37,8 +37,8 @@
         "surname": "Surname"
       },
       "prAddress": {
-        "addressLine1": "2 XYZ Street",
-        "addressLine2": "London",
+        "addressline1": "2 XYZ Street",
+        "addressline2": "London",
         "postcode": "AB1 2CD",
         "country": "GB"
       }
@@ -64,10 +64,10 @@
             "reasonForNoNINO": "Test"
             },
           "beneficiaryAddress": {
-            "addressLine1": "1 ABCDE Street",
-            "addressLine2": "FGHIJ Town",
-            "addressLine3": "line3",
-            "addressLine4": "line4",
+            "addressline1": "1 ABCDE Street",
+            "addressline2": "FGHIJ Town",
+            "addressline3": "line3",
+            "addressline4": "line4",
             "postcode": "ZZ1 1ZZ",
             "country": "GB"
             }
@@ -90,10 +90,10 @@
             "reasonForNoNINO": "Test"
             },
           "beneficiaryAddress": {
-            "addressLine1": "1 ABCDE Street",
-            "addressLine2": "FGHIJ Town",
-            "addressLine3": "line3",
-            "addressLine4": "line4",
+            "addressline1": "1 ABCDE Street",
+            "addressline2": "FGHIJ Town",
+            "addressline3": "line3",
+            "addressline4": "line4",
             "postcode": "ZZ1 1ZZ",
             "country": "GB"
             }
