@@ -1,52 +1,54 @@
 {
-  "reportDetails": {
-    "pstr": "S2400000001"
-  },
-  "deceased": {
-    "deceasedPersonalDetails": {
-            "title": "Mr",
-            "firstForename": "Firstname",
-            "secondForename": "Secondname",
-            "surname": "Surname",
-            "ninoExist": "No",
-            "reasonNoNINO": "Reason for no national insurance number"
+  "ihtNoticeRequest": {
+    "reportDetails": {
+      "pstr": "S2400000001"
     },
-    "deceasedDetails": {
-            "deceasedsDOB": "1950-01-01",
-            "deceasedsDOD": "2026-01-01",
-            "ihtRefNumber": "A123456/25D"
-    }
-  },
-  "personalRep": {
-    "typeOfPR": "01",
-    "prContactDetails": {
-      "title": "Mr",
-      "firstForename": "Firstname",
-      "secondForename": "Secondname",
-      "surname": "Surname"
+    "deceased": {
+      "deceasedPersonalDetails": {
+        "title": "Mr",
+        "firstForename": "Firstname",
+        "secondForename": "Secondname",
+        "surname": "Surname",
+        "ninoExist": "No",
+        "reasonNoNINO": "Reason for no national insurance number"
+      },
+      "deceasedDetails": {
+        "deceasedsDob": "1950-01-01",
+        "deceasedsDod": "2026-01-01",
+        "ihtRefNumber": "A123456/25D"
+      }
     },
-    "prAddress": {
-      "addressline1": "1 ABCDE Street",
-      "addressline2": "FGHIJ Town",
-      "postcode": "ZZ99 1AA",
-      "country": "GB"
-    }
-  },
-  "ihTaxInformation": {
-    "dateNoticeReceived": "2026-03-27",
-    "noticeSubmittedByPR": "Yes",
-    "knownBeneficiaries": "No",
-    "totalIHTPayable": 1000.00,
-    "totalInterestPayable": 50.00,
-    "total": 1050.00
-  },
-  "declarations": {
-    "submittedBy": "PSP",
-    "submitterID": "21000005",
-    "pspDeclaration": {
-      "pspDeclaration1": "false",
-      "pspDeclaration2": "false",
-      "psaid": "A2100005"
+    "personalRep": {
+      "typeOfPr": "01",
+      "prContactDetails": {
+        "title": "Mr",
+        "firstForename": "Firstname",
+        "secondForename": "Secondname",
+        "surname": "Surname"
+      },
+      "prAddress": {
+        "addressline1": "1 ABCDE Street",
+        "addressline2": "FGHIJ Town",
+        "postcode": "ZZ99 1AA",
+        "country": "GB"
+      }
+    },
+    "ihTaxInformation": {
+      "dateNoticeReceived": "2026-03-27",
+      "noticeSubmittedByPr": "Yes",
+      "knownBeneficiaries": "No",
+      "totalIhtPayable": 1000.00,
+      "totalInterestPayable": 50.00,
+      "total": 1050.00
+    },
+    "declarations": {
+      "submittedBy": "PSP",
+      "submitterId": "21000005",
+      "pspDeclaration": {
+        "pspDeclaration1": true,
+        "pspDeclaration2": false,
+        "psaid": "A2100005"
+      }
     }
   }
 }

@@ -40,7 +40,8 @@ class IhtpReportSubmissionController @Inject() (
 
         Try(body.as[IhtpPaymentNoticeSubmission]) match {
           case Success(submissionResponse) =>
-            val significantChar: String = submissionResponse.deceased.deceasedDetails.ihtRefNumber.takeRight(1)
+            val significantChar: String =
+              submissionResponse.ihtNoticeRequest.deceased.deceasedDetails.ihtRefNumber.takeRight(1)
 
             if (significantChar == BAD_REQUEST_CHAR) {
               invalidSrn400Response
@@ -52,10 +53,14 @@ class IhtpReportSubmissionController @Inject() (
               unprocessable422Response
             } else {
               Future.successful(
-                Ok(
+                Created(
                   Json.obj(
-                    "formBundleNo" -> "000012345678",
-                    "ihtPaymentReference" -> s"${submissionResponse.deceased.deceasedDetails.ihtRefNumber}556789"
+                    "success" -> Json.obj(
+                      "ihtResponse" -> Json.obj(
+                        "formBundleNo" -> "000012345678",
+                        "ihtPaymentReference" -> s"${submissionResponse.ihtNoticeRequest.deceased.deceasedDetails.ihtRefNumber}556789"
+                      )
+                    )
                   )
                 )
               )
