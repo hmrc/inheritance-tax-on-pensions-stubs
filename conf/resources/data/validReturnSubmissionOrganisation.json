@@ -1,32 +1,55 @@
 {
-  "reportDetails": {
-    "pstr": "S2400000001"
-  },
-  "deceasedDetails": {
-    "inheritanceTaxReference": "A123456/25A",
-    "title": "Mr",
-    "firstForename": "Firstname",
-    "secondForename": "Secondname",
-    "surname": "Surname",
-    "dateOfBirth": "1950-01-01",
-    "dateOfDeath": "2026-01-01",
-    "nino": null,
-    "reasonForNoNino": "Reason for no national insurance number"
-  },
-  "prDetails": {
-    "organisation": {
-      "title": "Test Organisation",
-      "firstForename": "FirstnameA",
-      "secondForename": "SecondnameB",
-      "surname": "Surname",
-      "addressline1": "1 ABCDE Street",
-      "addressline2": "FGHIJ Town",
-      "ukPostcode": "ZZ99 1AA",
-      "country": "GB"
+  "ihtNoticeRequest": {
+    "reportDetails": {
+      "pstr": "S2400000001"
+    },
+    "deceased": {
+      "deceasedPersonalDetails": {
+        "title": "Mr",
+        "firstForename": "Firstname",
+        "secondForename": "Secondname",
+        "surname": "Surname",
+        "ninoExist": "No",
+        "reasonNoNINO": "Reason for no national insurance number"
+      },
+      "deceasedDetails": {
+        "deceasedsDob": "1950-01-01",
+        "deceasedsDod": "2026-01-01",
+        "ihtRefNumber": "A123456/25A"
+      }
+    },
+    "personalRep": {
+      "typeOfPr": "02",
+      "prContactDetails": {
+        "orgName": "Test Organisation",
+        "title": "Mr",
+        "firstForename": "FirstnameA",
+        "secondForename": "SecondnameB",
+        "surname": "Surname"
+      },
+      "prAddress": {
+        "addressline1": "1 ABCDE Street",
+        "addressline2": "FGHIJ Town",
+        "postcode": "ZZ99 1AA",
+        "country": "GB"
+      }
+    },
+    "ihTaxInformation": {
+      "dateNoticeReceived": "2026-03-27",
+      "noticeSubmittedByPr": "Yes",
+      "knownBeneficiaries": "No",
+      "totalIhtPayable": 1000.00,
+      "totalInterestPayable": 50.00,
+      "total": 1050.00
+    },
+    "declarations": {
+      "submittedBy": "PSP",
+      "submitterId": "21000005",
+      "pspDeclaration": {
+        "pspDeclaration1": true,
+        "pspDeclaration2": false,
+        "psaid": "A2100005"
+      }
     }
-  },
-  "ihtTaxInformation": {
-    "dateThePensionSchemeReceivedNoticeToPay": "2026-03-27",
-    "didThePersonalRepresentativeSubmitTheNotice": "Yes"
   }
 }

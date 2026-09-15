@@ -1,5 +1,5 @@
 {
-  "success": {
+  "ihtNoticeResponse": {
     "schemeDetails": {
       "pstr": "24000036IN",
       "schemeName": "Testdata Scheme",
@@ -11,7 +11,7 @@
       "ihtPaymentDate": "2027-02-01",
       "ihtPaymentReference": "A240036/26A836241",
       "ihtVersion": "002",
-      "ihtPaid": "true"
+      "ihtPaid": true
     },
     "deceased": {
       "deceasedPersonalDetails": {
@@ -23,13 +23,13 @@
         "reasonNoNINO": "Test data does not include a National Insurance number"
       },
       "deceasedDetails": {
-        "deceasedsDOB": "1948-03-12",
-        "deceasedsDOD": "2026-01-15",
+        "deceasedsDob": "1948-03-12",
+        "deceasedsDod": "2026-01-15",
         "ihtRefNumber": "A240036/26A"
       }
     },
     "personalRep": {
-      "typeOfPR": "01",
+      "typeOfPr": "01",
       "prContactDetails": {
         "title": "Mr",
         "firstForename": "Firstname",
@@ -46,13 +46,13 @@
     "ihTaxInformation": {
       "ihTaxChangeFlag": "Yes",
       "dateNoticeReceived": "2026-02-10",
-      "noticeSubmittedByPR": "Yes",
+      "noticeSubmittedByPr": "Yes",
       "knownBeneficiaries": "Yes",
-      "totalIHTPayable": 120.00,
+      "totalIhtPayable": 120.00,
       "totalInterestPayable": 12.00,
       "total": 132.00
     },
-    "beneficiaries": [
+    "beneficiary": [
       {
         "beneficiaryChangeFlag": "Yes",
         "beneficiaryType": "01",
@@ -73,7 +73,7 @@
           }
         },
         "beneficiaryPaymentDetails": {
-          "beneficiaryIHTPayable": 80.00,
+          "beneficiaryIhtPayable": 80.00,
           "beneficiaryInterestPayable": 8.00,
           "beneficiaryTotal": 88.00
         }
@@ -97,7 +97,7 @@
           }
         },
         "beneficiaryPaymentDetails": {
-          "beneficiaryIHTPayable": 40.00,
+          "beneficiaryIhtPayable": 40.00,
           "beneficiaryInterestPayable": 4.00,
           "beneficiaryTotal": 44.00
         }
@@ -105,11 +105,11 @@
     ],
     "declarations": {
       "submittedBy": "PSA",
-      "submitterID": "A2100005",
+      "submitterId": "A2100005",
       "submitterName": "Testnamefirst Testnamelast",
       "psaDeclaration": {
-        "psaDeclaration1": "true",
-        "psaDeclaration2": "true"
+        "psaDeclaration1": true,
+        "psaDeclaration2": true
       }
     }
   }

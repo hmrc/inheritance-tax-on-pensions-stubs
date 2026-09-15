@@ -49,30 +49,32 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       header("correlationid", result).value mustBe correlationId
 
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000001IN"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
-      (JsPath \ "success" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A629671"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000001IN"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
+      (JsPath \ "ihtNoticeResponse" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(
+        JsString("A123456/25A629671")
+      )
 
       (JsPath \ "fbNumber")(content) mustBe empty
-      (JsPath \ "success" \ "deceased")(content) must not be empty
-      (JsPath \ "success" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
-      (JsPath \ "success" \ "deceased" \ "deceasedDetails")(content) must not be empty
-      (JsPath \ "success" \ "personalRep")(content) must not be empty
-      (JsPath \ "success" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "personalRep" \ "typeOfPR")(content) mustBe List(JsString("01"))
-      (JsPath \ "success" \ "personalRep" \ "prContactDetails")(content) must not be empty
-      (JsPath \ "success" \ "personalRep" \ "prAddress")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "typeOfPr")(content) mustBe List(JsString("01"))
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prAddress")(content) must not be empty
 
-      (JsPath \ "success" \ "ihTaxInformation")(content) must not be empty
-      (JsPath \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "beneficiaries")(content) must not be empty
-      (content \ "success" \ "beneficiaries")
+      (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "beneficiary")(content) must not be empty
+      (content \ "ihtNoticeResponse" \ "beneficiary")
         .as[Seq[JsObject]]
         .map(b => b.keys must not contain "beneficiaryChangeFlag")
-      (JsPath \ "success" \ "declarations")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "declarations")(content) must not be empty
     }
 
     "return 200-Ok for a second known fbNumber" in {
@@ -82,70 +84,76 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
 
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000002IN"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
-      (JsPath \ "success" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(JsString("A654321/25A999999"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000002IN"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
+      (JsPath \ "ihtNoticeResponse" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(
+        JsString("A654321/25A999999")
+      )
 
       (JsPath \ "fbNumber")(content) mustBe empty
-      (JsPath \ "success" \ "deceased")(content) must not be empty
-      (JsPath \ "success" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
-      (JsPath \ "success" \ "deceased" \ "deceasedDetails")(content) must not be empty
-      (JsPath \ "success" \ "personalRep")(content) must not be empty
-      (JsPath \ "success" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "personalRep" \ "typeOfPR")(content) mustBe List(JsString("01"))
-      (JsPath \ "success" \ "personalRep" \ "prContactDetails")(content) must not be empty
-      (JsPath \ "success" \ "personalRep" \ "prAddress")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "typeOfPr")(content) mustBe List(JsString("01"))
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prAddress")(content) must not be empty
 
-      (JsPath \ "success" \ "ihTaxInformation")(content) must not be empty
-      (JsPath \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "beneficiaries")(content) must not be empty
-      (content \ "success" \ "beneficiaries")
+      (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "beneficiary")(content) must not be empty
+      (content \ "ihtNoticeResponse" \ "beneficiary")
         .as[Seq[JsObject]]
         .map(b => b.keys must not contain "beneficiaryChangeFlag")
-      (JsPath \ "success" \ "declarations")(content) must not be empty
-      (JsPath \ "success" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSP"))
-      (JsPath \ "success" \ "declarations" \ "submitterID")(content) mustBe List(JsString("A1816536"))
-      (JsPath \ "success" \ "declarations" \ "pspDeclaration" \ "psaid")(content) mustBe List(JsString("A2100005"))
+      (JsPath \ "ihtNoticeResponse" \ "declarations")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSP"))
+      (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submitterId")(content) mustBe List(JsString("A1816536"))
+      (JsPath \ "ihtNoticeResponse" \ "declarations" \ "pspDeclaration" \ "psaid")(content) mustBe List(
+        JsString("A2100005")
+      )
 
     }
 
-    "return 200-Ok for known paymentReference and versionNumber" in {
+    "return 200-Ok for known ihtPaymentReference and versionNumber" in {
       val result = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A123456/25A629671&versionNumber=001")
+        retrieveRequest("?pstr=24000001IN&ihtPaymentReference=A123456/25A629671&versionNumber=001")
       )
 
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
-      (JsPath \ "success" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000001IN"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
-      (JsPath \ "success" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
-      (JsPath \ "success" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A629671"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "pstr")(content) mustBe List(JsString("24000001IN"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeName")(content) mustBe List(JsString("Test Scheme"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeStartDate")(content) mustBe List(JsString("1980-01-01"))
+      (JsPath \ "ihtNoticeResponse" \ "schemeDetails" \ "schemeEndDate")(content) mustBe List(JsString("2030-01-01"))
+      (JsPath \ "ihtNoticeResponse" \ "reportDetails" \ "ihtPaymentReference")(content) mustBe List(
+        JsString("A123456/25A629671")
+      )
 
       (JsPath \ "fbNumber")(content) mustBe empty
-      (JsPath \ "success" \ "deceased")(content) must not be empty
-      (JsPath \ "success" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
-      (JsPath \ "success" \ "deceased" \ "deceasedDetails")(content) must not be empty
-      (JsPath \ "success" \ "personalRep")(content) must not be empty
-      (JsPath \ "success" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "personalRep" \ "typeOfPR")(content) mustBe List(JsString("01"))
-      (JsPath \ "success" \ "personalRep" \ "prContactDetails")(content) must not be empty
-      (JsPath \ "success" \ "personalRep" \ "prAddress")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedPersonalDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "deceased" \ "deceasedDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "typeOfPr")(content) mustBe List(JsString("01"))
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prAddress")(content) must not be empty
 
-      (JsPath \ "success" \ "ihTaxInformation")(content) must not be empty
-      (JsPath \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
-      (JsPath \ "success" \ "beneficiaries")(content) must not be empty
-      (content \ "success" \ "beneficiaries")
+      (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "beneficiary")(content) must not be empty
+      (content \ "ihtNoticeResponse" \ "beneficiary")
         .as[Seq[JsObject]]
         .map(b => b.keys must not contain "beneficiaryChangeFlag")
-      (JsPath \ "success" \ "declarations")(content) must not be empty
-      (JsPath \ "success" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSA"))
-      (JsPath \ "success" \ "declarations" \ "submitterID")(content) mustBe List(JsString("A2100005"))
-      (JsPath \ "success" \ "declarations" \ "pspDeclaration" \ "psaid")(content) mustBe empty
+      (JsPath \ "ihtNoticeResponse" \ "declarations")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSA"))
+      (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submitterId")(content) mustBe List(JsString("A2100005"))
+      (JsPath \ "ihtNoticeResponse" \ "declarations" \ "pspDeclaration" \ "psaid")(content) mustBe empty
     }
 
     "return the pinned and amended versions of a report by fbNumber" in {
@@ -162,38 +170,35 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       val versionOne = contentAsJson(versionOneResult)
       val versionTwo = contentAsJson(versionTwoResult)
 
-      (versionOne \ "success" \ "deceased" \ "deceasedPersonalDetails") mustBe
-        (versionTwo \ "success" \ "deceased" \ "deceasedPersonalDetails")
+      (versionOne \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag").toOption mustBe None
+      (versionTwo \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag").as[String] mustBe "Yes"
 
-      (versionOne \ "success" \ "deceased" \ "deceasedChangeFlag").toOption mustBe None
-      (versionTwo \ "success" \ "deceased" \ "deceasedChangeFlag").toOption mustBe None
-
-      (versionOne \ "success" \ "beneficiaries")
+      (versionOne \ "ihtNoticeResponse" \ "beneficiary")
         .as[Seq[JsObject]]
         .map(b => b.keys must not contain "beneficiaryChangeFlag")
 
-      (versionTwo \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag").as[String] mustBe "Yes"
-      (versionTwo \ "success" \ "beneficiaries").as[Seq[JsObject]].length mustBe 2
-      (versionTwo \ "success" \ "beneficiaries")
+      (versionTwo \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag").as[String] mustBe "Yes"
+      (versionTwo \ "ihtNoticeResponse" \ "beneficiary").as[Seq[JsObject]].length mustBe 2
+      (versionTwo \ "ihtNoticeResponse" \ "beneficiary")
         .as[Seq[JsObject]]
         .map(b => (b \ "beneficiaryChangeFlag").toOption.map(_.as[JsString])) mustBe Seq(Some(JsString("Yes")), None)
 
-      (versionOne \ "success" \ "ihTaxInformation" \ "totalIHTPayable").as[Double] mustBe 100.00
-      (versionTwo \ "success" \ "ihTaxInformation" \ "totalIHTPayable").as[Double] mustBe 120.00
+      (versionOne \ "ihtNoticeResponse" \ "ihTaxInformation" \ "totalIhtPayable").as[Double] mustBe 100.00
+      (versionTwo \ "ihtNoticeResponse" \ "ihTaxInformation" \ "totalIhtPayable").as[Double] mustBe 120.00
     }
 
-    "return each amendment version by paymentReference and versionNumber" in {
+    "return each amendment version by ihtPaymentReference and versionNumber" in {
       val versionOneByFbNumber = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004360")
       )
       val versionOneByPaymentReference = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A999999&versionNumber=001")
+        retrieveRequest("?pstr=24000001IN&ihtPaymentReference=A556789/26A999999&versionNumber=001")
       )
       val versionTwoByFbNumber = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN&fbNumber=119000004361")
       )
       val versionTwoByPaymentReference = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A556789/26A999999&versionNumber=002")
+        retrieveRequest("?pstr=24000001IN&ihtPaymentReference=A556789/26A999999&versionNumber=002")
       )
 
       status(versionOneByPaymentReference) mustBe Status.OK
@@ -202,17 +207,17 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       contentAsJson(versionTwoByPaymentReference) mustBe contentAsJson(versionTwoByFbNumber)
     }
 
-    "return the additional paid version 001 reports by fbNumber and paymentReference" in {
+    "return the additional paid version 001 reports by fbNumber and ihtPaymentReference" in {
       Seq(
         ("119000004362", "F246810/26B999999"),
         ("119000004363", "A975310/26C999999")
-      ).foreach { case (fbNumber, paymentReference) =>
+      ).foreach { case (fbNumber, ihtPaymentReference) =>
         val byFbNumber = controller.getIhtpReport()(
           retrieveRequest(s"?pstr=24000001IN&fbNumber=$fbNumber")
         )
         val byPaymentReference = controller.getIhtpReport()(
           retrieveRequest(
-            s"?pstr=24000001IN&paymentReferenceNumber=$paymentReference&versionNumber=001"
+            s"?pstr=24000001IN&ihtPaymentReference=$ihtPaymentReference&versionNumber=001"
           )
         )
 
@@ -221,8 +226,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         contentAsJson(byPaymentReference) mustBe contentAsJson(byFbNumber)
 
         val content = contentAsJson(byFbNumber)
-        (content \ "success" \ "reportDetails" \ "ihtPaymentReference")
-          .as[String] mustBe paymentReference.replace("-", "")
+        (content \ "ihtNoticeResponse" \ "reportDetails" \ "ihtPaymentReference")
+          .as[String] mustBe ihtPaymentReference.replace("-", "")
       }
     }
 
@@ -237,21 +242,22 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         "?pstr=24000036IN&fbNumber=119000004366",
         "?pstr=00000042IN&fbNumber=119000004368",
         "?pstr=00000042IN&fbNumber=119000004370",
-        "?pstr=24000001IN&paymentReferenceNumber=A123456/25A629671&versionNumber=001",
-        "?pstr=24000001IN&paymentReferenceNumber=A556789/26A999999&versionNumber=001"
+        "?pstr=24000001IN&ihtPaymentReference=A123456/25A629671&versionNumber=001",
+        "?pstr=24000001IN&ihtPaymentReference=A556789/26A999999&versionNumber=001"
       ).foreach { queryString =>
         val result = controller.getIhtpReport()(retrieveRequest(queryString))
 
         status(result) mustBe Status.OK
         val content = contentAsJson(result)
 
-        val beneficiaryChangeFlags = (content \ "success" \ "beneficiaries")
+        val beneficiaryChangeFlags = (content \ "ihtNoticeResponse" \ "beneficiary")
           .as[Seq[JsObject]]
           .map(b => (b \ "beneficiaryChangeFlag").toOption)
 
-        val deceasedChangeFlag = (content \ "success" \ "deceased" \ "deceasedChangeFlag").toOption
-        val prChangeFlag = (content \ "success" \ "personalRep" \ "prChangeFlag").toOption
-        val ihTaxInformationChangeFlag = (content \ "success" \ "ihTaxInformation" \ "ihTaxChangeFlag").toOption
+        val deceasedChangeFlag = (content \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag").toOption
+        val prChangeFlag = (content \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag").toOption
+        val ihTaxInformationChangeFlag =
+          (content \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag").toOption
 
         val allChangeFlags =
           beneficiaryChangeFlags ++ Seq(deceasedChangeFlag, prChangeFlag, ihTaxInformationChangeFlag)
@@ -282,9 +288,9 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "errors" \ "text")(contentAsJson(result)) mustBe List(JsString("Request could not be processed"))
     }
 
-    "return 400-BadRequest for invalid parameter combination (fbNumber with paymentReferenceNumber)" in {
+    "return 400-BadRequest for invalid parameter combination (fbNumber with ihtPaymentReference)" in {
       val result = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&fbNumber=119000004320&paymentReferenceNumber=A123456/25A-629671")
+        retrieveRequest("?pstr=24000001IN&fbNumber=119000004320&ihtPaymentReference=A123456/25A-629671")
       )
 
       status(result) mustBe Status.BAD_REQUEST
@@ -298,7 +304,7 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       contentAsJson(result) mustBe hodBadRequestResponse
     }
 
-    "return 400-BadRequest when both fbNumber and paymentReferenceNumber are missing" in {
+    "return 400-BadRequest when both fbNumber and ihtPaymentReference are missing" in {
       val result = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN")
       )
@@ -307,16 +313,16 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       contentAsJson(result) mustBe hodBadRequestResponse
     }
 
-    "return 400-BadRequest when paymentReferenceNumber is provided without versionNumber" in {
+    "return 400-BadRequest when ihtPaymentReference is provided without versionNumber" in {
       val result = controller.getIhtpReport()(
-        retrieveRequest("?pstr=24000001IN&paymentReferenceNumber=A123456/25A-629671")
+        retrieveRequest("?pstr=24000001IN&ihtPaymentReference=A123456/25A-629671")
       )
 
       status(result) mustBe Status.BAD_REQUEST
       contentAsJson(result) mustBe hodBadRequestResponse
     }
 
-    "return 400-BadRequest when versionNumber is provided without paymentReferenceNumber" in {
+    "return 400-BadRequest when versionNumber is provided without ihtPaymentReference" in {
       val result = controller.getIhtpReport()(
         retrieveRequest("?pstr=24000001IN&versionNumber=001")
       )
