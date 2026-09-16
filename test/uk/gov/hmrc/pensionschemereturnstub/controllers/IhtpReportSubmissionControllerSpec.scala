@@ -38,82 +38,33 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
 
   "POST ihtp report" must {
 
-    "return 200-Ok for a valid request" in {
+    "return 201-Created for a valid request" in {
       val validData = jsonUtils.readJsonFile(filePath = "conf/resources/data/validReturnSubmission.json")
       val postRequest = fakePostRequest.withJsonBody(validData)
 
       val result = controller.postIhtpReport()(postRequest)
-      status(result) mustBe Status.OK
+      status(result) mustBe Status.CREATED
       val content = contentAsJson(result)
-      (JsPath \ "formBundleNo")(content) must not be empty
-      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
+      (JsPath \ "success" \ "ihtResponse" \ "formBundleNo")(content) must not be empty
+      (JsPath \ "success" \ "ihtResponse" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
     }
 
-    "return 200-Ok for a valid organisation PR request" in {
-      val validData = Json.obj(
-        "reportDetails" -> Json.obj(
-          "pstr" -> "S2400000001",
-          "ihtPaymentReference" -> "A123456/25A556789"
-        ),
-        "deceased" -> Json.obj(
-          "deceasedPersonalDetails" -> Json.obj(
-            "title" -> "Mr",
-            "firstForename" -> "Firstname",
-            "secondForename" -> "Secondname",
-            "surname" -> "Surname",
-            "ninoExist" -> "No",
-            "reasonNoNINO" -> "Reason for no national insurance number"
-          ),
-          "deceasedDetails" -> Json.obj(
-            "deceasedsDOB" -> "1950-01-01",
-            "deceasedsDOD" -> "2026-01-01",
-            "ihtRefNumber" -> "A123456/25A"
-          )
-        ),
-        "personalRep" -> Json.obj(
-          "typeOfPR" -> "02",
-          "prContactDetails" -> Json.obj(
-            "orgName" -> "Test Organisation",
-            "title" -> "Ms",
-            "firstForename" -> "FirstnameA",
-            "secondForename" -> "Ann",
-            "surname" -> "Surname"
-          ),
-          "prAddress" -> Json.obj(
-            "addressline1" -> "1 ABCDE Street",
-            "addressline2" -> "FGHIJ Town",
-            "postcode" -> "ZZ99 1AA",
-            "country" -> "GB"
-          )
-        ),
-        "ihTaxInformation" -> Json.obj(
-          "dateNoticeReceived" -> "2026-03-27",
-          "noticeSubmittedByPR" -> "Yes",
-          "knownBeneficiaries" -> "No",
-          "totalIHTPayable" -> 1000.00,
-          "totalInterestPayable" -> 50.00,
-          "total" -> 1050.00
-        ),
-        "declarations" -> Json.obj(
-          "submittedBy" -> "PSA",
-          "submitterID" -> "TODO",
-          "psaDeclaration" -> Json.obj(
-            "psaDeclaration1" -> "false",
-            "psaDeclaration2" -> "false"
-          )
-        )
-      )
-      validData.validate[IhtpPaymentNoticeSubmission].map(_.personalRep.prContactDetails) mustBe JsSuccess(
-        PrContactDetails(Some("Test Organisation"), Some("Ms"), "FirstnameA", Some("Ann"), "Surname")
+    "return 201-Created for a valid organisation PR request" in {
+      val validData = jsonUtils.readJsonFile(filePath = "conf/resources/data/validReturnSubmissionOrganisation.json")
+
+      validData
+        .validate[IhtpPaymentNoticeSubmission]
+        .map(_.ihtNoticeRequest.personalRep.prContactDetails) mustBe JsSuccess(
+        PrContactDetails(Some("Test Organisation"), Some("Mr"), "FirstnameA", Some("SecondnameB"), "Surname")
       )
 
       val postRequest = fakePostRequest.withJsonBody(validData)
 
       val result = controller.postIhtpReport()(postRequest)
-      status(result) mustBe Status.OK
+      status(result) mustBe Status.CREATED
       val content = contentAsJson(result)
-      (JsPath \ "formBundleNo")(content) must not be empty
-      (JsPath \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
+      (JsPath \ "success" \ "ihtResponse" \ "formBundleNo")(content) must not be empty
+      (JsPath \ "success" \ "ihtResponse" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
     }
 
     "return 400-BadRequest for an organisation request missing organisation name" in {

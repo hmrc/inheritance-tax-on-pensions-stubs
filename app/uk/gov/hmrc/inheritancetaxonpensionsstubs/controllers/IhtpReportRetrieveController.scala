@@ -32,14 +32,14 @@ class IhtpReportRetrieveController @Inject() (
   def getIhtpReport: Action[AnyContent] = Action.async { implicit request =>
     val pstr = request.getQueryString("pstr")
     val fbNumber = request.getQueryString("fbNumber")
-    val paymentReferenceNumber = request.getQueryString("paymentReferenceNumber")
+    val ihtPaymentReference = request.getQueryString("ihtPaymentReference")
     val versionNumber = request.getQueryString("versionNumber")
 
     pstr match {
       case None =>
         Future.successful(BadRequest(hodBadRequestResponse))
       case Some(pstrValue) =>
-        (fbNumber, paymentReferenceNumber, versionNumber) match {
+        (fbNumber, ihtPaymentReference, versionNumber) match {
           case (Some(_), None, None) =>
             handleRetrieval(fbNumber.get, pstrValue)
           case (None, Some(prn), Some(vn)) =>
@@ -57,7 +57,7 @@ class IhtpReportRetrieveController @Inject() (
   ): Future[Result] =
     resourceService.getResource("retrieve", identifier) match {
       case Some(json) =>
-        val resourcePstr = (json \ "success" \ "schemeDetails" \ "pstr").asOpt[String]
+        val resourcePstr = (json \ "ihtNoticeResponse" \ "schemeDetails" \ "pstr").asOpt[String]
         if (resourcePstr.contains(pstr)) {
           Future.successful(
             withCorrelationId(Ok(json))

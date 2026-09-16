@@ -9,7 +9,7 @@ Pension Scheme Practitioners use this service for reporting IHT due on unused pe
 
 ### Submit IHTP report
 
-- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp`
+- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp-payment-notice`
 - **Method**: `POST`
 
 The body of the payload is the report details built from user answers to be submitted down to ETMP.
@@ -130,27 +130,27 @@ against representative obsolete versions.
 
 ### Get IHTP report
 
-- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp`
+- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp-payment-notice`
 - **Method**: `GET`
 
 **Query parameters**:
 
 - `pstr` - required
 - `fbNumber` - optional, used for specific record retrieval (12-digit pattern: `^[0-9]{12}$`)
-- `paymentReferenceNumber` - optional, must be used with `versionNumber`; format is the 11-character inheritance tax
+- `ihtPaymentReference` - optional, must be used with `versionNumber`; format is the 11-character inheritance tax
   reference followed by 6 digits (for example, `A123456/25A556789`)
-- `versionNumber` - optional, must be used with `paymentReferenceNumber` (3-digit pattern: `^[0-9]{3}$`)
+- `versionNumber` - optional, must be used with `ihtPaymentReference` (3-digit pattern: `^[0-9]{3}$`)
 
 **Parameter combinations**:
 - `pstr` + `fbNumber` - retrieve by form bundle number
-- `pstr` + `paymentReferenceNumber` + `versionNumber` - retrieve by payment reference and version
+- `pstr` + `ihtPaymentReference` + `versionNumber` - retrieve by payment reference and version
 
 #### Retrieve stub scenarios
 
 The retrieve endpoint can return different responses by changing query parameter values. This is intentionally deterministic so
 that Bruno and frontend/backend tests can exercise success and error paths without needing realistic ETMP data.
 
-Known fbNumbers:
+Stubbed fbNumbers:
 
 - `119000004320` (PSTR: 24000001IN)
 - `119000004322` (PSTR: 24000002IN)
@@ -163,7 +163,7 @@ Known fbNumbers:
 - `119000004368` and `119000004369` (PSTR: 00000042IN, paid amendment versions 001 and 002)
 - `119000004370` and `119000004371` (PSTR: 00000042IN, not reconciled amendment versions 001 and 002)
 
-Known paymentReference + version combinations:
+Stubbed ihtPaymentReference + version combinations:
 
 - `A123456/25A629671` + `001` (PSTR: 24000001IN)
 - `A556789/26A758204` + `001` (PSTR: 24000001IN, pinned amendment baseline)
@@ -203,11 +203,11 @@ retrieved either by their fbNumber or by their payment reference with `versionNu
 | Scenario | Query values | Response |
 | --- | --- | --- |
 | Successful retrieve by fbNumber | Known `pstr`, known `fbNumber` | `200 OK` with full report payload |
-| Successful retrieve by payment reference | Known `pstr`, known `paymentReferenceNumber` + `versionNumber` | `200 OK` with full report payload |
+| Successful retrieve by payment reference | Known `pstr`, known `ihtPaymentReference` + `versionNumber` | `200 OK` with full report payload |
 | No records found | Known `pstr`, unknown `fbNumber` | `422 Unprocessable Entity` |
 | No records found | PSTR does not match the resource file's PSTR | `422 Unprocessable Entity` |
-| Bad request | Invalid parameter combination (e.g., fbNumber with paymentReferenceNumber) | `400 Bad Request` |
-| Bad request | Missing required parameters (no fbNumber or paymentReferenceNumber + versionNumber) | `400 Bad Request` |
+| Bad request | Invalid parameter combination (e.g., fbNumber with ihtPaymentReference) | `400 Bad Request` |
+| Bad request | Missing required parameters (no fbNumber or ihtPaymentReference + versionNumber) | `400 Bad Request` |
 
 ## Running the service
 

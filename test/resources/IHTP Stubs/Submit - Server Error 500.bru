@@ -1,7 +1,7 @@
 meta {
-  name: Submit - Success
+  name: Submit - Server Error 500
   type: http
-  seq: 6
+  seq: 20
 }
 
 post {
@@ -38,7 +38,7 @@ body:json {
           "deceasedDetails": {
             "deceasedsDob": "1950-01-01",
             "deceasedsDod": "2026-01-01",
-            "ihtRefNumber": "A123456/25A"
+            "ihtRefNumber": "A123456/25C"
           }
       },
       "personalRep": {
@@ -131,7 +131,7 @@ body:json {
 }
 
 tests {
-  test("Status code is 201", function () {
-      expect(res.getStatus()).to.equal(201);
+  test("Status code is 400", function () {
+      expect(res.getStatus()).to.equal(500);
   });
 }
