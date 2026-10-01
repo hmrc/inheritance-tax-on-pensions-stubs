@@ -10,7 +10,7 @@
         "secondForename": "Secondname",
         "surname": "Surname",
         "ninoExist": "No",
-        "reasonNoNINO": "Reason for no national insurance number"
+        "reasonNoNino": "Reason for no national insurance number"
       },
       "deceasedDetails": {
         "deceasedsDob": "1950-01-01",
@@ -24,13 +24,13 @@
         "title": "Mr",
         "firstForename": "Firstname",
         "secondForename": "Secondname",
-        "surname": "Surname"
-      },
-      "prAddress": {
-        "addressLine1": "1 ABCDE Street",
-        "addressLine2": "FGHIJ Town",
-        "postCode": "ZZ99 1AA",
-        "country": "GB"
+        "surname": "Surname",
+        "prAddress": {
+          "addressLine1": "1 ABCDE Street",
+          "addressLine2": "FGHIJ Town",
+          "postCode": "ZZ99 1AA",
+          "country": "GB"
+        }
       }
     },
     "ihTaxInformation": {

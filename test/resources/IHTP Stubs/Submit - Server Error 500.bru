@@ -33,7 +33,7 @@ body:json {
             "secondForename": "Secondname",
             "surname": "Surname",
             "ninoExist": "No",
-            "reasonNoNINO": "Reason for no NINO"
+            "reasonNoNino": "Reason for no NINO"
           },
           "deceasedDetails": {
             "deceasedsDob": "1950-01-01",
@@ -47,13 +47,13 @@ body:json {
           "title": "Mrs",
           "firstForename": "FirstnameA",
           "secondForename": "Middlename",
-          "surname": "Surname"
-        },
-        "prAddress": {
-          "addressLine1": "1 ABCDE Street",
-          "addressLine2": "FGHIJ Town",
-          "postCode": "ZZ99 1AA",
-          "country": "GB"
+          "surname": "Surname",
+          "prAddress": {
+            "addressLine1": "1 ABCDE Street",
+            "addressLine2": "FGHIJ Town",
+            "postCode": "ZZ99 1AA",
+            "country": "GB"
+          }
         }
       },
       "ihTaxInformation": {
@@ -64,17 +64,17 @@ body:json {
         "totalInterestPayable": 10.00,
         "total": 110.00
       },
-      "beneficiary": [
-        {
-          "beneficiaryType": "01",
-          "beneficiaryContactDetails": {
+      "beneficiary": {
+        "beneficiaryDetails": [
+          {
+            "beneficiaryType": "01",
             "beneficiaryPersonalDetails": {
               "title": "Mr",
               "firstForename": "FirstnameA",
               "secondForename": "W",
               "surname": "Surname",
               "ninoExist": "No",
-              "reasonForNoNINO": "Test"
+              "reasonNoNino": "Test"
             },
             "beneficiaryAddress": {
               "addressLine1": "1 ABCDE Street",
@@ -83,24 +83,22 @@ body:json {
               "addressLine4": "line4",
               "postCode": "ZZ1 1ZZ",
               "country": "GB"
+            },
+            "beneficiaryPaymentDetails": {
+              "beneficiaryIhtPayable": 60.0,
+              "beneficiaryInterestPayable": 6.0,
+              "beneficiaryTotal": 66.0
             }
           },
-          "beneficiaryPaymentDetails": {
-            "beneficiaryIhtPayable": 60.00,
-            "beneficiaryInterestPayable": 6.00,
-            "beneficiaryTotal": 66.00
-          }
-        },
-        {
-          "beneficiaryType": "01",
-          "beneficiaryContactDetails": {
+          {
+            "beneficiaryType": "01",
             "beneficiaryPersonalDetails": {
               "title": "Miss",
               "firstForename": "FirstnameB",
               "secondForename": "W",
               "surname": "Surname",
               "ninoExist": "No",
-              "reasonForNoNINO": "Test"
+              "reasonNoNino": "Test"
             },
             "beneficiaryAddress": {
               "addressLine1": "1 ABCDE Street",
@@ -109,15 +107,15 @@ body:json {
               "addressLine4": "line4",
               "postCode": "ZZ1 1ZZ",
               "country": "GB"
+            },
+            "beneficiaryPaymentDetails": {
+              "beneficiaryIhtPayable": 40.0,
+              "beneficiaryInterestPayable": 4.0,
+              "beneficiaryTotal": 44.0
             }
-          },
-          "beneficiaryPaymentDetails": {
-            "beneficiaryIhtPayable": 40.00,
-            "beneficiaryInterestPayable": 4.00,
-            "beneficiaryTotal": 44.00
           }
-        }
-      ],
+        ]
+      },
       "declarations": {
         "submittedBy": "PSA",
         "submitterId": "A2100005",
