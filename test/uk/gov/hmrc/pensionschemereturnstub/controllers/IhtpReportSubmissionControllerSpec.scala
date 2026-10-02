@@ -17,11 +17,12 @@
 package uk.gov.hmrc.pensionschemereturnstub.controllers
 
 import play.api.http.Status
+import java.time.Instant
 import play.api.libs.json.*
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportSubmissionController
-import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.{IhtpPaymentNoticeSubmission, PrContactDetails}
+import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.{AddressDetails, IhtpPaymentNoticeSubmission, PrContactDetails}
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.utils.{APIResponses, JsonUtils}
 import uk.gov.hmrc.pensionschemereturnstub.base.SpecBase
 
@@ -45,6 +46,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val result = controller.postIhtpReport()(postRequest)
       status(result) mustBe Status.CREATED
       val content = contentAsJson(result)
+      (content \ "success" \ "ihtResponse" \ "processingDate").validate[Instant].isSuccess mustBe true
       (JsPath \ "success" \ "ihtResponse" \ "formBundleNo")(content) must not be empty
       (JsPath \ "success" \ "ihtResponse" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
     }
@@ -55,7 +57,19 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       validData
         .validate[IhtpPaymentNoticeSubmission]
         .map(_.ihtNoticeRequest.personalRep.prContactDetails) mustBe JsSuccess(
-        PrContactDetails(Some("Test Organisation"), Some("Mr"), "FirstnameA", Some("SecondnameB"), "Surname")
+        PrContactDetails(
+          Some("Test Organisation"),
+          Some("Mr"),
+          "FirstnameA",
+          Some("SecondnameB"),
+          "Surname",
+          AddressDetails(
+            addressLine1 = "1 ABCDE Street",
+            addressLine2 = Some("FGHIJ Town"),
+            postCode = Some("ZZ99 1AA"),
+            country = "GB"
+          )
+        )
       )
 
       val postRequest = fakePostRequest.withJsonBody(validData)
@@ -78,7 +92,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "surname" -> "Surname",
           "dateOfBirth" -> "1950-01-01",
           "dateOfDeath" -> "2026-01-01",
-          "reasonForNoNino" -> "Reason for no national insurance number"
+          "reasonNoNino" -> "Reason for no national insurance number"
         ),
         "prDetails" -> Json.obj(
           "organisation" -> Json.obj(
@@ -109,7 +123,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "surname" -> "Surname",
           "dateOfBirth" -> "1950-01-01",
           "dateOfDeath" -> "2026-01-01",
-          "reasonForNoNino" -> "Reason for no national insurance number"
+          "reasonNoNino" -> "Reason for no national insurance number"
         ),
         "prDetails" -> Json.obj(
           "organisation" -> Json.obj(
