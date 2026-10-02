@@ -21,7 +21,7 @@
         "surname": "Surname",
         "ninoExist": "Yes",
         "nino": null,
-        "reasonForNoNino": "Reason for no national insurance number"
+        "reasonNoNino": "Reason for no national insurance number"
       },
       "deceasedDetails": {
         "deceasedsDob": "1948-03-12",
@@ -35,13 +35,13 @@
         "title": "Mr",
         "firstForename": "Firstname",
         "secondForename": "Middlename",
-        "surname": "Surname"
-      },
-      "prAddress": {
-        "addressLine1": "1 AB Street",
-        "addressLine2": "ABtown",
-        "postCode": "YY1 1YY",
-        "country": "GB"
+        "surname": "Surname",
+        "prAddress": {
+          "addressLine1": "1 AB Street",
+          "addressLine2": "ABtown",
+          "postCode": "YY1 1YY",
+          "country": "GB"
+        }
       }
     },
     "ihTaxInformation": {
@@ -52,10 +52,10 @@
       "totalInterestPayable": 10.00,
       "total": 110.00
     },
-    "beneficiary": [
-      {
-        "beneficiaryType": "01",
-        "beneficiaryContactDetails": {
+    "beneficiary": {
+      "beneficiaryDetails": [
+        {
+          "beneficiaryType": "01",
           "beneficiaryPersonalDetails": {
             "title": "Ms",
             "firstForename": "FirstnameA",
@@ -63,25 +63,22 @@
             "surname": "Surname",
             "ninoExist": "Yes",
             "nino": null,
-            "reasonForNoNino": "Reason for no national insurance number"
-
+            "reasonNoNino": "Reason for no national insurance number"
           },
           "beneficiaryAddress": {
             "addressLine1": "21 RB Road",
             "addressLine2": "RBtown",
             "postCode": "LL1 4LL",
             "country": "GB"
+          },
+          "beneficiaryPaymentDetails": {
+            "beneficiaryIhtPayable": 60.0,
+            "beneficiaryInterestPayable": 6.0,
+            "beneficiaryTotal": 66.0
           }
         },
-        "beneficiaryPaymentDetails": {
-          "beneficiaryIhtPayable": 60.00,
-          "beneficiaryInterestPayable": 6.00,
-          "beneficiaryTotal": 66.00
-        }
-      },
-      {
-        "beneficiaryType": "01",
-        "beneficiaryContactDetails": {
+        {
+          "beneficiaryType": "01",
           "beneficiaryPersonalDetails": {
             "title": "Mr",
             "firstForename": "Firstname",
@@ -89,22 +86,22 @@
             "surname": "Surname",
             "ninoExist": "Yes",
             "nino": null,
-            "reasonForNoNino": "Reason for no national insurance number"
-            },
+            "reasonNoNino": "Reason for no national insurance number"
+          },
           "beneficiaryAddress": {
             "addressLine1": "8 SB Lane",
             "addressLine2": "SBtown",
             "postCode": "SS1 2SS",
             "country": "GB"
-            }
-        },
-      "beneficiaryPaymentDetails": {
-        "beneficiaryIhtPayable": 40.00,
-        "beneficiaryInterestPayable": 4.00,
-        "beneficiaryTotal": 44.00
-      }
-      } 
-    ],
+          },
+          "beneficiaryPaymentDetails": {
+            "beneficiaryIhtPayable": 40.0,
+            "beneficiaryInterestPayable": 4.0,
+            "beneficiaryTotal": 44.0
+          }
+        }
+      ]
+    },
     "declarations": {
       "submittedBy": "PSA",
       "submitterId": "A2100005",

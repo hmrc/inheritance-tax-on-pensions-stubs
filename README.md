@@ -30,7 +30,7 @@ The body of the payload is the report details built from user answers to be subm
     "dateOfBirth": "1950-01-01",
     "dateOfDeath": "2026-01-01",
     "nino": null,
-    "reasonForNoNino": "Reason for no national insurance number"
+    "reasonNoNino": "Reason for no national insurance number"
   },
   "prDetails": {
     "individual": {
@@ -59,7 +59,7 @@ The body of the payload is the report details built from user answers to be subm
     "dateOfBirth": "1950-01-01",
     "dateOfDeath": "2026-01-01",
     "nino": null,
-    "reasonForNoNino": "Reason for no national insurance number"
+    "reasonNoNino": "Reason for no national insurance number"
   },
   "prDetails": {
     "organisation": {
@@ -182,13 +182,13 @@ The overview for PSTR `24000001IN` contains two versions of the report identifie
 
 | Version | fbNumber | Retrieve status | Change flags |
 | --- | --- | --- | --- |
-| `001` | `119000004360` | `Paid` | All section and beneficiary flags are `false` |
-| `002` | `119000004361` | `Submitted` | IHT tax information and beneficiary details are `true`; the first beneficiary is `true` |
+| `001` | `119000004360` | `Paid` | Change flags are omitted |
+| `002` | `119000004361` | `Submitted` | `ihTaxChangeFlag` and the wrapper's `beneficiariesChangeFlag` are `Yes` |
 
 Both versions can be retrieved either by their fbNumber or by `A556789/26A758204` with the corresponding version number. The
 deceased and PR details are unchanged. Version 002 increases the tax totals and the amount assigned to the first beneficiary.
-All `changeFlag` values are `false` for initial version `001` reports. Later versions set flags to `true` only for sections or
-beneficiaries changed by the amendment.
+Change flags are omitted for initial version `001` reports. Later versions set flags to `Yes` for changed sections.
+The beneficiary flag is held on the wrapper, not on individual entries in `beneficiaryDetails`.
 
 #### Additional paid version 001 scenarios
 

@@ -34,7 +34,7 @@ case class IhtNoticeRequest(
   deceased: Deceased,
   personalRep: PrDetails,
   ihTaxInformation: IhTaxInformation,
-  beneficiary: Option[Seq[BeneficiaryDetails]],
+  beneficiary: Option[Beneficiaries],
   declarations: Declarations
 )
 
@@ -71,7 +71,7 @@ case class DeceasedPersonalDetails(
   surname: String,
   ninoExist: YesNo,
   nino: Option[String],
-  reasonNoNINO: Option[String]
+  reasonNoNino: Option[String]
 )
 
 object DeceasedPersonalDetails {
@@ -93,8 +93,7 @@ object DeceasedDetails {
 case class PrDetails(
   prChangeFlag: Option[YesNo],
   typeOfPr: IndividualOrOrg,
-  prContactDetails: PrContactDetails,
-  prAddress: AddressDetails
+  prContactDetails: PrContactDetails
 )
 
 object PrDetails {
@@ -107,7 +106,8 @@ case class PrContactDetails(
   title: Option[String] = None,
   firstForename: String,
   secondForename: Option[String] = None,
-  surname: String
+  surname: String,
+  prAddress: AddressDetails
 )
 
 object PrContactDetails {
@@ -175,27 +175,26 @@ object OrganisationDetails {
     Json.toJsObject(organisationDetails.info) ++ Json.toJsObject(organisationDetails.address)
 }
 
+case class Beneficiaries(
+  beneficiaryDetails: Seq[BeneficiaryDetails],
+  beneficiariesChangeFlag: Option[YesNo] = None
+)
+
+object Beneficiaries {
+  implicit val beneficiariesFormat: OFormat[Beneficiaries] = Json.format[Beneficiaries]
+}
+
 case class BeneficiaryDetails(
-  beneficiaryChangeFlag: Option[YesNo] = None,
   beneficiaryType: IndividualOrTrust,
-  beneficiaryContactDetails: BeneficiaryContactDetails,
+  beneficiaryTrustName: Option[String] = None,
+  beneficiaryPersonalDetails: BeneficiaryPersonalDetails,
+  beneficiaryAddress: AddressDetails,
   beneficiaryPaymentDetails: BeneficiaryPaymentDetails
 )
 
 object BeneficiaryDetails {
   implicit val BeneficiaryDetailsFormat: OFormat[BeneficiaryDetails] =
     Json.format[BeneficiaryDetails]
-}
-
-case class BeneficiaryContactDetails(
-  beneficiaryTrustName: Option[String] = None,
-  beneficiaryPersonalDetails: BeneficiaryPersonalDetails,
-  beneficiaryAddress: AddressDetails
-)
-
-object BeneficiaryContactDetails {
-  implicit val BeneficiaryContactDetailsFormat: OFormat[BeneficiaryContactDetails] =
-    Json.format[BeneficiaryContactDetails]
 }
 
 case class BeneficiaryPersonalDetails(
@@ -205,7 +204,7 @@ case class BeneficiaryPersonalDetails(
   surname: String,
   ninoExist: YesNo,
   nino: Option[String],
-  reasonNoNINO: Option[String]
+  reasonNoNino: Option[String]
 )
 
 object BeneficiaryPersonalDetails {
@@ -224,7 +223,7 @@ object BeneficiaryPaymentDetails {
     Json.format[BeneficiaryPaymentDetails]
 }
 
-case class NinoOrReasonAnswers(nino: Option[String], reasonNoNINO: Option[String])
+case class NinoOrReasonAnswers(nino: Option[String], reasonNoNino: Option[String])
 
 object NinoOrReasonAnswers {
   implicit val ninoOrReasonAnswersFormat: OFormat[NinoOrReasonAnswers] =

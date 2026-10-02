@@ -405,7 +405,7 @@
         "secondForename": "Middlename",
         "surname": "Surname",
         "nino": null,
-        "reasonForNoNino": "Reason for no national insurance number",
+        "reasonNoNino": "Reason for no national insurance number",
         "ihtpStatus": "Paid"
       },
       {
@@ -420,7 +420,7 @@
         "secondForename": "Middlename",
         "surname": "Surname",
         "nino": null,
-        "reasonForNoNino": "Reason for no national insurance number",
+        "reasonNoNino": "Reason for no national insurance number",
         "ihtpStatus": "Not reconciled"
       },
       {
@@ -435,7 +435,7 @@
         "secondForename": "SecondnameM",
         "surname": "Surname",
         "nino": null,
-        "reasonForNoNino": "Reason for no national insurance number",
+        "reasonNoNino": "Reason for no national insurance number",
         "ihtpStatus": "Paid"
       },
       {
@@ -450,7 +450,7 @@
         "secondForename": "SecondnameN",
         "surname": "Surname",
         "nino": null,
-        "reasonForNoNino": "Reason for no national insurance number",
+        "reasonNoNino": "Reason for no national insurance number",
         "ihtpStatus": "Paid"
       }
     ]
