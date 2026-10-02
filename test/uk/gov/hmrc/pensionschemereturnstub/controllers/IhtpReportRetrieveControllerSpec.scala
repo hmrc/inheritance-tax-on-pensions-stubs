@@ -66,14 +66,13 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "typeOfPr")(content) mustBe List(JsString("01"))
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails")(content) must not be empty
-      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prAddress")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails" \ "prAddress")(content) must not be empty
 
       (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation")(content) must not be empty
       (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
       (JsPath \ "ihtNoticeResponse" \ "beneficiary")(content) must not be empty
-      (content \ "ihtNoticeResponse" \ "beneficiary")
-        .as[Seq[JsObject]]
-        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiariesChangeFlag").toOption mustBe None
+      (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiaryDetails").as[Seq[JsObject]] must not be empty
       (JsPath \ "ihtNoticeResponse" \ "declarations")(content) must not be empty
     }
 
@@ -101,14 +100,13 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "typeOfPr")(content) mustBe List(JsString("01"))
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails")(content) must not be empty
-      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prAddress")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails" \ "prAddress")(content) must not be empty
 
       (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation")(content) must not be empty
       (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
       (JsPath \ "ihtNoticeResponse" \ "beneficiary")(content) must not be empty
-      (content \ "ihtNoticeResponse" \ "beneficiary")
-        .as[Seq[JsObject]]
-        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiariesChangeFlag").toOption mustBe None
+      (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiaryDetails").as[Seq[JsObject]] must not be empty
       (JsPath \ "ihtNoticeResponse" \ "declarations")(content) must not be empty
       (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSP"))
       (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submitterId")(content) mustBe List(JsString("A1816536"))
@@ -142,14 +140,13 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag")(content) mustBe empty
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "typeOfPr")(content) mustBe List(JsString("01"))
       (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails")(content) must not be empty
-      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prAddress")(content) must not be empty
+      (JsPath \ "ihtNoticeResponse" \ "personalRep" \ "prContactDetails" \ "prAddress")(content) must not be empty
 
       (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation")(content) must not be empty
       (JsPath \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag")(content) mustBe empty
       (JsPath \ "ihtNoticeResponse" \ "beneficiary")(content) must not be empty
-      (content \ "ihtNoticeResponse" \ "beneficiary")
-        .as[Seq[JsObject]]
-        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiariesChangeFlag").toOption mustBe None
+      (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiaryDetails").as[Seq[JsObject]] must not be empty
       (JsPath \ "ihtNoticeResponse" \ "declarations")(content) must not be empty
       (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submittedBy")(content) mustBe List(JsString("PSA"))
       (JsPath \ "ihtNoticeResponse" \ "declarations" \ "submitterId")(content) mustBe List(JsString("A2100005"))
@@ -173,15 +170,11 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       (versionOne \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag").toOption mustBe None
       (versionTwo \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag").as[String] mustBe "Yes"
 
-      (versionOne \ "ihtNoticeResponse" \ "beneficiary")
-        .as[Seq[JsObject]]
-        .map(b => b.keys must not contain "beneficiaryChangeFlag")
+      (versionOne \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiariesChangeFlag").toOption mustBe None
 
       (versionTwo \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag").as[String] mustBe "Yes"
-      (versionTwo \ "ihtNoticeResponse" \ "beneficiary").as[Seq[JsObject]].length mustBe 2
-      (versionTwo \ "ihtNoticeResponse" \ "beneficiary")
-        .as[Seq[JsObject]]
-        .map(b => (b \ "beneficiaryChangeFlag").toOption.map(_.as[JsString])) mustBe Seq(Some(JsString("Yes")), None)
+      (versionTwo \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiaryDetails").as[Seq[JsObject]].length mustBe 2
+      (versionTwo \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiariesChangeFlag").as[String] mustBe "Yes"
 
       (versionOne \ "ihtNoticeResponse" \ "ihTaxInformation" \ "totalIhtPayable").as[Double] mustBe 100.00
       (versionTwo \ "ihtNoticeResponse" \ "ihTaxInformation" \ "totalIhtPayable").as[Double] mustBe 120.00
@@ -231,7 +224,7 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
       }
     }
 
-    "return only false change flags for every version 001 report" in {
+    "omit change flags for every version 001 report" in {
       Seq(
         "?pstr=24000001IN&fbNumber=119000004320",
         "?pstr=24000002IN&fbNumber=119000004322",
@@ -250,9 +243,8 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
         status(result) mustBe Status.OK
         val content = contentAsJson(result)
 
-        val beneficiaryChangeFlags = (content \ "ihtNoticeResponse" \ "beneficiary")
-          .as[Seq[JsObject]]
-          .map(b => (b \ "beneficiaryChangeFlag").toOption)
+        val beneficiariesChangeFlag =
+          (content \ "ihtNoticeResponse" \ "beneficiary" \ "beneficiariesChangeFlag").toOption
 
         val deceasedChangeFlag = (content \ "ihtNoticeResponse" \ "deceased" \ "deceasedChangeFlag").toOption
         val prChangeFlag = (content \ "ihtNoticeResponse" \ "personalRep" \ "prChangeFlag").toOption
@@ -260,7 +252,7 @@ class IhtpReportRetrieveControllerSpec extends SpecBase with APIResponses {
           (content \ "ihtNoticeResponse" \ "ihTaxInformation" \ "ihTaxChangeFlag").toOption
 
         val allChangeFlags =
-          beneficiaryChangeFlags ++ Seq(deceasedChangeFlag, prChangeFlag, ihTaxInformationChangeFlag)
+          Seq(beneficiariesChangeFlag, deceasedChangeFlag, prChangeFlag, ihTaxInformationChangeFlag)
         allChangeFlags.foreach(_ mustBe None)
 
       }

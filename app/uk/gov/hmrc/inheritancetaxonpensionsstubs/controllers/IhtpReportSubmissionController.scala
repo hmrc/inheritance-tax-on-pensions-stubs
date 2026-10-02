@@ -23,6 +23,7 @@ import uk.gov.hmrc.inheritancetaxonpensionsstubs.config.Constants._
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.models.IhtpPaymentNoticeSubmission
 
 import javax.inject.{Inject, Singleton}
+import java.time.Instant
 import scala.concurrent.Future
 import scala.util.{Success, Try}
 
@@ -57,6 +58,7 @@ class IhtpReportSubmissionController @Inject() (
                   Json.obj(
                     "success" -> Json.obj(
                       "ihtResponse" -> Json.obj(
+                        "processingDate" -> Instant.now(),
                         "formBundleNo" -> "000012345678",
                         "ihtPaymentReference" -> s"${submissionResponse.ihtNoticeRequest.deceased.deceasedDetails.ihtRefNumber}556789"
                       )

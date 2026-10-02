@@ -19,7 +19,7 @@
         "secondForename": "Middlenamefour",
         "surname": "Lastnamefour",
         "ninoExist": "No",
-        "reasonNoNINO": "Test data does not include a National Insurance number"
+        "reasonNoNino": "Test data does not include a National Insurance number"
       },
       "deceasedDetails": {
         "deceasedsDob": "1948-03-12",
@@ -33,13 +33,13 @@
         "title": "Mr",
         "firstForename": "Firstname",
         "secondForename": "Middlename",
-        "surname": "Lastname"
-      },
-      "prAddress": {
-        "addressLine1": "1 ABCDE Street",
-        "addressLine2": "FGHIJ Town",
-        "postCode": "AA1 1AA",
-        "country": "GB"
+        "surname": "Lastname",
+        "prAddress": {
+          "addressLine1": "1 ABCDE Street",
+          "addressLine2": "FGHIJ Town",
+          "postCode": "AA1 1AA",
+          "country": "GB"
+        }
       }
     },
     "ihTaxInformation": {
@@ -50,56 +50,54 @@
       "totalInterestPayable": 10.00,
       "total": 110.00
     },
-    "beneficiary": [
-      {
-        "beneficiaryType": "01",
-        "beneficiaryContactDetails": {
+    "beneficiary": {
+      "beneficiaryDetails": [
+        {
+          "beneficiaryType": "01",
           "beneficiaryPersonalDetails": {
             "title": "Ms",
             "firstForename": "Testnamefirst",
             "secondForename": "Testnamemiddle",
             "surname": "Testnamelast",
             "ninoExist": "No",
-            "reasonNoNINO": "Test data does not include a National Insurance number"
+            "reasonNoNino": "Test data does not include a National Insurance number"
           },
           "beneficiaryAddress": {
             "addressLine1": "1 Test Street",
             "addressLine2": "Test Town",
             "postCode": "TE57 0AA",
             "country": "GB"
+          },
+          "beneficiaryPaymentDetails": {
+            "beneficiaryIhtPayable": 60.0,
+            "beneficiaryInterestPayable": 6.0,
+            "beneficiaryTotal": 66.0
           }
         },
-        "beneficiaryPaymentDetails": {
-          "beneficiaryIhtPayable": 60.00,
-          "beneficiaryInterestPayable": 6.00,
-          "beneficiaryTotal": 66.00
-        }
-      },
-      {
-        "beneficiaryType": "01",
-        "beneficiaryContactDetails": {
+        {
+          "beneficiaryType": "01",
           "beneficiaryPersonalDetails": {
             "title": "Mr",
             "firstForename": "Testdatafirst",
             "secondForename": "Testdatamiddle",
             "surname": "Testdatalast",
             "ninoExist": "No",
-            "reasonNoNINO": "Test data does not include a National Insurance number"
+            "reasonNoNino": "Test data does not include a National Insurance number"
           },
           "beneficiaryAddress": {
             "addressLine1": "1 ABCDE Street",
             "addressLine2": "FGHIJ Town",
             "postCode": "AA1 1AA",
             "country": "GB"
+          },
+          "beneficiaryPaymentDetails": {
+            "beneficiaryIhtPayable": 40.0,
+            "beneficiaryInterestPayable": 4.0,
+            "beneficiaryTotal": 44.0
           }
-        },
-        "beneficiaryPaymentDetails": {
-          "beneficiaryIhtPayable": 40.00,
-          "beneficiaryInterestPayable": 4.00,
-          "beneficiaryTotal": 44.00
         }
-      }
-    ],
+      ]
+    },
     "declarations": {
       "submittedBy": "PSA",
       "submitterId": "A2100005",
