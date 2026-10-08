@@ -170,7 +170,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val statuses =
         (content \ "success" \ "ihtpOverview").as[Seq[JsValue]].flatMap(item => (item \ "ihtpStatus").asOpt[String])
 
-      statuses.size mustBe 33
+      statuses.size mustBe 34
       statuses.distinct mustBe Seq("Not reconciled")
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
     }
