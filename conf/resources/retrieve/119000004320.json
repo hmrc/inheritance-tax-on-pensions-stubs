@@ -78,8 +78,8 @@
         },
         {
           "beneficiaryType": "02",
+          "beneficiaryTrustName": "Trustname",
           "beneficiaryPersonalDetails": {
-            "beneficiaryTrustName": "Trustname",
             "title": "Miss",
             "firstForename": "FirstnameC",
             "secondForename": "W",
