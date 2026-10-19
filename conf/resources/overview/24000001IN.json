@@ -465,6 +465,21 @@
         "nino": null,
         "reasonNoNino": "Reason for no national insurance number",
         "ihtpStatus": "Paid"
+      },
+      {
+        "fbNumber": "119000004372",
+        "submissionDate": "2026-07-26T09:15:00Z",
+        "paymentDueDate": "2027-01-26",
+        "ihtVersion": "001",
+        "inheritanceTaxReference": "F246810/26C",
+        "paymentReference": "F246810/26C999999",
+        "title": "Mr",
+        "firstForename": "Firstname",
+        "secondForename": "SecondnameM",
+        "surname": "Surname",
+        "nino": null,
+        "reasonNoNino": "reason",
+        "ihtpStatus": "Paid"
       }
     ]
   }

@@ -20,7 +20,7 @@
         "secondForename": "Middlename",
         "surname": "Surname",
         "ninoExist": "Yes",
-        "nino": null,
+        "nino": "QQ123456C",
         "reasonNoNino": "Reason for no national insurance number"
       },
       "deceasedDetails": {
@@ -62,7 +62,7 @@
             "secondForename": "MiddlenameB",
             "surname": "Surname",
             "ninoExist": "Yes",
-            "nino": null,
+            "nino": "QQ123456C",
             "reasonNoNino": "Reason for no national insurance number"
           },
           "beneficiaryAddress": {
@@ -85,7 +85,7 @@
             "secondForename": "MiddlenameC",
             "surname": "Surname",
             "ninoExist": "Yes",
-            "nino": null,
+            "nino": "QQ123456C",
             "reasonNoNino": "Reason for no national insurance number"
           },
           "beneficiaryAddress": {
