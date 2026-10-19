@@ -16,11 +16,10 @@
     "deceased": {
       "deceasedPersonalDetails": {
         "title": "Mr",
-        "firstForename": "Firstname",
+        "firstForename": "Paid",
         "secondForename": "Middlename",
         "surname": "Surname",
-        "ninoExist": "Yes",
-        "nino": "QQ123456C",
+        "ninoExist": "No",
         "reasonNoNino": "Reason for no national insurance number"
       },
       "deceasedDetails": {
@@ -61,8 +60,7 @@
             "firstForename": "FirstnameA",
             "secondForename": "MiddlenameB",
             "surname": "Surname",
-            "ninoExist": "Yes",
-            "nino": "QQ123456C",
+            "ninoExist": "No",
             "reasonNoNino": "Reason for no national insurance number"
           },
           "beneficiaryAddress": {
@@ -84,8 +82,7 @@
             "firstForename": "Firstname",
             "secondForename": "MiddlenameC",
             "surname": "Surname",
-            "ninoExist": "Yes",
-            "nino": "QQ123456C",
+            "ninoExist": "No",
             "reasonNoNino": "Reason for no national insurance number"
           },
           "beneficiaryAddress": {
