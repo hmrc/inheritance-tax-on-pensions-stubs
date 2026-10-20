@@ -202,7 +202,7 @@ case class BeneficiaryPersonalDetails(
   firstForename: String,
   secondForename: Option[String],
   surname: String,
-  ninoExist: YesNo,
+  ninoExist: Option[YesNo],
   nino: Option[String],
   reasonNoNino: Option[String]
 )
