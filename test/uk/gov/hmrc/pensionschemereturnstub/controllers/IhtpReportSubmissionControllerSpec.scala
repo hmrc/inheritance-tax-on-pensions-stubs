@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.pensionschemereturnstub.controllers
 
+import org.scalacheck.Gen
 import play.api.http.Status
 import java.time.Instant
 import play.api.libs.json.*
@@ -31,6 +32,34 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
   private val controller = app.injector.instanceOf[IhtpReportSubmissionController]
   private val jsonUtils = app.injector.instanceOf[JsonUtils]
 
+  private def digits(length: Int): Gen[String] = Gen.listOfN(length, Gen.numChar).map(_.mkString)
+
+  private val psaId = digits(7).map("A" + _).sample.get
+  private val pspId = digits(8).sample.get
+  private val inheritanceTaxReference = (for {
+    prefix <- Gen.oneOf("A", "F")
+    number <- digits(6)
+    year <- digits(2)
+  } yield s"$prefix$number/${year}A").sample.get
+
+  private def submissionData(fileName: String): JsValue = {
+    val data = jsonUtils.readJsonFile(s"conf/resources/data/$fileName.json")
+    val referencePath = __ \ "ihtNoticeRequest" \ "deceased" \ "deceasedDetails" \ "ihtRefNumber"
+    val declarationsPath = __ \ "ihtNoticeRequest" \ "declarations"
+    // Preserve the suffix that selects the existing success or error scenario.
+    val reference = inheritanceTaxReference.dropRight(1) + data.as[String](referencePath.read[String]).takeRight(1)
+    val submitterId =
+      if ((data \ "ihtNoticeRequest" \ "declarations" \ "submittedBy").as[String] == "PSA") psaId else pspId
+    val updates = referencePath.json
+      .update(Reads.pure(JsString(reference)))
+      .andThen((declarationsPath \ "submitterId").json.update(Reads.pure(JsString(submitterId))))
+    val updated = data.transform(updates).get
+
+    if ((data \ "ihtNoticeRequest" \ "declarations" \ "pspDeclaration").toOption.isDefined) {
+      updated.transform((declarationsPath \ "pspDeclaration" \ "psaid").json.update(Reads.pure(JsString(psaId)))).get
+    } else updated
+  }
+
   private val fakePostRequest = FakeRequest("POST", "/").withHeaders(
     ("CorrelationId", "testId"),
     "Authorization" -> "test Bearer token",
@@ -40,7 +69,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
   "POST ihtp report" must {
 
     "return 201-Created for a valid request" in {
-      val validData = jsonUtils.readJsonFile(filePath = "conf/resources/data/validReturnSubmission.json")
+      val validData = submissionData("validReturnSubmission")
       val postRequest = fakePostRequest.withJsonBody(validData)
 
       val result = controller.postIhtpReport()(postRequest)
@@ -48,11 +77,12 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (content \ "success" \ "ihtResponse" \ "processingDate").validate[Instant].isSuccess mustBe true
       (JsPath \ "success" \ "ihtResponse" \ "formBundleNo")(content) must not be empty
-      (JsPath \ "success" \ "ihtResponse" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
+      val reference = (validData \ "ihtNoticeRequest" \ "deceased" \ "deceasedDetails" \ "ihtRefNumber").as[String]
+      (content \ "success" \ "ihtResponse" \ "ihtPaymentReference").as[String] mustBe s"${reference}556789"
     }
 
     "return 201-Created for a valid organisation PR request" in {
-      val validData = jsonUtils.readJsonFile(filePath = "conf/resources/data/validReturnSubmissionOrganisation.json")
+      val validData = submissionData("validReturnSubmissionOrganisation")
 
       validData
         .validate[IhtpPaymentNoticeSubmission]
@@ -78,7 +108,8 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.CREATED
       val content = contentAsJson(result)
       (JsPath \ "success" \ "ihtResponse" \ "formBundleNo")(content) must not be empty
-      (JsPath \ "success" \ "ihtResponse" \ "ihtPaymentReference")(content) mustBe List(JsString("A123456/25A556789"))
+      val reference = (validData \ "ihtNoticeRequest" \ "deceased" \ "deceasedDetails" \ "ihtRefNumber").as[String]
+      (content \ "success" \ "ihtResponse" \ "ihtPaymentReference").as[String] mustBe s"${reference}556789"
     }
 
     "return 400-BadRequest for an organisation request missing organisation name" in {
@@ -87,7 +118,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "pstr" -> "S2400000001"
         ),
         "deceasedDetails" -> Json.obj(
-          "inheritanceTaxReference" -> "A123456/25A",
+          "inheritanceTaxReference" -> inheritanceTaxReference,
           "firstForename" -> "Firstname",
           "surname" -> "Surname",
           "dateOfBirth" -> "1950-01-01",
@@ -118,7 +149,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "pstr" -> "S2400000001"
         ),
         "deceasedDetails" -> Json.obj(
-          "inheritanceTaxReference" -> "A123456/25A",
+          "inheritanceTaxReference" -> inheritanceTaxReference,
           "firstForename" -> "Firstname",
           "surname" -> "Surname",
           "dateOfBirth" -> "1950-01-01",
@@ -145,7 +176,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 400-BadRequest for an invalid srn" in {
-      val badRequestData = jsonUtils.readJsonFile(filePath = "conf/resources/data/BadRequestSubmission.json")
+      val badRequestData = submissionData("BadRequestSubmission")
       val postRequest = fakePostRequest.withJsonBody(badRequestData)
 
       val result = controller.postIhtpReport()(postRequest)
@@ -158,7 +189,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 500-InternalServerError for an srn" in {
-      val serverErrorData = jsonUtils.readJsonFile(filePath = "conf/resources/data/ServerErrorSubmission.json")
+      val serverErrorData = submissionData("ServerErrorSubmission")
       val postRequest = fakePostRequest.withJsonBody(serverErrorData)
 
       val result = controller.postIhtpReport()(postRequest)
@@ -171,7 +202,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 503-ServiceUnavailable for an srn" in {
-      val unavailableData = jsonUtils.readJsonFile(filePath = "conf/resources/data/UnavailableSubmission.json")
+      val unavailableData = submissionData("UnavailableSubmission")
       val postRequest = fakePostRequest.withJsonBody(unavailableData)
 
       val result = controller.postIhtpReport()(postRequest)
@@ -184,7 +215,7 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
     }
 
     "return 422-UnprocessableEntity for an srn" in {
-      val unprocessableData = jsonUtils.readJsonFile(filePath = "conf/resources/data/UnprocessableSubmission.json")
+      val unprocessableData = submissionData("UnprocessableSubmission")
       val postRequest = fakePostRequest.withJsonBody(unprocessableData)
 
       val result = controller.postIhtpReport()(postRequest)

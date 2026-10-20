@@ -231,6 +231,10 @@ If you do not have Bruno installed you can install it with the following command
 
 A Bruno collection is available in `test/resources/IHTP Stubs`.
 
+Submission tests and Bruno submission requests generate their IHT references and submitter identifiers.
+The reference suffix still selects the existing success or error scenario. Fixed overview/retrieve fixtures,
+lookup keys and stub response behaviour are unchanged.
+
 The stubs collection does not require a login request. Requests are sent directly to the stubbed ETMP-style endpoints and use
 `auth: none`.
 

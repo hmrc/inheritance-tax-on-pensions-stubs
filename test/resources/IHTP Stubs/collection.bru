@@ -1,0 +1,12 @@
+script:pre-request {
+  if (!bru.getVar("test_iht_reference")) {
+    const digits = length => Array.from({ length }, () => Math.floor(Math.random() * 10)).join("");
+    const reference = `A${digits(6)}/${digits(2)}`;
+    bru.setVar("test_iht_reference", reference + "A");
+    bru.setVar("bad_request_iht_reference", reference + "B");
+    bru.setVar("server_error_iht_reference", reference + "C");
+    bru.setVar("unavailable_iht_reference", reference + "D");
+    bru.setVar("unprocessable_iht_reference", reference + "E");
+    bru.setVar("test_psa_id", "A" + digits(7));
+  }
+}
