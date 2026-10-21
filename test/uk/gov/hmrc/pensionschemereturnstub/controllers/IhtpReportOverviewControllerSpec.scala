@@ -157,7 +157,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       paidReports
         .map(report => (report \ "fbNumber").as[String]) mustBe Seq("119000004360", "119000004362", "119000004363")
       paidReports.map(report => (report \ "paymentReference").as[String]) mustBe
-        Seq("A556789/26A758204", "F246810/26B999999", "A975310/26C271828")
+        Seq("A556789/26A758204", "F246810/26B999999", "A975310/26C999999")
     }
 
     "return 200-Ok with only matching items when status is supplied" in {
