@@ -38,7 +38,7 @@ tests {
       expect(reports).to.have.lengthOf(2);
       expect(reports.map(report => report.ihtVersion)).to.deep.equal(["001", "002"]);
       expect(reports.map(report => report.paymentReference)).to.deep.equal(
-        ["A556789/26A758204", "A556789/26A758204"]
+        ["A556789/26A999999", "A556789/26A999999"]
       );
   });
   
@@ -51,7 +51,7 @@ tests {
         ["119000004360", "119000004362", "119000004363"]
       );
       expect(reports.map(report => report.paymentReference)).to.deep.equal(
-        ["A556789/26A758204", "F246810/26B314159", "A975310/26C271828"]
+        ["A556789/26A999999", "F246810/26B999999", "A975310/26C271828"]
       );
   });
 }
