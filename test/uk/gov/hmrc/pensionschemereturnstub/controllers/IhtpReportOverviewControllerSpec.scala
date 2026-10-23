@@ -51,8 +51,8 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (JsPath \ "success" \ "pstr")(content) mustBe empty
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "firstForename")(content) mustBe List(JsString("Firstname"))
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "surname")(content) mustBe List(JsString("Surname"))
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "firstForename")(content) mustBe List(JsString("View"))
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "surname")(content) mustBe List(JsString("Change"))
     }
 
     "return 200-Ok for a second known pstr" in {
@@ -81,7 +81,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       amendmentReports.size mustBe 2
       amendmentReports.map(report => (report \ "ihtVersion").as[String]) mustBe Seq("001", "002")
       amendmentReports.map(report => (report \ "fbNumber").as[String]).distinct.size mustBe 2
-      amendmentReports.map(report => (report \ "paymentReference").as[String]).distinct mustBe Seq("A556789/26A758204")
+      amendmentReports.map(report => (report \ "paymentReference").as[String]).distinct mustBe Seq("A556789/26A999999")
     }
 
     "return two amendment scenarios with consistent payment statuses for each IHTP-574 scheme" in {
@@ -157,7 +157,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       paidReports
         .map(report => (report \ "fbNumber").as[String]) mustBe Seq("119000004360", "119000004362", "119000004363")
       paidReports.map(report => (report \ "paymentReference").as[String]) mustBe
-        Seq("A556789/26A758204", "F246810/26B999999", "A975310/26C999999")
+        Seq("A556789/26A999999", "F246810/26B999999", "A975310/26C999999")
     }
 
     "return 200-Ok with only matching items when status is supplied" in {
@@ -170,7 +170,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val statuses =
         (content \ "success" \ "ihtpOverview").as[Seq[JsValue]].flatMap(item => (item \ "ihtpStatus").asOpt[String])
 
-      statuses.size mustBe 34
+      statuses.size mustBe 3
       statuses.distinct mustBe Seq("Not reconciled")
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
     }

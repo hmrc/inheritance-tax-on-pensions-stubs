@@ -14,10 +14,10 @@
     },
     "deceased": {
       "deceasedPersonalDetails": {
-        "title": "Mr",
-        "firstForename": "Firstname",
-        "secondForename": "Middlename",
-        "surname": "Surname",
+        "title": "Dr",
+        "firstForename": "View",
+        "secondForename": "Or",
+        "surname": "Change",
         "ninoExist": "No",
         "reasonNoNino": "Reason for no NINO"
       },
