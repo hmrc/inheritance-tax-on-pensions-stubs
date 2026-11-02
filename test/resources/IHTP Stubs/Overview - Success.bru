@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp-overview?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp-payment-notice-overview?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31
   body: none
   auth: none
 }
@@ -14,7 +14,6 @@ params:query {
   pstr: 24000001IN
   dateFrom: 2026-01-01
   dateTo: 2026-12-31
-  ~status: Not reconciled
 }
 
 headers {
@@ -33,24 +32,24 @@ tests {
   
   test("Returns both versions of the amendment report", function () {
       const reports = res.body.success.ihtpOverview.filter(
-        report => report.inheritanceTaxReference === "A556789/26A"
+        report => report.ihtPaymentReference === "A556789/26A999999"
       );
       expect(reports).to.have.lengthOf(2);
       expect(reports.map(report => report.ihtVersion)).to.deep.equal(["001", "002"]);
-      expect(reports.map(report => report.paymentReference)).to.deep.equal(
+      expect(reports.map(report => report.ihtPaymentReference)).to.deep.equal(
         ["A556789/26A999999", "A556789/26A999999"]
       );
   });
   
   test("Returns two additional paid version 001 reports", function () {
       const reports = res.body.success.ihtpOverview.filter(
-        report => report.ihtpStatus === "Paid" && report.ihtVersion === "001"
+        report => report.ihtStatus === "Paid" && report.ihtVersion === "001"
       );
       expect(reports).to.have.lengthOf(3);
       expect(reports.map(report => report.fbNumber)).to.deep.equal(
         ["119000004360", "119000004362", "119000004363"]
       );
-      expect(reports.map(report => report.paymentReference)).to.deep.equal(
+      expect(reports.map(report => report.ihtPaymentReference)).to.deep.equal(
         ["A556789/26A999999", "F246810/26B999999", "A975310/26C999999"]
       );
   });

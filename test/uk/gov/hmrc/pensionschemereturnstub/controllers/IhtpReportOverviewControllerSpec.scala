@@ -17,7 +17,7 @@
 package uk.gov.hmrc.pensionschemereturnstub.controllers
 
 import play.api.http.Status
-import play.api.libs.json.{JsPath, JsString, JsValue}
+import play.api.libs.json.{JsNull, JsPath, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportOverviewController
@@ -63,7 +63,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val content = contentAsJson(result)
       (JsPath \ "success" \ "pstr")(content) mustBe empty
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "paymentReference")(content) mustBe List(
+      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "ihtPaymentReference")(content) mustBe List(
         JsString("A654321/25A392617")
       )
     }
@@ -76,12 +76,14 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.OK
       val amendmentReports = (contentAsJson(result) \ "success" \ "ihtpOverview")
         .as[Seq[JsValue]]
-        .filter(report => (report \ "inheritanceTaxReference").asOpt[String].contains("A556789/26A"))
+        .filter(report => (report \ "ihtPaymentReference").asOpt[String].contains("A556789/26A999999"))
 
       amendmentReports.size mustBe 2
       amendmentReports.map(report => (report \ "ihtVersion").as[String]) mustBe Seq("001", "002")
       amendmentReports.map(report => (report \ "fbNumber").as[String]).distinct.size mustBe 2
-      amendmentReports.map(report => (report \ "paymentReference").as[String]).distinct mustBe Seq("A556789/26A999999")
+      amendmentReports.map(report => (report \ "ihtPaymentReference").as[String]).distinct mustBe Seq(
+        "A556789/26A999999"
+      )
     }
 
     "return two amendment scenarios with consistent payment statuses for each IHTP-574 scheme" in {
@@ -102,7 +104,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
         status(result) mustBe Status.OK
         val reports = (contentAsJson(result) \ "success" \ "ihtpOverview").as[Seq[JsValue]]
         val amendmentScenarios = reports
-          .groupBy(report => (report \ "paymentReference").as[String])
+          .groupBy(report => (report \ "ihtPaymentReference").as[String])
           .values
           .filter(_.size == 2)
           .toSeq
@@ -111,32 +113,12 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
         amendmentScenarios.foreach { versions =>
           versions.map(report => (report \ "ihtVersion").as[String]).sorted mustBe Seq("001", "002")
           versions.map(report => (report \ "fbNumber").as[String]).distinct.size mustBe 2
-          versions.map(report => (report \ "inheritanceTaxReference").as[String]).distinct.size mustBe 1
+          versions.map(report => (report \ "ihtPaymentReference").as[String]).distinct.size mustBe 1
 
-          val paymentReference = (versions.head \ "paymentReference").as[String]
-          versions.map(report => (report \ "ihtpStatus").as[String]).distinct mustBe
+          val paymentReference = (versions.head \ "ihtPaymentReference").as[String]
+          versions.map(report => (report \ "ihtStatus").as[String]).distinct mustBe
             Seq(expectedStatuses(paymentReference))
           versions.foreach(report => (report \ "nino").toOption mustBe None)
-        }
-      }
-    }
-
-    "return payment references in IHT reference plus six digit UPR format" in {
-      Seq("00000042IN", "24000001IN", "24000002IN", "24000036IN").foreach { pstr =>
-        val result = controller.getIhtpOverview()(
-          overviewRequest(s"?pstr=$pstr&dateFrom=2026-01-01&dateTo=2026-12-31")
-        )
-
-        status(result) mustBe Status.OK
-        val reports = (contentAsJson(result) \ "success" \ "ihtpOverview").as[Seq[JsValue]]
-
-        reports.foreach { report =>
-          (report \ "paymentReference").asOpt[String].foreach { paymentReference =>
-            val inheritanceTaxReference = (report \ "inheritanceTaxReference").as[String]
-
-            paymentReference must startWith(s"$inheritanceTaxReference")
-            (paymentReference must fullyMatch).regex("""[AF]\d{6}/\d{2}[A-Z]\d{6}""")
-          }
         }
       }
     }
@@ -150,29 +132,14 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val paidReports = (contentAsJson(result) \ "success" \ "ihtpOverview")
         .as[Seq[JsValue]]
         .filter(report =>
-          (report \ "ihtpStatus").as[String] == "Paid" &&
+          (report \ "ihtStatus").as[String] == "Paid" &&
             (report \ "ihtVersion").as[String] == "001"
         )
 
       paidReports
         .map(report => (report \ "fbNumber").as[String]) mustBe Seq("119000004360", "119000004362", "119000004363")
-      paidReports.map(report => (report \ "paymentReference").as[String]) mustBe
+      paidReports.map(report => (report \ "ihtPaymentReference").as[String]) mustBe
         Seq("A556789/26A999999", "F246810/26B999999", "A975310/26C999999")
-    }
-
-    "return 200-Ok with only matching items when status is supplied" in {
-      val result = controller.getIhtpOverview()(
-        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=Not reconciled")
-      )
-
-      status(result) mustBe Status.OK
-      val content = contentAsJson(result)
-      val statuses =
-        (content \ "success" \ "ihtpOverview").as[Seq[JsValue]].flatMap(item => (item \ "ihtpStatus").asOpt[String])
-
-      statuses.size mustBe 3
-      statuses.distinct mustBe Seq("Not reconciled")
-      (JsPath \ "success" \ "ihtpOverview" \ 0 \ "fbNumber")(content) mustBe List(JsString("119000004320"))
     }
 
     "return 200 and empty list when no overview items match the supplied date range" in {

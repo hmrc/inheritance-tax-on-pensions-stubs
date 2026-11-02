@@ -87,7 +87,7 @@ The last character of the `inheritanceTaxReference` is used to return specific e
 
 ### Get IHTP overview
 
-- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp-overview`
+- **URL**: `/etmp/RESTAdapter/pods/reports/ihtp-payment-notice-overview`
 - **Method**: `GET`
 
 **Query parameters**:
@@ -95,7 +95,10 @@ The last character of the `inheritanceTaxReference` is used to return specific e
 - `pstr` - required
 - `dateFrom` - required, for example `2026-01-01`
 - `dateTo` - required, for example `2026-12-31`
-- `status` - optional, for example `Not reconciled`, `In progress` or `Paid`
+- `ihtStatus` - optional, for example `Not reconciled`, `In progress` or `Paid`
+- `ihtPaymentReference` - optional, for example `A123456/25A999999`
+- `ihtReference` - optional, for example `A123456/25A`
+- `nino` - optional, for example `AA123456A`
 
 #### Overview stub scenarios
 

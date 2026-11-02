@@ -6,116 +6,92 @@
         "submissionDate": "2026-05-13T09:05:00Z",
         "paymentDueDate": "2026-11-13",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A123456/42A",
-        "paymentReference": "A123456/42A518742",
-        "title": "Dr",
+        "ihtPaymentReference": "A123456/42A518742",
         "firstForename": "FirstnameA",
-        "secondForename": "SecondnameB",
         "surname": "Surname",
-        "nino": null,
-        "reasonNoNino": "Reason for no national insurance number",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004353",
         "submissionDate": "2026-05-14T10:20:00Z",
         "paymentDueDate": "2026-11-14",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "F654321/42B",
-        "paymentReference": "F654321/42B749183",
-        "title": "Mr",
+        "ihtPaymentReference": "F654321/42B749183",
         "firstForename": "Firstname",
-        "secondForename": "SecondnameC",
         "surname": "Surname",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004354",
         "submissionDate": "2026-05-15T11:35:00Z",
         "paymentDueDate": "2026-11-15",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A642531/42C",
-        "paymentReference": "A642531/42C749183",
+        "ihtPaymentReference": "A642531/42C749183",
         "firstForename": "FirstnameA",
-        "secondForename": "SecondnameD",
         "surname": "Surname",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004355",
         "submissionDate": "2026-05-16T12:50:00Z",
         "paymentDueDate": "2026-11-16",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "F135246/42D",
-        "paymentReference": "F135246/42D836204",
+        "ihtPaymentReference": "F135246/42D836204",
         "firstForename": "Firstname",
-        "secondForename": "SecondnameE",
         "surname": "Surname",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004356",
         "submissionDate": "2026-05-17T14:05:00Z",
         "paymentDueDate": "2026-11-17",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A654321/42E",
-        "paymentReference": "A654321/42E204675",
-        "title": "Ms",
+        "ihtPaymentReference": "A654321/42E204675",
         "firstForename": "FirstnameA",
         "surname": "Surname",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004368",
         "submissionDate": "2026-08-05T09:20:00Z",
         "paymentDueDate": "2027-02-05",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A000042/26C",
-        "paymentReference": "A000042/26C604218",
-        "title": "Ms",
+        "ihtPaymentReference": "A000042/26C604218",
         "firstForename": "Testdatafirst",
-        "secondForename": "Testdatamiddle",
         "surname": "Testdatalast",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       },
       {
         "fbNumber": "119000004369",
         "submissionDate": "2026-08-06T10:35:00Z",
         "paymentDueDate": "2027-02-06",
         "ihtVersion": "002",
-        "inheritanceTaxReference": "A000042/26C",
-        "paymentReference": "A000042/26C604218",
-        "title": "Ms",
+        "ihtPaymentReference": "A000042/26C604218",
         "firstForename": "Testdatafirst",
-        "secondForename": "Testdatamiddle",
         "surname": "Testdatalast",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       },
       {
         "fbNumber": "119000004370",
         "submissionDate": "2026-08-07T11:50:00Z",
         "paymentDueDate": "2027-02-07",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "F420000/26D",
-        "paymentReference": "F420000/26D195307",
-        "title": "Mr",
+        "ihtPaymentReference": "F420000/26D195307",
         "firstForename": "Firstnamefour",
-        "secondForename": "Middlenamefour",
         "surname": "Lastnamefour",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004371",
         "submissionDate": "2026-08-08T13:05:00Z",
         "paymentDueDate": "2027-02-08",
         "ihtVersion": "002",
-        "inheritanceTaxReference": "F420000/26D",
-        "paymentReference": "F420000/26D195307",
-        "title": "Mr",
+        "ihtPaymentReference": "F420000/26D195307",
         "firstForename": "Firstnamefour",
-        "secondForename": "Middlenamefour",
         "surname": "Lastnamefour",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       }
     ]
   }
