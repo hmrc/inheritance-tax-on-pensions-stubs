@@ -6,52 +6,42 @@
         "submissionDate": "2026-08-01T09:15:00Z",
         "paymentDueDate": "2027-02-01",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A240036/26A",
-        "paymentReference": "A240036/26A836241",
-        "title": "Mr",
+        "ihtPaymentReference": "A240036/26A836241",
         "firstForename": "Firstname",
-        "secondForename": "Middlename",
         "surname": "Lastname",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       },
       {
         "fbNumber": "119000004365",
         "submissionDate": "2026-08-02T10:30:00Z",
         "paymentDueDate": "2027-02-02",
         "ihtVersion": "002",
-        "inheritanceTaxReference": "A240036/26A",
-        "paymentReference": "A240036/26A836241",
-        "title": "Mr",
+        "ihtPaymentReference": "A240036/26A836241",
         "firstForename": "Firstname",
-        "secondForename": "Middlename",
         "surname": "Lastname",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       },
       {
         "fbNumber": "119000004366",
         "submissionDate": "2026-08-03T11:45:00Z",
         "paymentDueDate": "2027-02-03",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "F360024/26B",
-        "paymentReference": "F360024/26B472915",
-        "title": "Mrs",
+        "ihtPaymentReference": "F360024/26B472915",
         "firstForename": "Testnamefirst",
-        "secondForename": "Testnamemiddle",
         "surname": "Testnamelast",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004367",
         "submissionDate": "2026-08-04T13:00:00Z",
         "paymentDueDate": "2027-02-04",
         "ihtVersion": "002",
-        "inheritanceTaxReference": "F360024/26B",
-        "paymentReference": "F360024/26B472915",
-        "title": "Mrs",
+        "ihtPaymentReference": "F360024/26B472915",
         "firstForename": "Testnamefirst",
-        "secondForename": "Testnamemiddle",
         "surname": "Testnamelast",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       }
     ]
   }

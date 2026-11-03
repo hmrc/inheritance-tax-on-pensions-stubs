@@ -6,86 +6,63 @@
         "submissionDate": "2026-07-14T16:42:20Z",
         "paymentDueDate": "2026-03-09",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A123456/25A",
-        "paymentReference": "A123456/25A629671",
-        "title": "Dr",
+        "ihtPaymentReference": "A123456/25A629671",
         "firstForename": "View",
-        "secondForename": "Or",
         "surname": "Change",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004321",
         "submissionDate": "2026-08-14T16:42:20Z",
         "paymentDueDate": "2026-04-06",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A123456/25A",
-        "paymentReference": "A123456/25A629672",
-        "title": "title",
+        "ihtPaymentReference": "A123456/25A629672",
         "firstForename": "firstForename",
-        "secondForename": "secondForname",
         "surname": "Lastname",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004360",
         "submissionDate": "2026-07-20T10:00:00Z",
         "paymentDueDate": "2027-01-20",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A556789/26A",
-        "paymentReference": "A556789/26A999999",
-        "title": "Mrs",
+        "ihtPaymentReference": "A556789/26A999999",
         "firstForename": "FirstnameA",
-        "secondForename": "Middlename",
         "surname": "Surname",
-        "nino": null,
-        "reasonNoNino": "Reason for no national insurance number",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       },
       {
         "fbNumber": "119000004361",
         "submissionDate": "2026-07-22T14:30:00Z",
         "paymentDueDate": "2026-03-17",
         "ihtVersion": "002",
-        "inheritanceTaxReference": "A556789/26A",
-        "paymentReference": "A556789/26A999999",
-        "title": "Mrs",
+        "ihtPaymentReference": "A556789/26A999999",
         "firstForename": "FirstnameA",
-        "secondForename": "SecondnameChanged",
         "surname": "Surname",
-        "nino": null,
-        "reasonNoNino": "Reason for no national insurance number",
-        "ihtpStatus": "Not reconciled"
+        "ihtStatus": "Not reconciled"
       },
       {
         "fbNumber": "119000004362",
         "submissionDate": "2026-07-24T09:15:00Z",
         "paymentDueDate": "2027-01-24",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "F246810/26B",
-        "paymentReference": "F246810/26B999999",
-        "title": "Mr",
+        "ihtPaymentReference": "F246810/26B999999",
         "firstForename": "Paid",
-        "secondForename": "Middlename",
         "surname": "Surname",
-        "nino": null,
-        "reasonNoNino": "Reason for no national insurance number",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       },
       {
         "fbNumber": "119000004363",
         "submissionDate": "2026-07-25T11:45:00Z",
         "paymentDueDate": "2027-01-25",
         "ihtVersion": "001",
-        "inheritanceTaxReference": "A975310/26C",
-        "paymentReference": "A975310/26C999999",
-        "title": "Mrs",
+        "ihtPaymentReference": "A975310/26C999999",
         "firstForename": "Paid",
-        "secondForename": "SecondnameN",
         "surname": "Surname",
-        "nino": null,
-        "reasonNoNino": "Reason for no national insurance number",
-        "ihtpStatus": "Paid"
+        "ihtStatus": "Paid",
+        "allocatedDate": "2027-10-31"
       }
     ]
   }

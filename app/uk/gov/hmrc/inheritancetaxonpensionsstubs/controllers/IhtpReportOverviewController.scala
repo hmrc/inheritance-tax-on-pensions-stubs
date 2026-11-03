@@ -42,21 +42,16 @@ class IhtpReportOverviewController @Inject() (
           maybeOverview match {
             case Some(overview) =>
               val filteredByDate = overview.filter(item => isInDateRange(item, dateFrom, dateTo))
-              val filteredOverview = request
-                .getQueryString("status")
-                .fold(filteredByDate)(status =>
-                  filteredByDate.filter(item => (item \ "ihtpStatus").as[String] == status)
-                )
 
               Future.successful(
-                if (filteredOverview.isEmpty) {
+                if (filteredByDate.isEmpty) {
                   noRecordsFound
                 } else {
                   withCorrelationId(
                     Ok(
                       Json.obj(
                         "success" -> Json.obj(
-                          "ihtpOverview" -> JsArray(filteredOverview)
+                          "ihtpOverview" -> JsArray(filteredByDate)
                         )
                       )
                     )
