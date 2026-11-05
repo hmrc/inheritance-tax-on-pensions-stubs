@@ -7,7 +7,7 @@
       "schemeEndDate": "2030-01-01"
     },
     "reportDetails": {
-      "submissionDate": "2026-07-14T16:42:20Z",
+      "submissionDate": "2026-11-02T16:42:20Z",
       "ihtPaymentReference": "A123456/25A629672",
       "ihtVersion": "001",
       "ihtPaid": false
@@ -44,7 +44,7 @@
       }
     },
     "ihTaxInformation": {
-      "dateNoticeReceived": "2026-03-02",
+      "dateNoticeReceived": "2027-03-02",
       "noticeSubmittedByPr": "Yes",
       "knownBeneficiaries": "Yes",
       "totalIhtPayable": 100.00,
