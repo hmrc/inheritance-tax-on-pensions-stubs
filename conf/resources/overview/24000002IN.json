@@ -6,9 +6,9 @@
         "submissionDate": "2026-11-01T14:45:00Z",
         "paymentDueDate": "2027-11-01",
         "ihtVersion": "001",
-        "ihtPaymentReference": "A654321/25A392617",
+        "ihtPaymentReference": "A654321/25A999999",
         "firstForename": "Firstname",
-        "surname": "Surname",
+        "surname": "Secondname",
         "ihtStatus": "Not reconciled"
       }
     ]

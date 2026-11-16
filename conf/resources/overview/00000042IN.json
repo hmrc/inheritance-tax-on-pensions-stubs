@@ -2,56 +2,6 @@
   "success": {
     "ihtpOverview": [
       {
-        "fbNumber": "119000004352",
-        "submissionDate": "2026-11-01T09:05:00Z",
-        "paymentDueDate": "2026-11-13",
-        "ihtVersion": "001",
-        "ihtPaymentReference": "A123456/42A518742",
-        "firstForename": "FirstnameA",
-        "surname": "Surname",
-        "ihtStatus": "Not reconciled"
-      },
-      {
-        "fbNumber": "119000004353",
-        "submissionDate": "2026-11-02T10:20:00Z",
-        "paymentDueDate": "2026-11-14",
-        "ihtVersion": "001",
-        "ihtPaymentReference": "F654321/42B749183",
-        "firstForename": "Firstname",
-        "surname": "Surname",
-        "ihtStatus": "Not reconciled"
-      },
-      {
-        "fbNumber": "119000004354",
-        "submissionDate": "2026-11-03T11:35:00Z",
-        "paymentDueDate": "2026-11-15",
-        "ihtVersion": "001",
-        "ihtPaymentReference": "A642531/42C749183",
-        "firstForename": "FirstnameA",
-        "surname": "Surname",
-        "ihtStatus": "Not reconciled"
-      },
-      {
-        "fbNumber": "119000004355",
-        "submissionDate": "2026-11-04T12:50:00Z",
-        "paymentDueDate": "2026-11-16",
-        "ihtVersion": "001",
-        "ihtPaymentReference": "F135246/42D836204",
-        "firstForename": "Firstname",
-        "surname": "Surname",
-        "ihtStatus": "Not reconciled"
-      },
-      {
-        "fbNumber": "119000004356",
-        "submissionDate": "2026-11-05T14:05:00Z",
-        "paymentDueDate": "2026-11-17",
-        "ihtVersion": "001",
-        "ihtPaymentReference": "A654321/42E204675",
-        "firstForename": "FirstnameA",
-        "surname": "Surname",
-        "ihtStatus": "Not reconciled"
-      },
-      {
         "fbNumber": "119000004368",
         "submissionDate": "2026-11-05T09:20:00Z",
         "paymentDueDate": "2027-02-05",

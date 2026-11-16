@@ -64,7 +64,7 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       val content = contentAsJson(result)
       (JsPath \ "success" \ "pstr")(content) mustBe empty
       (JsPath \ "success" \ "ihtpOverview" \ 0 \ "ihtPaymentReference")(content) mustBe List(
-        JsString("A654321/25A392617")
+        JsString("A654321/25A999999")
       )
     }
 
