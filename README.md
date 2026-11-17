@@ -176,7 +176,7 @@ Stubbed ihtPaymentReference + version combinations:
 - `A240036/26A836241` + `001` or `002` (PSTR: 24000036IN, paid amendment)
 - `F360024/26B472915` + `001` or `002` (PSTR: 24000036IN, not reconciled amendment)
 - `A000042/26C604218` + `001` or `002` (PSTR: 00000042IN, paid amendment)
-- `F420000/26D195307` + `001` or `002` (PSTR: 00000042IN, not reconciled amendment)
+- `F420000/26A195307` + `001` or `002` (PSTR: 00000042IN, not reconciled amendment)
 
 #### Amendment stub scenario
 
