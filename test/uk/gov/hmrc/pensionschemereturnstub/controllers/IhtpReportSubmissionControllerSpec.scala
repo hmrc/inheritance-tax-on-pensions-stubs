@@ -95,7 +95,8 @@ class IhtpReportSubmissionControllerSpec extends SpecBase with APIResponses {
           "Surname",
           AddressDetails(
             addressLine1 = "1 ABCDE Street",
-            addressLine2 = Some("FGHIJ Town"),
+            addressLine2 = Some("Other place"),
+            addressLine4 = "Anytown",
             postCode = Some("ZZ99 1AA"),
             country = "GB"
           )

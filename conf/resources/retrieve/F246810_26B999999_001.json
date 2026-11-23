@@ -37,7 +37,8 @@
         "surname": "Surname",
         "prAddress": {
           "addressLine1": "10 AB Street",
-          "addressLine2": "ABtown",
+          "addressLine2": "Other place",
+          "addressLine4": "Anytown",
           "postCode": "YY1 7YY",
           "country": "GB"
         }
@@ -65,7 +66,8 @@
           },
           "beneficiaryAddress": {
             "addressLine1": "21 RB Road",
-            "addressLine2": "RBtown",
+            "addressLine2": "Other place",
+            "addressLine4": "Anytown",
             "postCode": "LL1 4LL",
             "country": "GB"
           },
@@ -87,7 +89,8 @@
           },
           "beneficiaryAddress": {
             "addressLine1": "8 SB Lane",
-            "addressLine2": "SBtown",
+            "addressLine2": "Other place",
+            "addressLine4": "Anytown",
             "postCode": "SS1 2SS",
             "country": "GB"
           },

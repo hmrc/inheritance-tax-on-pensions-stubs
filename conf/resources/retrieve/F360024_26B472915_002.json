@@ -36,7 +36,8 @@
         "surname": "Lastname",
         "prAddress": {
           "addressLine1": "1 ABCDE Street",
-          "addressLine2": "FGHIJ Town",
+          "addressLine2": "Other place",
+          "addressLine4": "Anytown",
           "postCode": "AA1 1AA",
           "country": "GB"
         }
@@ -66,7 +67,8 @@
           },
           "beneficiaryAddress": {
             "addressLine1": "1 Test Street",
-            "addressLine2": "Test Town",
+            "addressLine2": "Other place",
+            "addressLine4": "Anytown",
             "postCode": "TE57 0AA",
             "country": "GB"
           },
@@ -88,7 +90,8 @@
           },
           "beneficiaryAddress": {
             "addressLine1": "1 ABCDE Street",
-            "addressLine2": "FGHIJ Town",
+            "addressLine2": "Other place",
+            "addressLine4": "Anytown",
             "postCode": "AA1 1AA",
             "country": "GB"
           },
