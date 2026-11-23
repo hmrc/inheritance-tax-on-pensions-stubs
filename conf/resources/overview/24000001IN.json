@@ -17,8 +17,8 @@
         "paymentDueDate": "2027-04-06",
         "ihtVersion": "001",
         "ihtPaymentReference": "A123456/25A629672",
-        "firstForename": "firstForename",
-        "surname": "Lastname",
+        "firstForename": "No",
+        "surname": "Beneficiaries",
         "ihtStatus": "Not reconciled"
       },
       {
