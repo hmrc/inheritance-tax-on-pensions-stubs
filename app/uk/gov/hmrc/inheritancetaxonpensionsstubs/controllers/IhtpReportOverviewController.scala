@@ -16,12 +16,13 @@
 
 package uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers
 
-import play.api.libs.json.{JsArray, JsObject, Json}
+import play.api.libs.json.{JsArray, JsObject, JsString, Json}
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.services.ResourceService
 
+import java.time.format.DateTimeFormatter
 import javax.inject.{Inject, Singleton}
-import java.time.{LocalDate, OffsetDateTime}
+import java.time.{Instant, LocalDate, LocalDateTime, OffsetDateTime}
 import scala.concurrent.Future
 import scala.util.Try
 
@@ -35,36 +36,61 @@ class IhtpReportOverviewController @Inject() (
     (request.getQueryString("pstr"), request.getQueryString("dateFrom"), request.getQueryString("dateTo")) match {
       case (Some(pstr), Some(dateFrom), Some(dateTo)) =>
         scenarioResponse(request.getQueryString("status")).getOrElse {
-          val maybeOverview = resourceService
-            .getResource("overview", pstr)
-            .map(json => (json \ "success" \ "ihtpOverview").asOpt[Seq[JsObject]].getOrElse(Seq.empty))
+          if (request.getQueryString("nino").getOrElse("fail") == "AA422422A") {
+            Future.successful(otherUnprocessable)
+          } else {
+            val maybeOverview = resourceService
+              .getResource("overview", pstr)
+              .map(json => (json \ "success" \ "ihtpOverview").asOpt[Seq[JsObject]].getOrElse(Seq.empty))
 
-          maybeOverview match {
-            case Some(overview) =>
-              val filteredByDate = overview.filter(item => isInDateRange(item, dateFrom, dateTo))
+            maybeOverview match {
+              case Some(overview) =>
+                val filtered =
+                  overview
+                    .filter(item => isInDateRange(item, dateFrom, dateTo))
+                    .filter(item =>
+                      filterByOptionalParameter(
+                        item,
+                        "ihtPaymentReference",
+                        request.getQueryString("ihtPaymentReference")
+                      )
+                    )
+                    .filter(item => filterByIhtReference(item, request.getQueryString("ihtReference")))
+                    .filter(item => filterByOptionalParameter(item, "nino", request.getQueryString("nino")))
 
-              Future.successful(
-                if (filteredByDate.isEmpty) {
-                  noRecordsFound
-                } else {
-                  withCorrelationId(
-                    Ok(
-                      Json.obj(
-                        "success" -> Json.obj(
-                          "ihtpOverview" -> JsArray(filteredByDate)
+                Future.successful(
+                  if (filtered.isEmpty) {
+                    noRecordsFound
+                  } else {
+                    withCorrelationId(
+                      Ok(
+                        Json.obj(
+                          "success" -> Json.obj(
+                            "ihtpOverview" -> JsArray(filtered)
+                          )
                         )
                       )
                     )
-                  )
-                }
-              )
-            case None =>
-              Future.successful(noRecordsFound)
+                  }
+                )
+              case None =>
+                Future.successful(noRecordsFound)
+            }
           }
         }
       case _ =>
         Future.successful(BadRequest(hodBadRequestResponse))
     }
+  }
+
+  private def filterByOptionalParameter(item: JsObject, parameterName: String, queryString: Option[String]) = {
+    val value = (item \ parameterName).getOrElse(JsString("fail")).as[String]
+    if (queryString.isEmpty) true else queryString.contains(value)
+  }
+
+  private def filterByIhtReference(item: JsObject, queryString: Option[String]) = {
+    val paymentReferenceValue = (item \ "ihtPaymentReference").getOrElse(JsString("fail")).as[String]
+    if (queryString.isEmpty) true else paymentReferenceValue.startsWith(queryString.getOrElse("queryfail"))
   }
 
   private def scenarioResponse(
@@ -74,7 +100,7 @@ class IhtpReportOverviewController @Inject() (
       case "BAD_REQUEST" => Some(Future.successful(BadRequest(hodBadRequestResponse)))
       case "SERVER_ERROR" => Some(internalServerError500Response)
       case "SERVICE_UNAVAILABLE" => Some(serviceUnavailable503Response)
-      case "NO_RECORDS" => Some(Future.successful(noRecordsFound))
+      case "UNPROCESSABLE" => Some(Future.successful(otherUnprocessable))
       case _ => None
     }
 
@@ -83,10 +109,24 @@ class IhtpReportOverviewController @Inject() (
 
   private def noRecordsFound(implicit request: play.api.mvc.Request[?]): Result =
     withCorrelationId(
-      Ok(
+      UnprocessableEntity(
         Json.obj(
-          "success" -> Json.obj(
-            "ihtpOverview" -> JsArray.empty
+          "errors" -> Json.obj(
+            "processingDate" -> Instant.now(),
+            "code" -> "087",
+            "text" -> "No valid IHT form found in ETMP for the requested details"
+          )
+        )
+      )
+    )
+  private def otherUnprocessable(implicit request: play.api.mvc.Request[?]): Result =
+    withCorrelationId(
+      UnprocessableEntity(
+        Json.obj(
+          "errors" -> Json.obj(
+            "processingDate" -> Instant.now(),
+            "code" -> "003",
+            "text" -> "Request could not be processed"
           )
         )
       )

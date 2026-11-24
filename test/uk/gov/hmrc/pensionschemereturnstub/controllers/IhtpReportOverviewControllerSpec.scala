@@ -17,7 +17,7 @@
 package uk.gov.hmrc.pensionschemereturnstub.controllers
 
 import play.api.http.Status
-import play.api.libs.json.{JsNull, JsPath, JsString, JsValue}
+import play.api.libs.json.{JsPath, JsString, JsValue}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.inheritancetaxonpensionsstubs.controllers.IhtpReportOverviewController
@@ -142,26 +142,23 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
         Seq("A556789/26A999999", "F246810/26B999999", "A975310/26C999999")
     }
 
-    "return 200 and empty list when no overview items match the supplied date range" in {
+    "return 422 when no overview items match the supplied date range" in {
       val result = controller.getIhtpOverview()(
         overviewRequest("?pstr=24000002IN&dateFrom=2027-01-01&dateTo=2027-12-31")
       )
 
-      status(result) mustBe Status.OK
+      status(result) mustBe Status.UNPROCESSABLE_ENTITY
       val content = contentAsJson(result)
-      val reports = (content \ "success" \ "ihtpOverview").as[Seq[JsValue]]
-      reports.size mustBe 0
+      val reports = (content \ "errors" \ "code").as[JsValue]
+      reports.as[String] mustBe "087"
     }
 
-    "return 200 and empty list when status is NO_RECORDS" in {
+    "return 200 and empty list when status is UNPROCESSABLE" in {
       val result = controller.getIhtpOverview()(
-        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=NO_RECORDS")
+        overviewRequest("?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=UNPROCESSABLE")
       )
 
-      status(result) mustBe Status.OK
-      val content = contentAsJson(result)
-      val reports = (content \ "success" \ "ihtpOverview").as[Seq[JsValue]]
-      reports.size mustBe 0
+      status(result) mustBe Status.UNPROCESSABLE_ENTITY
     }
 
     "return 400-BadRequest when status is BAD_REQUEST" in {
