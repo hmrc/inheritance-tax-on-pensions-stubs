@@ -126,7 +126,8 @@ against representative obsolete versions.
 | No records found | Unknown `pstr` | `422 Unprocessable Entity` |
 | No records found | Known `pstr`, date range with no matching overview records | `422 Unprocessable Entity` |
 | No records found | Known `pstr`, normal `status` value with no matching overview records | `422 Unprocessable Entity` |
-| Forced no records response | `status=NO_RECORDS` | `422 Unprocessable Entity` |
+| Failing with unprocessable | `nino=AA422422A` | `422 Unprocessable Entity` |
+| Forced no unprocessable response | `status=UNPROCESSABLE` | `422 Unprocessable Entity` |
 | Forced bad request response | `status=BAD_REQUEST` | `400 Bad Request` |
 | Forced internal server error response | `status=SERVER_ERROR` | `500 Internal Server Error` |
 | Forced service unavailable response | `status=SERVICE_UNAVAILABLE` | `503 Service Unavailable` |

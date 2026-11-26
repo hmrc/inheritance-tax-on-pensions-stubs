@@ -1,0 +1,34 @@
+meta {
+  name: Overview by IHT payment reference - Not found
+  type: http
+  seq: 25
+}
+
+get {
+  url: {{ihtp_stubs_url}}/etmp/RESTAdapter/pods/reports/ihtp-payment-notice-overview?pstr=24000001IN&dateFrom=2026-01-01&dateTo=2026-12-31&ihtPaymentReference=A123456/25A987789
+  body: none
+  auth: none
+}
+
+params:query {
+  pstr: 24000001IN
+  dateFrom: 2026-01-01
+  dateTo: 2026-12-31
+  ihtPaymentReference: A123456/25A987789
+}
+
+headers {
+  correlationid: {{correlationid}}
+  X-Message-Type: Request
+  X-Originating-System: MDTP
+  X-Receipt-Date: 2026-04-10T16:12:49Z
+  X-Regime-Type: IHTP
+  X-Transmitting-System: HIP
+}
+
+tests {
+  test("Status code is 422", function () {
+      expect(res.getStatus()).to.equal(422);
+  });
+  
+}
