@@ -16,7 +16,8 @@
         "deceasedsDob": "1950-01-01",
         "deceasedsDod": "2026-01-01",
         "ihtRefNumber": "A123456/25A"
-      }
+      },
+      "estateRepresentative": "02"
     },
     "personalRep": {
       "typeOfPr": "02",
