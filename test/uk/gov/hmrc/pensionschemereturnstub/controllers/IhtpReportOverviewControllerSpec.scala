@@ -194,5 +194,25 @@ class IhtpReportOverviewControllerSpec extends SpecBase with APIResponses {
       status(result) mustBe Status.BAD_REQUEST
       contentAsJson(result) mustBe hodBadRequestResponse
     }
+
+    "return 200 and empty list when no resource exists for the pstr" in {
+      val result = controller.getIhtpOverview()(
+        overviewRequest("?pstr=99999999ZZ&dateFrom=2026-01-01&dateTo=2026-12-31")
+      )
+
+      status(result) mustBe Status.OK
+      val reports = (contentAsJson(result) \ "success" \ "ihtpOverview").as[Seq[JsValue]]
+      reports.size mustBe 0
+    }
+
+    "perform a normal lookup when status is unrecognised" in {
+      val result = controller.getIhtpOverview()(
+        overviewRequest("?pstr=24000002IN&dateFrom=2026-01-01&dateTo=2026-12-31&status=NOT_A_STATUS")
+      )
+
+      status(result) mustBe Status.OK
+      val reports = (contentAsJson(result) \ "success" \ "ihtpOverview").as[Seq[JsValue]]
+      reports.size mustBe 1
+    }
   }
 }
